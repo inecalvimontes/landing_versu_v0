@@ -49,54 +49,56 @@ const FAQs = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
   return (
-    <section className="bg-gray-50 py-16 md:py-24 lg:py-32 xl:py-40">
-      <div className="container mx-auto px-4 lg:px-6 xl:px-8">
-        <div className="max-w-6xl xl:max-w-7xl mx-auto">
-          {/* Header - centered */}
-          <div className="text-center mb-10 lg:mb-16">
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl xl:text-6xl">
-              Preguntas frecuentes
-            </h2>
-            <p className="mt-4 text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">
-              ¿Tienes más preguntas? Escríbenos por WhatsApp y te responderemos
-              en minutos.
-            </p>
-          </div>
+    <section className="bg-background py-8 md:py-12 lg:py-16 xl:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20">
+            {/* Left: Title and subtitle */}
+            <div className="flex flex-col justify-center">
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl xl:text-6xl text-text mb-6">
+                Preguntas frecuentes (FAQ)
+              </h2>
+              <p className="text-base lg:text-lg text-text/70">
+                ¿No encuentras lo que buscas? Contacta a nuestro{" "}
+                <span className="font-semibold text-text">equipo de soporte</span>.
+              </p>
+            </div>
 
-          {/* FAQ accordion - full width */}
-          <div className="divide-y divide-gray-200 rounded-2xl border border-gray-200 bg-white shadow-sm">
-            {faqs.map((faq, index) => (
-              <div key={index}>
-                <button
-                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-4 text-left transition-colors hover:bg-gray-50"
-                >
-                  <span className="font-medium text-gray-900">
-                    {faq.question}
-                  </span>
-                  <ChevronDown
+            {/* Right: FAQ accordion */}
+            <div className="divide-y divide-text/20 rounded-2xl border border-text/20 bg-background shadow-sm">
+              {faqs.map((faq, index) => (
+                <div key={index}>
+                  <button
+                    onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                    className="flex w-full items-center justify-between gap-4 px-6 py-4 text-left transition-colors hover:bg-text/10"
+                  >
+                    <span className="font-medium text-text">
+                      {faq.question}
+                    </span>
+                    <ChevronDown
+                      className={cn(
+                        "h-5 w-5 flex-shrink-0 text-text/60 transition-transform duration-200",
+                        openIndex === index && "rotate-180"
+                      )}
+                    />
+                  </button>
+                  <div
                     className={cn(
-                      "h-5 w-5 flex-shrink-0 text-gray-500 transition-transform duration-200",
-                      openIndex === index && "rotate-180"
+                      "grid transition-all duration-200 ease-in-out",
+                      openIndex === index
+                        ? "grid-rows-[1fr] opacity-100"
+                        : "grid-rows-[0fr] opacity-0"
                     )}
-                  />
-                </button>
-                <div
-                  className={cn(
-                    "grid transition-all duration-200 ease-in-out",
-                    openIndex === index
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0"
-                  )}
-                >
-                  <div className="overflow-hidden">
-                    <p className="px-6 pb-4 text-sm leading-relaxed text-gray-600">
-                      {faq.answer}
-                    </p>
+                  >
+                    <div className="overflow-hidden">
+                      <p className="px-6 pb-4 text-sm leading-relaxed text-text/70">
+                        {faq.answer}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

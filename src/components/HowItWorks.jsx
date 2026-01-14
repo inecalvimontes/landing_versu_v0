@@ -72,50 +72,51 @@ const HowItWorks = () => {
   };
 
   return (
-    <section className="bg-gray-50 py-16 md:py-24 lg:py-32 xl:py-40">
+    <section className="bg-background py-8 md:py-12 lg:py-16 xl:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-40 xl:px-48">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl xl:text-6xl">
-            Cómo funciona
-          </h2>
-          <p className="mt-4 text-lg lg:text-xl xl:text-2xl text-gray-600">
-            Tres pasos. Sin equipo técnico para partir.
-          </p>
-        </div>
-
-        <div className="mt-16 grid gap-12 lg:grid-cols-2 lg:gap-16 items-start">
-          {/* Steps */}
-          <div className="space-y-8 lg:space-y-10">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+          {/* Left: Title, Subtitle and Steps */}
+          <div>
+            <div className="mb-8 lg:mb-10">
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl xl:text-6xl text-text">
+                Cómo funciona
+              </h2>
+              <p className="mt-4 text-lg lg:text-xl xl:text-2xl text-text/70">
+                Tres pasos. Sin equipo técnico para partir.
+              </p>
+            </div>
+            <div className="space-y-8 lg:space-y-10">
             {steps.map((step, index) => (
               <div key={index} className="flex gap-4">
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100">
-                    <step.icon className="h-6 w-6 text-gray-700" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/20">
+                    <step.icon className="h-6 w-6 text-accent" />
                   </div>
                 </div>
                 <div>
-                  <p className="mb-1 text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <p className="mb-1 text-xs font-medium uppercase tracking-wider text-text/60">
                     PASO {index + 1}
                   </p>
-                  <h3 className="text-lg font-semibold text-gray-900">{step.title}</h3>
-                  <p className="mt-1 text-gray-600">{step.description}</p>
+                  <h3 className="text-lg font-semibold text-text">{step.title}</h3>
+                  <p className="mt-1 text-text/70">{step.description}</p>
                 </div>
               </div>
             ))}
+            </div>
           </div>
 
           {/* iPhone Simulator */}
-          <div className="flex items-start justify-center lg:justify-end">
+          <div className="flex items-center justify-center lg:justify-end">
             <div className="w-full max-w-[280px]">
               <div className="text-center mb-4">
-                <p className="text-sm font-medium text-gray-500">
+                <p className="text-sm font-medium text-text/60">
                   Prueba cómo funciona Versu
                 </p>
               </div>
               
               <IPhoneFrame>
                 {/* Status Bar */}
-                <div className="flex items-center justify-between bg-indigo-600 px-4 py-2 pt-12">
+                <div className="flex items-center justify-between bg-accent px-4 py-2 pt-12">
                   <div className="flex items-center gap-2">
                     <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center">
                       <MessageCircle className="h-4 w-4 text-white" />
@@ -128,7 +129,7 @@ const HowItWorks = () => {
                 </div>
 
                 {/* Chat Messages */}
-                <div className="h-80 overflow-y-auto bg-gray-100 p-3 space-y-2">
+                <div className="h-80 overflow-y-auto bg-text/5 p-3 space-y-2">
                   {messages.map((message, index) => (
                     <div
                       key={index}
@@ -137,8 +138,8 @@ const HowItWorks = () => {
                       <div
                         className={`max-w-[80%] rounded-xl px-3 py-2 text-xs ${
                           message.isUser
-                            ? "bg-indigo-600 text-white rounded-tr-sm"
-                            : "bg-white border border-gray-200 rounded-tl-sm"
+                            ? "bg-accent text-white rounded-tr-sm"
+                            : "bg-background border border-text/20 rounded-tl-sm text-text"
                         }`}
                       >
                         {message.text}
@@ -148,16 +149,16 @@ const HowItWorks = () => {
 
                   {/* Form inside chat */}
                   {chatStep === "form" && (
-                    <div className="mt-3 space-y-2 rounded-xl bg-white border border-gray-200 p-2.5">
+                    <div className="mt-3 space-y-2 rounded-xl bg-background border border-text/20 p-2.5">
                       <div>
-                        <label className="text-[10px] text-gray-500 mb-1 block">
+                        <label className="text-[10px] text-text/60 mb-1 block">
                           Tu WhatsApp
                         </label>
                         <div className="flex gap-1">
                           <select
                             value={countryCode}
                             onChange={(e) => setCountryCode(e.target.value)}
-                            className="w-14 h-6 px-1 text-[9px] rounded border border-gray-300 bg-white flex-shrink-0"
+                            className="w-14 h-6 px-1 text-[9px] rounded border border-text/20 bg-background flex-shrink-0 text-text"
                           >
                             {countryOptions.map((opt) => (
                               <option key={opt.code} value={opt.code}>
@@ -169,23 +170,23 @@ const HowItWorks = () => {
                             placeholder="9 1234 5678"
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
-                            className="h-6 text-[10px] flex-1 min-w-0 px-1.5 rounded border border-gray-300"
+                            className="h-6 text-[10px] flex-1 min-w-0 px-1.5 rounded border border-text/20 bg-background text-text"
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="text-[10px] text-gray-500 mb-1 block">
+                        <label className="text-[10px] text-text/60 mb-1 block">
                           URL de tu tienda
                         </label>
                         <input
                           placeholder="URL de tu tienda"
                           value={storeUrl}
                           onChange={(e) => setStoreUrl(e.target.value)}
-                          className="h-6 text-[10px] w-full px-1.5 rounded border border-gray-300"
+                          className="h-6 text-[10px] w-full px-1.5 rounded border border-text/20 bg-background text-text"
                         />
                       </div>
                       <button
-                        className="w-full h-6 text-[10px] rounded bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full h-6 text-[10px] rounded bg-accent text-white hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed"
                         onClick={handleSubmitForm}
                         disabled={!phone.trim() || !storeUrl.trim()}
                       >
@@ -198,7 +199,7 @@ const HowItWorks = () => {
                   {chatStep === "done" && (
                     <div className="mt-3">
                       <button
-                        className="w-full h-9 gap-2 rounded-lg bg-[#25D366] hover:bg-[#20BD5A] text-white inline-flex items-center justify-center text-xs"
+                        className="w-full h-9 gap-2 rounded-lg bg-[#25D366] hover:bg-[#25D366]/90 text-white inline-flex items-center justify-center text-xs transition-colors"
                         onClick={openWhatsApp}
                       >
                         <MessageCircle className="h-4 w-4" />
@@ -211,17 +212,17 @@ const HowItWorks = () => {
 
                 {/* Input Area */}
                 {chatStep === "chat" && (
-                  <div className="border-t border-gray-200 bg-white p-2 pb-8">
+                  <div className="border-t border-text/20 bg-background p-2 pb-8">
                     <div className="flex items-center gap-2">
                       <input
                         placeholder="Escribe un mensaje..."
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-                        className="h-8 flex-1 text-xs px-2 rounded border border-gray-300"
+                        className="h-8 flex-1 text-xs px-2 rounded border border-text/20 bg-background text-text"
                       />
                       <button
-                        className="h-8 w-8 rounded inline-flex items-center justify-center bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="h-8 w-8 rounded inline-flex items-center justify-center bg-accent text-white hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed"
                         onClick={handleSendMessage}
                         disabled={!inputValue.trim()}
                       >
@@ -232,9 +233,9 @@ const HowItWorks = () => {
                 )}
 
                 {chatStep !== "chat" && (
-                  <div className="border-t border-gray-200 bg-white p-2 pb-8">
+                  <div className="border-t border-text/20 bg-background p-2 pb-8">
                     <div className="h-8 flex items-center justify-center">
-                      <p className="text-[10px] text-gray-500">
+                      <p className="text-[10px] text-text/60">
                         {chatStep === "form" ? "Completa el formulario arriba" : "¡Listo para probar!"}
                       </p>
                     </div>

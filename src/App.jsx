@@ -20,12 +20,12 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background text-text">
       <Header onDemoClick={handleDemoClick} />
       <Hero onDemoClick={handleDemoClick} />
-      <LogoCarousel />
       <HowItWorks />
       <Testimonials />
+      <LogoCarousel />
       <DemoForm />
       <FAQs />
       <FinalCTA onDemoClick={handleDemoClick} />
