@@ -33,13 +33,13 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="bg-white py-16 md:py-24 lg:py-32 xl:py-40">
+    <section className="bg-background py-8 md:py-12 lg:py-16 xl:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-20 xl:px-24">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl xl:text-6xl">
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl xl:text-6xl text-text">
             Lo que dicen nuestros clientes
           </h2>
-          <p className="mt-4 text-lg lg:text-xl xl:text-2xl text-gray-600">
+          <p className="mt-4 text-lg lg:text-xl xl:text-2xl text-text/70">
             Tiendas en LatAm que ya transformaron su atención con Versu.
           </p>
         </div>
@@ -48,7 +48,7 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="flex h-full flex-col rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
+              className="flex h-full flex-col rounded-2xl border border-text/20 bg-background p-6 shadow-sm"
             >
               <div className="flex gap-1">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
@@ -58,21 +58,21 @@ const Testimonials = () => {
                   />
                 ))}
               </div>
-              <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-gray-900">
+              <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-text">
                 "{testimonial.content}"
               </blockquote>
-              <div className="mt-4 flex items-center gap-3 border-t border-gray-200 pt-4">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-100 text-xs font-semibold text-indigo-600">
+              <div className="mt-4 flex items-center gap-3 border-t border-text/20 pt-4">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/20 text-xs font-semibold text-accent">
                   {testimonial.name
                     .split(" ")
                     .map((n) => n[0])
                     .join("")}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-gray-900">
+                  <p className="text-sm font-semibold text-text">
                     {testimonial.name}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-text/60">
                     {testimonial.role}
                   </p>
                 </div>

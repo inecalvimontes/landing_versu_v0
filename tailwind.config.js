@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        background: '#202020',
+        text: '#f2f2f2',
+        accent: '#7669e9',
+      },
       keyframes: {
         marquee: {
           '0%': { transform: 'translateX(0%)' },
