@@ -89,10 +89,6 @@ const IntegrationsCarousel = () => {
 
       {/* Desktop: infinite marquee - se extiende a todo el ancho con márgenes */}
       <div className="relative hidden overflow-hidden lg:block -mx-4 sm:-mx-6 lg:-mx-20 xl:-mx-24">
-        {/* Fade edges */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-background to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-background to-transparent" />
-        
         {/* Marquee track - duplicamos el array para hacer el loop infinito */}
         <div className="flex animate-marquee px-4 sm:px-6 lg:px-20 xl:px-24">
           {[...partnersLogos, ...partnersLogos, ...partnersLogos].map((partner, index) => (
@@ -137,6 +133,27 @@ const Hero = ({ onDemoClick }) => {
       <div className="absolute inset-0 bg-background/80 z-10"></div>
       
       <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-20 xl:px-24">
+        {/* Botón Play - posicionado a la derecha con margen */}
+        <button className="hidden xl:flex absolute right-4 sm:right-6 lg:right-20 xl:right-24 top-24 md:top-28 lg:top-32 xl:top-36 items-center gap-3 rounded-xl bg-accent px-9 py-5 text-xl font-medium text-white hover:bg-accent/90 transition-colors shadow-lg z-30">
+          <Play className="h-8 w-8 fill-white" />
+          <span>Play</span>
+        </button>
+
+        {/* Tarjetas de Testimonio e Impacto - posicionadas a la derecha con margen */}
+        <div className="hidden xl:grid absolute right-4 sm:right-6 lg:right-20 xl:right-24 top-[22.5rem] md:top-[27rem] lg:top-[30rem] xl:top-[33rem] grid-cols-2 gap-4 w-[450px] 2xl:w-[500px]">
+          <div className="rounded-xl border border-text/20 bg-background/60 backdrop-blur-sm p-4 shadow-sm h-full">
+            <p className="text-xs text-text/60 mb-2">Testimonio</p>
+            <p className="text-sm text-text leading-relaxed">
+              "Versu redujo nuestras consultas repetidas en un 60%."
+            </p>
+          </div>
+          <div className="rounded-xl border border-text/20 bg-background/60 backdrop-blur-sm p-4 shadow-sm h-full">
+            <p className="text-xs text-text/60 mb-2">Impacto</p>
+            <p className="text-2xl font-bold text-text">+35%</p>
+            <p className="text-sm text-text/60">conversión en carritos</p>
+          </div>
+        </div>
+
         <div>
           {/* Left: Content */}
           <div className="max-w-xl xl:max-w-2xl">
@@ -157,48 +174,31 @@ const Hero = ({ onDemoClick }) => {
               humano.
             </p>
 
-            <div className="relative">
-              <ul className="mt-8 space-y-3">
-                {features.map((feature, index) => (
-                  <li key={index} className="flex items-center gap-3 text-sm">
-                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-accent/20">
-                      <Check className="h-3 w-3 text-accent" />
-                    </div>
-                    <span className="text-text">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* Botón Play sobre el bloque de Impacto */}
-              <button className="hidden lg:flex absolute left-[calc(110%+370px)] xl:left-[calc(110%+420px)] -top-16 items-center gap-2 rounded-lg bg-accent px-4 py-2 lg:px-6 lg:py-3 text-sm lg:text-base font-medium text-white hover:bg-accent/90 transition-colors shadow-lg z-30">
-                <Play className="h-4 w-4 lg:h-5 lg:w-5 fill-white" />
-                <span>Play</span>
-              </button>
-
-              {/* Tarjetas de Testimonio e Impacto a la derecha - versión desktop */}
-              <div className="hidden lg:grid absolute left-[110%] top-0 grid-cols-2 gap-4 w-[500px] xl:w-[550px]">
-                <div className="rounded-xl border border-text/20 bg-background/60 backdrop-blur-sm p-4 shadow-sm h-full">
-                  <p className="text-xs text-text/60 mb-2">Testimonio</p>
-                  <p className="text-sm text-text leading-relaxed">
-                    "Versu redujo nuestras consultas repetidas en un 60%."
-                  </p>
-                </div>
-                <div className="rounded-xl border border-text/20 bg-background/60 backdrop-blur-sm p-4 shadow-sm h-full">
-                  <p className="text-xs text-text/60 mb-2">Impacto</p>
-                  <p className="text-2xl font-bold text-text">+35%</p>
-                  <p className="text-sm text-text/60">conversión en carritos</p>
-                </div>
-              </div>
-            </div>
+            <ul className="mt-8 space-y-3">
+              {features.map((feature, index) => (
+                <li key={index} className="flex items-center gap-3 text-sm">
+                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-accent/20">
+                    <Check className="h-3 w-3 text-accent" />
+                  </div>
+                  <span className="text-text">{feature}</span>
+                </li>
+              ))}
+            </ul>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <button
-                onClick={onDemoClick}
-                className="group inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-base font-medium text-white hover:bg-accent/90 transition-colors"
-              >
-                Solicitar demo
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </button>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={onDemoClick}
+                  className="group inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 text-base font-medium text-white hover:bg-accent/90 transition-colors"
+                >
+                  Solicitar demo
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </button>
+                <button className="xl:hidden inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-6 py-3 text-base font-medium text-white hover:bg-accent/90 transition-colors">
+                  <Play className="h-4 w-4 fill-white" />
+                  <span>Ver demo</span>
+                </button>
+              </div>
               <p className="text-sm text-text/60">
                 Toma 2 minutos. Sin spam.
               </p>
@@ -227,7 +227,7 @@ const Hero = ({ onDemoClick }) => {
             </div>
 
             {/* Tarjetas de Testimonio e Impacto - versión móvil */}
-            <div className="mt-10 grid lg:hidden grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+            <div className="mt-10 grid xl:hidden grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
               <div className="rounded-xl border border-text/20 bg-background/60 backdrop-blur-sm p-4 shadow-sm">
                 <p className="text-xs text-text/60 mb-2">Testimonio</p>
                 <p className="text-sm text-text leading-relaxed">
