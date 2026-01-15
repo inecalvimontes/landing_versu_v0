@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { MessageCircle } from "lucide-react";
+import ModalWhatsApp from "./ModalWhatsApp";
 
 const StickyCTA = ({ onDemoClick }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
 
   useEffect(() => {
     const formElement = document.getElementById("demo-form");
@@ -27,8 +29,7 @@ const StickyCTA = ({ onDemoClick }) => {
   }, []);
 
   const handleWhatsApp = () => {
-    const message = encodeURIComponent("Hola, quiero saber más sobre Versu");
-    window.open(`https://wa.me/56932592085?text=${message}`, "_blank");
+    setIsWhatsAppModalOpen(true);
   };
 
   // No mostrar la barra si el formulario está visible
@@ -40,7 +41,7 @@ const StickyCTA = ({ onDemoClick }) => {
         <div className="flex gap-3">
           <button
             onClick={handleWhatsApp}
-            className="glow-btn-whatsapp flex-shrink-0 inline-flex items-center justify-center rounded-full border border-[#25D366] bg-transparent px-4 py-2 text-sm font-medium text-white hover:text-white transition-all"
+            className="glow-btn-whatsapp flex-shrink-0 inline-flex items-center justify-center rounded-full border border-[#1DAB61] bg-transparent px-4 py-2 text-sm font-medium text-white hover:text-white transition-all"
             aria-label="Abrir WhatsApp"
           >
             <MessageCircle className="w-4 h-4" />
@@ -53,6 +54,11 @@ const StickyCTA = ({ onDemoClick }) => {
           </button>
         </div>
       </div>
+
+      <ModalWhatsApp
+        isOpen={isWhatsAppModalOpen}
+        onClose={() => setIsWhatsAppModalOpen(false)}
+      />
     </div>
   );
 };

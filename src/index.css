@@ -34,7 +34,7 @@
   }
   
   /* DejaVu Sans Light para texto normal (16-20px) */
-  p, span:not(.font-detail):not(.font-subtitle), li, a, button, input, textarea, select, label {
+  p, span:not(.font-detail):not(.font-subtitle):not(.stats-text):not(.stats-number), li, a, button, input, textarea, select, label {
     font-family: 'DejaVu Sans', 'Source Sans 3', 'Inter', sans-serif;
     font-weight: 300;
   }
@@ -101,7 +101,7 @@
   height: 200%;
   background: radial-gradient(
     circle,
-    rgba(118, 105, 233, 0.5) 0%,
+    rgba(118, 105, 233, 0.25) 0%,
     rgba(118, 105, 233, 0) 70%
   );
   transition: transform 0.4s ease-in-out;
@@ -117,9 +117,9 @@
   background-color: rgba(118, 105, 233, 1) !important;
   border-color: rgba(118, 105, 233, 1);
   box-shadow: 
-    0 0 15px rgba(118, 105, 233, 0.3),
-    0 0 30px rgba(118, 105, 233, 0.2),
-    0 0 60px rgba(118, 105, 233, 0.15);
+    0 0 7.5px rgba(118, 105, 233, 0.15),
+    0 0 15px rgba(118, 105, 233, 0.1),
+    0 0 30px rgba(118, 105, 233, 0.075);
 }
 
 .glow-btn:active {
@@ -141,7 +141,7 @@
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease-in-out;
-  border-color: rgba(37, 211, 102, 0.8);
+  border-color: rgba(29, 171, 97, 0.8);
 }
 
 .glow-btn-whatsapp::before {
@@ -153,8 +153,8 @@
   height: 200%;
   background: radial-gradient(
     circle,
-    rgba(37, 211, 102, 0.5) 0%,
-    rgba(37, 211, 102, 0) 70%
+    rgba(29, 171, 97, 0.25) 0%,
+    rgba(29, 171, 97, 0) 70%
   );
   transition: transform 0.4s ease-in-out;
   transform: scale(0);
@@ -166,12 +166,12 @@
 }
 
 .glow-btn-whatsapp:hover {
-  background-color: rgba(37, 211, 102, 1) !important;
-  border-color: rgba(37, 211, 102, 1);
+  background-color: rgba(29, 171, 97, 1) !important;
+  border-color: rgba(29, 171, 97, 1);
   box-shadow: 
-    0 0 15px rgba(37, 211, 102, 0.3),
-    0 0 30px rgba(37, 211, 102, 0.2),
-    0 0 60px rgba(37, 211, 102, 0.15);
+    0 0 7.5px rgba(29, 171, 97, 0.15),
+    0 0 15px rgba(29, 171, 97, 0.1),
+    0 0 30px rgba(29, 171, 97, 0.075);
 }
 
 .glow-btn-whatsapp:active {
@@ -214,7 +214,7 @@
   height: 200%;
   background: radial-gradient(
     circle,
-    rgba(242, 242, 242, 0.5) 0%,
+    rgba(242, 242, 242, 0.25) 0%,
     rgba(242, 242, 242, 0) 70%
   );
   transition: transform 0.4s ease-in-out;
@@ -230,9 +230,9 @@
   background-color: rgba(242, 242, 242, 1) !important;
   border-color: rgba(242, 242, 242, 1);
   box-shadow: 
-    0 0 15px rgba(242, 242, 242, 0.3),
-    0 0 30px rgba(242, 242, 242, 0.2),
-    0 0 60px rgba(242, 242, 242, 0.15);
+    0 0 7.5px rgba(242, 242, 242, 0.15),
+    0 0 15px rgba(242, 242, 242, 0.1),
+    0 0 30px rgba(242, 242, 242, 0.075);
 }
 
 .glow-btn-white:hover span {
@@ -321,4 +321,39 @@
 .glow-icon svg {
   z-index: 1;
   position: relative;
+}
+
+/* Clase para el texto animado del Hero - mismo formato que h1 */
+.typewriter-text {
+  font-family: 'Chesna Grotesk', 'Inter', sans-serif !important;
+  font-size: 30px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.2 !important;
+  color: #f2f2f2 !important;
+  text-shadow: 
+    0 0 7.5px rgba(118, 105, 233, 0.15),
+    0 0 15px rgba(118, 105, 233, 0.1),
+    0 0 30px rgba(118, 105, 233, 0.075);
+}
+
+@media (min-width: 640px) {
+  .typewriter-text {
+    font-size: 35px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .typewriter-text {
+    font-size: 40px !important;
+  }
+}
+
+/* Clases para estadísticas del Hero - semibold */
+.stats-number {
+  font-weight: 600 !important;
+}
+
+.stats-text {
+  font-weight: 600 !important;
 }

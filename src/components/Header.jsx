@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { MessageCircle, Menu, X } from "lucide-react";
 import { cn } from "../lib/utils";
+import ModalWhatsApp from "./ModalWhatsApp";
 
 const Header = ({ onDemoClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,8 +17,8 @@ const Header = ({ onDemoClick }) => {
   }, []);
 
   const openWhatsApp = () => {
-    const message = encodeURIComponent("Hola, quiero saber más sobre Versu");
-    window.open(`https://wa.me/56932592085?text=${message}`, "_blank");
+    setIsWhatsAppModalOpen(true);
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -52,7 +54,7 @@ const Header = ({ onDemoClick }) => {
           <div className="hidden items-center gap-4 lg:gap-6 md:flex">
             <button 
               onClick={openWhatsApp} 
-              className="glow-btn-whatsapp inline-flex items-center gap-2 rounded-full border border-[#25D366] bg-transparent px-4 py-2 lg:px-6 lg:py-3 text-sm lg:text-base font-medium text-white hover:text-white transition-all"
+              className="glow-btn-whatsapp inline-flex items-center gap-2 rounded-full border border-[#1DAB61] bg-transparent px-4 py-2 lg:px-6 lg:py-3 text-sm lg:text-base font-medium text-white hover:text-white transition-all"
             >
               <MessageCircle className="h-4 w-4 lg:h-5 lg:w-5" />
               <span>WhatsApp</span>
@@ -88,7 +90,7 @@ const Header = ({ onDemoClick }) => {
                   openWhatsApp();
                   setIsMobileMenuOpen(false);
                 }}
-                className="glow-btn-whatsapp inline-flex items-center justify-start gap-2 rounded-full border border-[#25D366] bg-transparent px-4 py-2 text-sm font-medium text-white hover:text-white transition-all"
+                className="glow-btn-whatsapp inline-flex items-center justify-start gap-2 rounded-full border border-[#1DAB61] bg-transparent px-4 py-2 text-sm font-medium text-white hover:text-white transition-all"
               >
                 <MessageCircle className="h-4 w-4" />
                 <span>Hablar por WhatsApp</span>
@@ -106,6 +108,11 @@ const Header = ({ onDemoClick }) => {
           </div>
         )}
       </div>
+
+      <ModalWhatsApp
+        isOpen={isWhatsAppModalOpen}
+        onClose={() => setIsWhatsAppModalOpen(false)}
+      />
     </header>
   );
 };

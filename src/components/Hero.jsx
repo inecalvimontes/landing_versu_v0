@@ -113,8 +113,11 @@ const IntegrationsCarousel = () => {
 const Hero = ({ onDemoClick }) => {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isHeroVisible, setIsHeroVisible] = useState(true);
+  const [typewriterText, setTypewriterText] = useState("");
   const videoRef = useRef(null);
   const heroSectionRef = useRef(null);
+
+  const words = ["resuelve.", "atiende.", "vende.", "responde."];
 
   const features = [
     "Integración en menos de 48 horas.",
@@ -173,6 +176,47 @@ const Hero = ({ onDemoClick }) => {
     return () => window.removeEventListener('keydown', handleEscape);
   }, [isVideoModalOpen]);
 
+  // Efecto de máquina de escribir que cicla entre palabras
+  useEffect(() => {
+    let currentWordIndex = 0;
+    let currentIndex = 0;
+    let isDeleting = false;
+    let timeoutId;
+
+    const type = () => {
+      const currentWord = words[currentWordIndex];
+
+      if (!isDeleting && currentIndex < currentWord.length) {
+        // Escribiendo
+        setTypewriterText(currentWord.slice(0, currentIndex + 1));
+        currentIndex++;
+        timeoutId = setTimeout(type, 100); // Velocidad de escritura
+      } else if (isDeleting && currentIndex > 0) {
+        // Borrando
+        setTypewriterText(currentWord.slice(0, currentIndex - 1));
+        currentIndex--;
+        timeoutId = setTimeout(type, 50); // Velocidad de borrado (más rápido)
+      } else if (!isDeleting && currentIndex === currentWord.length) {
+        // Esperar antes de borrar
+        timeoutId = setTimeout(() => {
+          isDeleting = true;
+          type();
+        }, 2000); // Esperar 2 segundos antes de borrar
+      } else if (isDeleting && currentIndex === 0) {
+        // Cambiar a la siguiente palabra
+        isDeleting = false;
+        currentWordIndex = (currentWordIndex + 1) % words.length; // Ciclar entre palabras
+        timeoutId = setTimeout(type, 500); // Esperar antes de empezar la siguiente palabra
+      }
+    };
+
+    type();
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, []);
+
   return (
     <section ref={heroSectionRef} className="relative w-full overflow-hidden pt-[86px] pb-8 md:pt-[115px] md:pb-12 lg:pt-[144px] lg:pb-16 xl:pt-[173px] xl:pb-20">
       {/* Video de fondo */}
@@ -200,7 +244,7 @@ const Hero = ({ onDemoClick }) => {
             </span> */}
 
             <h1 className="mt-0 text-balance text-[30px] sm:text-[35px] lg:text-[40px] tracking-tight text-text font-semibold">
-            Tu equipo no da abasto,<br />Versu AI sí
+            Tu equipo no da abasto,<br />Versu AI <span className="typewriter-text inline-block min-w-[140px]">{typewriterText}<span className="animate-pulse">|</span></span>
             </h1>
 
             <p className="mt-6 text-base sm:text-lg lg:text-xl text-text font-text">
@@ -249,23 +293,23 @@ const Hero = ({ onDemoClick }) => {
         <div className="mt-10 w-full flex items-center justify-center">
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 lg:gap-8 text-xs sm:text-base lg:text-lg text-text/60">
             <div className="flex items-center gap-1 sm:gap-2">
-              <span className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-text whitespace-nowrap">+100</span>
-              <span className="whitespace-nowrap">tiendas</span>
+              <span className="stats-number text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-text whitespace-nowrap">+100</span>
+              <span className="stats-text whitespace-nowrap">tiendas</span>
             </div>
             <div className="h-8 sm:h-10 w-px bg-text/20 flex-shrink-0" />
             <div className="flex items-center gap-1 sm:gap-2">
-              <span className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-text whitespace-nowrap">4</span>
-              <span className="whitespace-nowrap">países</span>
+              <span className="stats-number text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-text whitespace-nowrap">4</span>
+              <span className="stats-text whitespace-nowrap">países</span>
             </div>
             <div className="h-8 sm:h-10 w-px bg-text/20 flex-shrink-0" />
             <div className="flex items-center gap-1 sm:gap-2">
-              <span className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-text whitespace-nowrap">7 días</span>
-              <span className="whitespace-nowrap">implementación</span>
+              <span className="stats-number text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-text whitespace-nowrap">7 días</span>
+              <span className="stats-text whitespace-nowrap">implementación</span>
             </div>
             <div className="h-8 sm:h-10 w-px bg-text/20 flex-shrink-0" />
             <div className="flex items-center gap-1 sm:gap-2">
-              <span className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-text whitespace-nowrap">35%</span>
-              <span className="whitespace-nowrap">conversión en carritos</span>
+              <span className="stats-number text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-text whitespace-nowrap">35%</span>
+              <span className="stats-text whitespace-nowrap">conversión en carritos</span>
             </div>
           </div>
         </div>
