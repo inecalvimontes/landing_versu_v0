@@ -50,15 +50,15 @@ const FAQs = () => {
 
   return (
     <section className="bg-background py-8 md:py-12 lg:py-16 xl:py-20">
-      <div className="container mx-auto px-6 sm:px-10 lg:px-12 xl:px-16">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
+        <div className="max-w-[1600px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-48 xl:gap-64">
             {/* Left: Title and subtitle */}
             <div className="flex flex-col justify-center">
-              <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text mb-6 font-subtitle">
+              <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text mb-6 font-subtitle lg:whitespace-nowrap">
                 Preguntas frecuentes (FAQ)
               </h2>
-              <p className="text-base lg:text-lg text-text/70 font-text">
+              <p className="text-base lg:text-lg text-text/70 font-text lg:whitespace-nowrap">
                 ¿No encuentras lo que buscas? Contacta a nuestro{" "}
                 <span className="font-semibold text-text">equipo de soporte</span>.
               </p>

@@ -8,11 +8,11 @@ const Footer = () => {
   return (
     <footer className="bg-background text-white">
       {/* Main footer content */}
-      <div className="container mx-auto px-6 sm:px-10 lg:px-12 xl:px-16 py-12 lg:py-16 xl:py-20">
-        <div className="grid gap-10 md:grid-cols-3 md:items-start">
+      <div className="container mx-auto px-6 sm:px-10 lg:px-12 xl:px-16 py-3 lg:py-4 xl:py-5">
+        <div className="grid gap-2 md:grid-cols-3 md:items-center">
           {/* Partners */}
           <div>
-            <p className="text-xs font-medium uppercase tracking-widest text-white/60 mb-4">
+            <p className="text-xs font-medium uppercase tracking-widest text-white/60 mb-2">
               Partners
             </p>
             <div className="flex items-center gap-6">
@@ -64,7 +64,7 @@ const Footer = () => {
 
           {/* Backed by */}
           <div className="md:text-right">
-            <p className="text-xs font-medium uppercase tracking-widest text-white/60 mb-4">
+            <p className="text-xs font-medium uppercase tracking-widest text-white/60 mb-2">
               Backed by
             </p>
             <div className="flex items-center gap-6 md:justify-end">
@@ -78,13 +78,13 @@ const Footer = () => {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="container mx-auto px-6 py-0">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="container mx-auto px-6 py-2">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
             <div className="flex items-center gap-3">
               <img 
                 src="/logos/versu-logo.svg" 
                 alt="Versu" 
-                className="h-[120px] w-auto"
+                className="h-[60px] w-auto"
                 onError={(e) => {
                   e.target.style.display = 'none';
                 }}

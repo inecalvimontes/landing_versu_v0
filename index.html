@@ -16,5 +16,32 @@
   <body style="margin: 0; padding: 0; width: 100%; overflow-x: hidden;">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- SavvyCal Embed Script -->
+    <script>window.SavvyCal=window.SavvyCal||function(){(SavvyCal.q=SavvyCal.q||[]).push(arguments)};</script>
+    <script async src="https://embed.savvycal.com/v1/embed.js"></script>
+    <script>
+      SavvyCal('init');
+      
+      // Listen for scheduling events
+      window.addEventListener("savvycal.scheduled", (ev) => {
+        const { id, link, startAt, endAt, email, displayName, timeZone } = ev.detail;
+        
+        // Log the scheduled event (you can replace this with analytics tracking)
+        console.log('Demo scheduled:', {
+          id,
+          link,
+          startAt,
+          endAt,
+          email,
+          displayName,
+          timeZone
+        });
+        
+        // TODO: Add your analytics tracking here
+        // Example: gtag('event', 'demo_scheduled', { email, startAt });
+        // Example: analytics.track('Demo Scheduled', { email, startAt });
+      });
+    </script>
   </body>
 </html>
