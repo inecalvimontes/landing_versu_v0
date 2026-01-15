@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/logos/logo-mini.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Landing Page</title>
+    <title>Versu AI</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,5 +16,32 @@
   <body style="margin: 0; padding: 0; width: 100%; overflow-x: hidden;">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- SavvyCal Embed Script -->
+    <script>window.SavvyCal=window.SavvyCal||function(){(SavvyCal.q=SavvyCal.q||[]).push(arguments)};</script>
+    <script async src="https://embed.savvycal.com/v1/embed.js"></script>
+    <script>
+      SavvyCal('init');
+      
+      // Listen for scheduling events
+      window.addEventListener("savvycal.scheduled", (ev) => {
+        const { id, link, startAt, endAt, email, displayName, timeZone } = ev.detail;
+        
+        // Log the scheduled event (you can replace this with analytics tracking)
+        console.log('Demo scheduled:', {
+          id,
+          link,
+          startAt,
+          endAt,
+          email,
+          displayName,
+          timeZone
+        });
+        
+        // TODO: Add your analytics tracking here
+        // Example: gtag('event', 'demo_scheduled', { email, startAt });
+        // Example: analytics.track('Demo Scheduled', { email, startAt });
+      });
+    </script>
   </body>
 </html>

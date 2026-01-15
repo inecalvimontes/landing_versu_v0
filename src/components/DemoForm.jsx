@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { Check, Clock, Shield, Target, MessageCircle, ArrowLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Check, Clock, Shield, Target, MessageCircle, ArrowLeft, ArrowRight } from "lucide-react";
 
 const ordersOptions = [
   { value: "0-200", label: "0 - 200" },
   { value: "200-500", label: "200 - 500" },
-  { value: "500-1000", label: "500 - 1,000" },
-  { value: "1000-3000", label: "1,000 - 3,000" },
-  { value: "3000+", label: "3,000 o más" },
+  { value: "500-1000", label: "500 - 1000" },
+  { value: "1000-3000", label: "1000 - 3000" },
+  { value: "3000+", label: "+3000" },
 ];
 
 const platformOptions = [
@@ -18,16 +18,6 @@ const platformOptions = [
   "BigCommerce",
   "Magento",
   "Otro",
-];
-
-const countryOptions = [
-  { code: "+52", country: "MX", flag: "🇲🇽" },
-  { code: "+57", country: "CO", flag: "🇨🇴" },
-  { code: "+56", country: "CL", flag: "🇨🇱" },
-  { code: "+51", country: "PE", flag: "🇵🇪" },
-  { code: "+54", country: "AR", flag: "🇦🇷" },
-  { code: "+593", country: "EC", flag: "🇪🇨" },
-  { code: "+1", country: "US", flag: "🇺🇸" },
 ];
 
 const sourceOptions = [
@@ -59,8 +49,6 @@ const DemoForm = () => {
     storeUrl: "",
     ordersRange: "",
     platform: "",
-    countryCode: "+52",
-    phone: "",
     name: "",
     email: "",
     source: "",
@@ -85,11 +73,62 @@ const DemoForm = () => {
     console.log("Form data:", formData);
   };
 
-  const showCalendar = formData.ordersRange !== "0-200";
-
   const handleWhatsApp = () => {
-    window.open("https://wa.me/1234567890", "_blank");
+    window.open("https://wa.me/56932592085", "_blank");
   };
+
+  // Email validation
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  // URL validation
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  // Step 1 validation
+  const isStep1Valid = 
+    formData.name.trim() !== "" &&
+    isValidEmail(formData.email) &&
+    formData.source !== "";
+
+  // Step 2 validation
+  const isStep2Valid = 
+    isValidUrl(formData.storeUrl) &&
+    formData.ordersRange !== "" &&
+    formData.platform !== "";
+
+  // Initialize SavvyCal when the calendar should be shown
+  useEffect(() => {
+    if (isSubmitted && window.SavvyCal) {
+      // Small delay to ensure the DOM element exists
+      setTimeout(() => {
+        // Clear previous calendar instance to avoid duplication
+        const container = document.getElementById('savvycal-booking');
+        if (container) {
+          container.innerHTML = '';
+        }
+        
+        window.SavvyCal('inline', { 
+          link: 'versu/demo', 
+          selector: '#savvycal-booking',
+          email: formData.email,
+          displayName: formData.name,
+          // Campos personalizados usando índices según el orden en SavvyCal
+          questions: {
+            0: formData.storeUrl,           // Website (primera pregunta)
+            1: formData.ordersRange         // Órdenes mensuales (segunda pregunta)
+          }
+        });
+      }, 100);
+    }
+  }, [isSubmitted]);
 
   return (
     <section id="demo-form" className="py-6 lg:py-12 xl:py-16 bg-background">
@@ -140,6 +179,18 @@ const DemoForm = () => {
                   <p className="text-xs text-text/60">
                     Al enviar, aceptas que te contactemos para coordinar la demo.
                   </p>
+
+                  {/* Botón Atrás - solo visible cuando se muestra el calendario */}
+                  {isSubmitted && (
+                    <button
+                      type="button"
+                      onClick={() => setIsSubmitted(false)}
+                      className="glow-btn-white h-11 px-4 mt-6 inline-flex items-center justify-center rounded-full border border-white/80 bg-transparent text-white hover:bg-white transition-all"
+                    >
+                      <ArrowLeft className="w-4 h-4 mr-1" />
+                      <span>Atrás</span>
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -203,36 +254,6 @@ const DemoForm = () => {
                         <div className="space-y-4">
                           <div>
                             <label className="text-sm font-medium text-text mb-2 block">
-                              Teléfono
-                            </label>
-                            <div className="flex gap-2">
-                              <select
-                                value={formData.countryCode}
-                                onChange={(e) =>
-                                  handleInputChange("countryCode", e.target.value)
-                                }
-                                className="w-28 h-11 px-3 rounded-lg border border-text/20 bg-background text-text text-sm focus:outline-none focus:ring-2 focus:ring-accent"
-                              >
-                                {countryOptions.map((option) => (
-                                  <option key={option.code} value={option.code}>
-                                    {option.flag} {option.code}
-                                  </option>
-                                ))}
-                              </select>
-                              <input
-                                type="tel"
-                                placeholder="123 456 7890"
-                                value={formData.phone}
-                                onChange={(e) =>
-                                  handleInputChange("phone", e.target.value)
-                                }
-                                className="h-11 flex-1 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
-                              />
-                            </div>
-                          </div>
-
-                          <div>
-                            <label className="text-sm font-medium text-text mb-2 block">
                               Nombre
                             </label>
                             <input
@@ -242,6 +263,7 @@ const DemoForm = () => {
                               onChange={(e) =>
                                 handleInputChange("name", e.target.value)
                               }
+                              required
                               className="w-full h-11 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
                             />
                           </div>
@@ -257,6 +279,7 @@ const DemoForm = () => {
                               onChange={(e) =>
                                 handleInputChange("email", e.target.value)
                               }
+                              required
                               className="w-full h-11 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
                             />
                           </div>
@@ -270,6 +293,7 @@ const DemoForm = () => {
                               onChange={(e) =>
                                 handleInputChange("source", e.target.value)
                               }
+                              required
                               className="w-full h-11 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
                             >
                               <option value="">Selecciona una opción</option>
@@ -284,10 +308,11 @@ const DemoForm = () => {
                           <button
                             type="button"
                             onClick={handleContinue}
-                            className="glow-btn w-full h-11 mt-6 inline-flex items-center justify-center rounded-full border border-accent bg-transparent px-6 text-sm font-medium text-white hover:bg-accent transition-all"
+                            disabled={!isStep1Valid}
+                            className="glow-btn group w-full h-11 mt-6 inline-flex items-center justify-center gap-2 rounded-full border border-accent bg-transparent px-6 text-sm font-medium text-white hover:bg-accent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             <span>Continuar</span>
-                            <ChevronRight className="w-4 h-4 ml-1" />
+                            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                           </button>
 
                           <p className="text-xs text-center text-text/60">
@@ -307,6 +332,7 @@ const DemoForm = () => {
                               onChange={(e) =>
                                 handleInputChange("storeUrl", e.target.value)
                               }
+                              required
                               className="w-full h-11 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
                             />
                           </div>
@@ -320,6 +346,7 @@ const DemoForm = () => {
                               onChange={(e) =>
                                 handleInputChange("ordersRange", e.target.value)
                               }
+                              required
                               className="w-full h-11 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
                             >
                               <option value="">Selecciona un rango</option>
@@ -340,6 +367,7 @@ const DemoForm = () => {
                               onChange={(e) =>
                                 handleInputChange("platform", e.target.value)
                               }
+                              required
                               className="w-full h-11 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
                             >
                               <option value="">Selecciona tu plataforma</option>
@@ -362,9 +390,11 @@ const DemoForm = () => {
                             </button>
                             <button
                               type="submit"
-                              className="glow-btn h-11 flex-1 inline-flex items-center justify-center rounded-full border border-accent bg-transparent px-6 text-sm font-medium text-white hover:bg-accent transition-all"
+                              disabled={!isStep2Valid}
+                              className="glow-btn group h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-accent bg-transparent px-6 text-sm font-medium text-white hover:bg-accent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                              <span>Enviar</span>
+                              <span>Continuar</span>
+                              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                             </button>
                           </div>
 
@@ -376,45 +406,20 @@ const DemoForm = () => {
                     </form>
                   </div>
                 ) : (
-                  <div className="text-center py-8">
-                    {showCalendar ? (
-                      <>
-                        <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-6">
-                          <Check className="w-8 h-8 text-accent" />
-                        </div>
-                        <h3 className="text-xl font-semibold text-text mb-2">
-                          Agenda tu demo
-                        </h3>
-                        <p className="text-text/70 mb-6">
-                          Selecciona un horario que te convenga.
-                        </p>
-                        <div className="bg-text/10 rounded-xl border border-text/20 p-8 min-h-[300px] flex items-center justify-center">
-                          <span className="text-text/60">
-                            [Calendario embebido]
-                          </span>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="w-16 h-16 rounded-full bg-accent/20 flex items-center justify-center mx-auto mb-6">
-                          <Check className="w-8 h-8 text-accent" />
-                        </div>
-                        <h3 className="text-xl font-semibold text-text mb-2">
-                          Muchas gracias por escribirnos
-                        </h3>
-                        <p className="text-text/70 mb-6">
-                          Nuestro equipo te contactará a la brevedad.
-                        </p>
-                        <button
-                          onClick={handleWhatsApp}
-                          className="glow-btn-whatsapp inline-flex items-center justify-center rounded-full border border-[#25D366] bg-transparent px-4 py-2 text-sm font-medium text-white hover:text-white transition-all"
-                        >
-                          <MessageCircle className="w-4 h-4 mr-2" />
-                          <span>Hablar por WhatsApp</span>
-                        </button>
-                      </>
-                    )}
-                  </div>
+                  <>
+                    <div id="savvycal-booking" className="min-h-[300px]">
+                      {/* SavvyCal calendar will be injected here */}
+                    </div>
+                    {/* Botón Atrás para móviles - debajo del calendario */}
+                    <button
+                      type="button"
+                      onClick={() => setIsSubmitted(false)}
+                      className="lg:hidden glow-btn-white h-11 px-4 mt-4 inline-flex items-center justify-center rounded-full border border-white/80 bg-transparent text-white hover:bg-white transition-all"
+                    >
+                      <ArrowLeft className="w-4 h-4 mr-1" />
+                      <span>Atrás</span>
+                    </button>
+                  </>
                 )}
               </div>
             </div>
