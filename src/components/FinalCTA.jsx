@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { ArrowRight, MessageCircle } from "lucide-react";
+import ModalWhatsApp from "./ModalWhatsApp";
 
 const FinalCTA = ({ onDemoClick }) => {
+  const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
+
   const openWhatsApp = () => {
-    const message = encodeURIComponent("Hola, quiero saber más sobre Versu");
-    window.open(`https://wa.me/56932592085?text=${message}`, "_blank");
+    setIsWhatsAppModalOpen(true);
   };
 
   return (
@@ -26,13 +29,18 @@ const FinalCTA = ({ onDemoClick }) => {
           </button>
           <button
             onClick={openWhatsApp}
-            className="glow-btn-whatsapp inline-flex items-center gap-2 rounded-full border border-[#25D366] bg-transparent px-6 py-3 text-base font-medium text-white hover:text-white transition-all"
+            className="glow-btn-whatsapp inline-flex items-center gap-2 rounded-full border border-[#1DAB61] bg-transparent px-6 py-3 text-base font-medium text-white hover:text-white transition-all"
           >
             <MessageCircle className="h-4 w-4" />
-            <span>Hablar por WhatsApp</span>
+            <span>WhatsApp</span>
           </button>
         </div>
       </div>
+
+      <ModalWhatsApp
+        isOpen={isWhatsAppModalOpen}
+        onClose={() => setIsWhatsAppModalOpen(false)}
+      />
     </section>
   );
 };

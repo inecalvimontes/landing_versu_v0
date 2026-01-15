@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Check, Clock, Shield, Target, MessageCircle, ArrowLeft, ArrowRight } from "lucide-react";
+import ModalWhatsApp from "./ModalWhatsApp";
 
 const ordersOptions = [
   { value: "0-200", label: "0 - 200" },
@@ -45,6 +46,7 @@ const demoPoints = [
 const DemoForm = () => {
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     storeUrl: "",
     ordersRange: "",
@@ -53,13 +55,96 @@ const DemoForm = () => {
     email: "",
     source: "",
   });
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    source: "",
+    storeUrl: "",
+    ordersRange: "",
+    platform: "",
+  });
+  const [touched, setTouched] = useState({
+    name: false,
+    email: false,
+    source: false,
+    storeUrl: false,
+    ordersRange: false,
+    platform: false,
+  });
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
+  };
+
+  const handleBlur = (field) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    validateField(field, formData[field]);
+  };
+
+  const validateField = (field, value) => {
+    let error = "";
+    
+    switch (field) {
+      case "name":
+        if (!value.trim()) {
+          error = "Ingresa tu nombre";
+        }
+        break;
+      case "email":
+        if (!value.trim()) {
+          error = "Ingresa un correo electrónico";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          error = "Ingresa un correo electrónico válido";
+        }
+        break;
+      case "source":
+        if (!value) {
+          error = "Selecciona una opción";
+        }
+        break;
+      case "storeUrl":
+        if (!value.trim()) {
+          error = "Ingresa la URL de tu tienda";
+        } else {
+          try {
+            new URL(value);
+          } catch {
+            error = "Ingresa una URL válida (ej: https://tutienda.com)";
+          }
+        }
+        break;
+      case "ordersRange":
+        if (!value) {
+          error = "Selecciona un rango de órdenes";
+        }
+        break;
+      case "platform":
+        if (!value) {
+          error = "Selecciona tu plataforma";
+        }
+        break;
+    }
+    
+    setErrors((prev) => ({ ...prev, [field]: error }));
+    return !error;
   };
 
   const handleContinue = () => {
-    setStep(2);
+    // Validate all step 1 fields
+    const nameValid = validateField("name", formData.name);
+    const emailValid = validateField("email", formData.email);
+    const sourceValid = validateField("source", formData.source);
+    
+    // Mark all as touched
+    setTouched((prev) => ({ ...prev, name: true, email: true, source: true }));
+    
+    if (nameValid && emailValid && sourceValid) {
+      setStep(2);
+    }
   };
 
   const handleBack = () => {
@@ -68,13 +153,24 @@ const DemoForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    // Aquí puedes agregar la lógica para enviar el formulario
-    console.log("Form data:", formData);
+    
+    // Validate all step 2 fields
+    const urlValid = validateField("storeUrl", formData.storeUrl);
+    const ordersValid = validateField("ordersRange", formData.ordersRange);
+    const platformValid = validateField("platform", formData.platform);
+    
+    // Mark all as touched
+    setTouched((prev) => ({ ...prev, storeUrl: true, ordersRange: true, platform: true }));
+    
+    if (urlValid && ordersValid && platformValid) {
+      setIsSubmitted(true);
+      // Aquí puedes agregar la lógica para enviar el formulario
+      console.log("Form data:", formData);
+    }
   };
 
   const handleWhatsApp = () => {
-    window.open("https://wa.me/56932592085", "_blank");
+    setIsWhatsAppModalOpen(true);
   };
 
   // Email validation
@@ -263,9 +359,17 @@ const DemoForm = () => {
                               onChange={(e) =>
                                 handleInputChange("name", e.target.value)
                               }
+                              onBlur={() => handleBlur("name")}
                               required
-                              className="w-full h-11 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
+                              className={`w-full h-11 px-4 rounded-lg border bg-background text-text focus:outline-none focus:ring-2 ${
+                                touched.name && errors.name
+                                  ? "border-red-500 focus:ring-red-500"
+                                  : "border-text/20 focus:ring-accent"
+                              }`}
                             />
+                            {touched.name && errors.name && (
+                              <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                            )}
                           </div>
 
                           <div>
@@ -279,9 +383,17 @@ const DemoForm = () => {
                               onChange={(e) =>
                                 handleInputChange("email", e.target.value)
                               }
+                              onBlur={() => handleBlur("email")}
                               required
-                              className="w-full h-11 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
+                              className={`w-full h-11 px-4 rounded-lg border bg-background text-text focus:outline-none focus:ring-2 ${
+                                touched.email && errors.email
+                                  ? "border-red-500 focus:ring-red-500"
+                                  : "border-text/20 focus:ring-accent"
+                              }`}
                             />
+                            {touched.email && errors.email && (
+                              <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                            )}
                           </div>
 
                           <div>
@@ -293,8 +405,13 @@ const DemoForm = () => {
                               onChange={(e) =>
                                 handleInputChange("source", e.target.value)
                               }
+                              onBlur={() => handleBlur("source")}
                               required
-                              className="w-full h-11 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
+                              className={`w-full h-11 px-4 rounded-lg border bg-background text-text focus:outline-none focus:ring-2 ${
+                                touched.source && errors.source
+                                  ? "border-red-500 focus:ring-red-500"
+                                  : "border-text/20 focus:ring-accent"
+                              }`}
                             >
                               <option value="">Selecciona una opción</option>
                               {sourceOptions.map((option) => (
@@ -303,6 +420,9 @@ const DemoForm = () => {
                                 </option>
                               ))}
                             </select>
+                            {touched.source && errors.source && (
+                              <p className="mt-1 text-sm text-red-500">{errors.source}</p>
+                            )}
                           </div>
 
                           <button
@@ -332,9 +452,17 @@ const DemoForm = () => {
                               onChange={(e) =>
                                 handleInputChange("storeUrl", e.target.value)
                               }
+                              onBlur={() => handleBlur("storeUrl")}
                               required
-                              className="w-full h-11 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
+                              className={`w-full h-11 px-4 rounded-lg border bg-background text-text focus:outline-none focus:ring-2 ${
+                                touched.storeUrl && errors.storeUrl
+                                  ? "border-red-500 focus:ring-red-500"
+                                  : "border-text/20 focus:ring-accent"
+                              }`}
                             />
+                            {touched.storeUrl && errors.storeUrl && (
+                              <p className="mt-1 text-sm text-red-500">{errors.storeUrl}</p>
+                            )}
                           </div>
 
                           <div>
@@ -346,8 +474,13 @@ const DemoForm = () => {
                               onChange={(e) =>
                                 handleInputChange("ordersRange", e.target.value)
                               }
+                              onBlur={() => handleBlur("ordersRange")}
                               required
-                              className="w-full h-11 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
+                              className={`w-full h-11 px-4 rounded-lg border bg-background text-text focus:outline-none focus:ring-2 ${
+                                touched.ordersRange && errors.ordersRange
+                                  ? "border-red-500 focus:ring-red-500"
+                                  : "border-text/20 focus:ring-accent"
+                              }`}
                             >
                               <option value="">Selecciona un rango</option>
                               {ordersOptions.map((option) => (
@@ -356,6 +489,9 @@ const DemoForm = () => {
                                 </option>
                               ))}
                             </select>
+                            {touched.ordersRange && errors.ordersRange && (
+                              <p className="mt-1 text-sm text-red-500">{errors.ordersRange}</p>
+                            )}
                           </div>
 
                           <div>
@@ -367,8 +503,13 @@ const DemoForm = () => {
                               onChange={(e) =>
                                 handleInputChange("platform", e.target.value)
                               }
+                              onBlur={() => handleBlur("platform")}
                               required
-                              className="w-full h-11 px-4 rounded-lg border border-text/20 bg-background text-text focus:outline-none focus:ring-2 focus:ring-accent"
+                              className={`w-full h-11 px-4 rounded-lg border bg-background text-text focus:outline-none focus:ring-2 ${
+                                touched.platform && errors.platform
+                                  ? "border-red-500 focus:ring-red-500"
+                                  : "border-text/20 focus:ring-accent"
+                              }`}
                             >
                               <option value="">Selecciona tu plataforma</option>
                               {platformOptions.map((option) => (
@@ -377,6 +518,9 @@ const DemoForm = () => {
                                 </option>
                               ))}
                             </select>
+                            {touched.platform && errors.platform && (
+                              <p className="mt-1 text-sm text-red-500">{errors.platform}</p>
+                            )}
                           </div>
 
                           <div className="flex gap-3 mt-6">
@@ -423,25 +567,28 @@ const DemoForm = () => {
                 )}
               </div>
             </div>
-          </div>
 
-          {/* WhatsApp alternative */}
-          <div className="mt-6">
-            <div className="bg-background rounded-2xl border border-text/20 shadow-sm p-6 text-center">
+            {/* WhatsApp alternative */}
+            <div className="p-6 text-center">
               <p className="text-text/70 mb-4">
                 ¿Prefieres escribir ahora?
               </p>
               <button
                 onClick={handleWhatsApp}
-                className="glow-btn-whatsapp inline-flex items-center justify-center rounded-full border border-[#25D366] bg-transparent px-4 py-2 text-sm font-medium text-white hover:text-white transition-all"
+                className="glow-btn-whatsapp inline-flex items-center justify-center rounded-full border border-[#1DAB61] bg-transparent px-4 py-2 text-sm font-medium text-white hover:text-white transition-all"
               >
                 <MessageCircle className="w-4 h-4 mr-2" />
-                <span>Abrir WhatsApp</span>
+                <span>WhatsApp</span>
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      <ModalWhatsApp
+        isOpen={isWhatsAppModalOpen}
+        onClose={() => setIsWhatsAppModalOpen(false)}
+      />
     </section>
   );
 };

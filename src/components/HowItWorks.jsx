@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link2, Brain, Rocket, Send, MessageCircle, ArrowRight } from "lucide-react";
 import IPhoneFrame from "./ui/IPhoneFrame";
+import ModalWhatsApp from "./ModalWhatsApp";
 
 const steps = [
   {
@@ -39,6 +40,7 @@ const HowItWorks = () => {
   const [countryCode, setCountryCode] = useState("+56");
   const [phone, setPhone] = useState("");
   const [storeUrl, setStoreUrl] = useState("");
+  const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
@@ -66,9 +68,7 @@ const HowItWorks = () => {
   };
 
   const openWhatsApp = () => {
-    const fullPhone = `${countryCode}${phone}`.replace(/\s+/g, "");
-    const message = encodeURIComponent(`Hola, quiero probar Versu. Mi tienda es: ${storeUrl}`);
-    window.open(`https://wa.me/56932592085?text=${message}`, "_blank");
+    setIsWhatsAppModalOpen(true);
   };
 
   return (
@@ -199,7 +199,7 @@ const HowItWorks = () => {
                   {chatStep === "done" && (
                     <div className="mt-3">
                       <button
-                        className="glow-btn-whatsapp w-full h-9 gap-2 rounded-full border border-[#25D366] bg-transparent text-white inline-flex items-center justify-center text-xs transition-all"
+                        className="glow-btn-whatsapp w-full h-9 gap-2 rounded-full border border-[#1DAB61] bg-transparent text-white inline-flex items-center justify-center text-xs transition-all"
                         onClick={openWhatsApp}
                       >
                         <MessageCircle className="h-4 w-4" />
@@ -246,6 +246,11 @@ const HowItWorks = () => {
           </div>
         </div>
       </div>
+
+      <ModalWhatsApp
+        isOpen={isWhatsAppModalOpen}
+        onClose={() => setIsWhatsAppModalOpen(false)}
+      />
     </section>
   );
 };
