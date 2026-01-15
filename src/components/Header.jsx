@@ -16,7 +16,7 @@ const Header = ({ onDemoClick }) => {
 
   const openWhatsApp = () => {
     const message = encodeURIComponent("Hola, quiero saber más sobre Versu");
-    window.open(`https://wa.me/56912345678?text=${message}`, "_blank");
+    window.open(`https://wa.me/56932592085?text=${message}`, "_blank");
   };
 
   return (

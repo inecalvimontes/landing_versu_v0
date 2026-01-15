@@ -68,7 +68,7 @@ const HowItWorks = () => {
   const openWhatsApp = () => {
     const fullPhone = `${countryCode}${phone}`.replace(/\s+/g, "");
     const message = encodeURIComponent(`Hola, quiero probar Versu. Mi tienda es: ${storeUrl}`);
-    window.open(`https://wa.me/56912345678?text=${message}`, "_blank");
+    window.open(`https://wa.me/56932592085?text=${message}`, "_blank");
   };
 
   return (
