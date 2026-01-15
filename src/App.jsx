@@ -1,0 +1,38 @@
+import { useState } from 'react'
+import Header from './components/Header'
+import Hero from './components/Hero'
+import LogoCarousel from './components/LogoCarousel'
+import HowItWorks from './components/HowItWorks'
+import Testimonials from './components/Testimonials'
+import FAQs from './components/FAQs'
+import DemoForm from './components/DemoForm'
+import FinalCTA from './components/FinalCTA'
+import Footer from './components/Footer'
+import StickyCTA from './components/StickyCTA'
+
+function App() {
+  const handleDemoClick = () => {
+    // Scroll suave al formulario de demo
+    const demoForm = document.getElementById('demo-form')
+    if (demoForm) {
+      demoForm.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-background text-text overflow-x-hidden w-full max-w-[100vw] box-border">
+      <Header onDemoClick={handleDemoClick} />
+      <Hero onDemoClick={handleDemoClick} />
+      <HowItWorks />
+      <Testimonials />
+      <LogoCarousel />
+      <DemoForm />
+      <FAQs />
+      <FinalCTA onDemoClick={handleDemoClick} />
+      <Footer />
+      <StickyCTA onDemoClick={handleDemoClick} />
+    </div>
+  )
+}
+
+export default App

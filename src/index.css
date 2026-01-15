@@ -1,0 +1,324 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  html {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    @apply bg-background text-text;
+    /* DejaVu Sans Light - Texto 16-20px (usando Source Sans 3 Light como alternativa) */
+    font-family: 'DejaVu Sans', 'Source Sans 3', 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* DejaVu Sans Light para texto normal (16-20px) */
+  p, span:not(.font-detail):not(.font-subtitle), li, a, button, input, textarea, select, label {
+    font-family: 'DejaVu Sans', 'Source Sans 3', 'Inter', sans-serif;
+    font-weight: 300;
+  }
+  
+  /* Chesna Grotesk Semi bold para títulos principales (60-80px) */
+  h1 {
+    font-family: 'Chesna Grotesk', 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: clamp(60px, 8vw, 80px);
+    line-height: 1.2;
+  }
+  
+  /* Chesna Grotesk Regular para subtítulos (20-40px) */
+  h2, h3 {
+    font-family: 'Chesna Grotesk', 'Inter', sans-serif;
+    font-weight: 400;
+  }
+}
+
+@layer utilities {
+  /* Fira Code Semi bold para detalles (20-40px) */
+  .font-detail {
+    font-family: 'Fira Code', monospace;
+    font-weight: 600;
+  }
+  
+  /* Chesna Grotesk Regular para subtítulos (20-40px) */
+  .font-subtitle {
+    font-family: 'Chesna Grotesk', 'Inter', sans-serif;
+    font-weight: 400;
+  }
+  
+  /* Texto normal con DejaVu Sans Light (16-20px) */
+  .font-text {
+    font-family: 'DejaVu Sans', 'Source Sans 3', 'Inter', sans-serif;
+    font-weight: 300;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Efecto glow para botón */
+.glow-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  border-color: rgba(118, 105, 233, 0.8);
+}
+
+.glow-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(118, 105, 233, 0.5) 0%,
+    rgba(118, 105, 233, 0) 70%
+  );
+  transition: transform 0.4s ease-in-out;
+  transform: scale(0);
+  z-index: 0;
+}
+
+.glow-btn:hover::before {
+  transform: scale(1);
+}
+
+.glow-btn:hover {
+  background-color: rgba(118, 105, 233, 1) !important;
+  border-color: rgba(118, 105, 233, 1);
+  box-shadow: 
+    0 0 15px rgba(118, 105, 233, 0.3),
+    0 0 30px rgba(118, 105, 233, 0.2),
+    0 0 60px rgba(118, 105, 233, 0.15);
+}
+
+.glow-btn:active {
+  transform: scale(0.98);
+}
+
+.glow-btn > * {
+  position: relative;
+  z-index: 10;
+  opacity: 1 !important;
+}
+
+.glow-btn:hover > * {
+  opacity: 1 !important;
+}
+
+/* Efecto glow verde para botón WhatsApp */
+.glow-btn-whatsapp {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  border-color: rgba(37, 211, 102, 0.8);
+}
+
+.glow-btn-whatsapp::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(37, 211, 102, 0.5) 0%,
+    rgba(37, 211, 102, 0) 70%
+  );
+  transition: transform 0.4s ease-in-out;
+  transform: scale(0);
+  z-index: 0;
+}
+
+.glow-btn-whatsapp:hover::before {
+  transform: scale(1);
+}
+
+.glow-btn-whatsapp:hover {
+  background-color: rgba(37, 211, 102, 1) !important;
+  border-color: rgba(37, 211, 102, 1);
+  box-shadow: 
+    0 0 15px rgba(37, 211, 102, 0.3),
+    0 0 30px rgba(37, 211, 102, 0.2),
+    0 0 60px rgba(37, 211, 102, 0.15);
+}
+
+.glow-btn-whatsapp:active {
+  transform: scale(0.98);
+}
+
+.glow-btn-whatsapp > * {
+  position: relative;
+  z-index: 10;
+  opacity: 1 !important;
+}
+
+.glow-btn-whatsapp:hover > * {
+  opacity: 1 !important;
+}
+
+/* Efecto glow blanco para botón Video completo */
+.glow-btn-white {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  border-color: rgba(242, 242, 242, 0.8);
+}
+
+.glow-btn-white .play-icon-container {
+  background-color: #f2f2f2;
+}
+
+.glow-btn-white .play-icon-container svg {
+  fill: #202020;
+  stroke: #202020;
+}
+
+.glow-btn-white::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(242, 242, 242, 0.5) 0%,
+    rgba(242, 242, 242, 0) 70%
+  );
+  transition: transform 0.4s ease-in-out;
+  transform: scale(0);
+  z-index: 0;
+}
+
+.glow-btn-white:hover::before {
+  transform: scale(1);
+}
+
+.glow-btn-white:hover {
+  background-color: rgba(242, 242, 242, 1) !important;
+  border-color: rgba(242, 242, 242, 1);
+  box-shadow: 
+    0 0 15px rgba(242, 242, 242, 0.3),
+    0 0 30px rgba(242, 242, 242, 0.2),
+    0 0 60px rgba(242, 242, 242, 0.15);
+}
+
+.glow-btn-white:hover span {
+  color: #202020;
+}
+
+.glow-btn-white:hover svg:not(.play-icon-container svg) {
+  color: #202020 !important;
+  stroke: #202020 !important;
+  fill: none !important;
+}
+
+.glow-btn-white svg:not(.play-icon-container svg) {
+  stroke: currentColor;
+  fill: none;
+}
+
+.glow-btn-white:hover .play-icon-container {
+  background-color: #202020;
+}
+
+.glow-btn-white:hover .play-icon-container svg {
+  fill: #f2f2f2 !important;
+  stroke: #f2f2f2 !important;
+}
+
+.glow-btn-white:active {
+  transform: scale(0.98);
+}
+
+.glow-btn-white > * {
+  position: relative;
+  z-index: 10;
+  opacity: 1 !important;
+}
+
+.glow-btn-white:hover > * {
+  opacity: 1 !important;
+}
+
+/* Efecto glow para íconos de pasos */
+.glow-icon {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.glow-icon::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(118, 105, 233, 0.5) 0%,
+    rgba(118, 105, 233, 0) 70%
+  );
+  transition: transform 0.4s ease-in-out;
+  transform: scale(0);
+  z-index: 0;
+}
+
+.glow-icon:hover::before {
+  transform: scale(1);
+}
+
+.glow-icon:hover {
+  background-color: rgba(118, 105, 233, 1) !important;
+  border-color: rgba(118, 105, 233, 1);
+  box-shadow: 
+    0 0 15px rgba(118, 105, 233, 0.3),
+    0 0 30px rgba(118, 105, 233, 0.2),
+    0 0 60px rgba(118, 105, 233, 0.15);
+}
+
+.glow-icon:hover svg {
+  color: #f2f2f2 !important;
+  stroke: #f2f2f2 !important;
+  fill: none !important;
+  z-index: 1;
+  position: relative;
+}
+
+.glow-icon svg {
+  z-index: 1;
+  position: relative;
+}
