@@ -50,11 +50,10 @@ const FAQs = () => {
 
   return (
     <section className="bg-background py-8 md:py-12 lg:py-16 xl:py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
-        <div className="max-w-[1600px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-48 xl:gap-64">
-            {/* Left: Title and subtitle */}
-            <div className="flex flex-col justify-center">
+      <div className="mx-auto max-w-7xl px-[42px] sm:px-[72px] lg:px-[84px] xl:px-[108px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-start">
+            {/* Left: Title, subtitle and image - sticky on desktop */}
+            <div className="lg:sticky lg:top-24">
               <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text mb-6 font-subtitle lg:whitespace-nowrap">
                 Preguntas frecuentes (FAQ)
               </h2>
@@ -62,6 +61,15 @@ const FAQs = () => {
                 ¿No encuentras lo que buscas? Contacta a nuestro{" "}
                 <span className="font-semibold text-text">equipo de soporte</span>.
               </p>
+              <div className="mt-8 flex justify-center">
+                <div className="rounded-2xl overflow-hidden max-w-[280px] lg:max-w-[320px]">
+                <img 
+                  src="/placeholder.jpg" 
+                  alt="FAQ illustration" 
+                  className="w-full h-auto object-cover rounded-2xl"
+                />
+                </div>
+              </div>
             </div>
 
             {/* Right: FAQ accordion */}
@@ -100,7 +108,6 @@ const FAQs = () => {
               ))}
             </div>
           </div>
-        </div>
       </div>
     </section>
   );

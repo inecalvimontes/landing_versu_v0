@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link2, Brain, Rocket, Send, MessageCircle, ArrowRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link2, Brain, Rocket, Send, MessageCircle, ArrowRight, ArrowLeft, Video, Phone, Plus, Camera, Mic, Signal, Wifi, Battery } from "lucide-react";
 import IPhoneFrame from "./ui/IPhoneFrame";
 import ModalWhatsApp from "./ModalWhatsApp";
 
@@ -34,25 +34,47 @@ const countryOptions = [
 const HowItWorks = () => {
   const [chatStep, setChatStep] = useState("chat");
   const [messages, setMessages] = useState([
-    { text: "¡Hola! Soy Versu 👋 ¿Tienes alguna pregunta sobre nuestros productos?", isUser: false },
+    { text: "¡Hola! Soy Versu 👋 ¿Tienes alguna pregunta sobre nuestros productos?", isUser: false, timestamp: new Date() },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [countryCode, setCountryCode] = useState("+56");
   const [phone, setPhone] = useState("");
   const [storeUrl, setStoreUrl] = useState("");
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (date) => {
+    return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false });
+  };
+
+  const formatDate = (date) => {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const dayName = days[date.getDay()];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    return `${dayName} ${day}. ${month}`;
+  };
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
     
     const userMessage = inputValue;
-    setMessages(prev => [...prev, { text: userMessage, isUser: true }]);
+    setMessages(prev => [...prev, { text: userMessage, isUser: true, timestamp: new Date() }]);
     setInputValue("");
     
     setTimeout(() => {
       setMessages(prev => [...prev, { 
         text: "¡Gracias por tu mensaje! Para darte una respuesta personalizada, ¿podrías compartirme tu número de WhatsApp y la URL de tu tienda?", 
-        isUser: false 
+        isUser: false,
+        timestamp: new Date()
       }]);
       setChatStep("form");
     }, 1000);
@@ -63,7 +85,8 @@ const HowItWorks = () => {
     setChatStep("done");
     setMessages(prev => [...prev, { 
       text: "¡Perfecto! Ahora puedes probar Versu directamente en WhatsApp con tu catálogo.", 
-      isUser: false 
+      isUser: false,
+      timestamp: new Date()
     }]);
   };
 
@@ -73,7 +96,7 @@ const HowItWorks = () => {
 
   return (
     <section className="bg-background py-8 md:py-12 lg:py-16 xl:py-20">
-      <div className="mx-auto max-w-7xl px-14 sm:px-24 lg:px-28 xl:px-36">
+      <div className="mx-auto max-w-7xl px-[42px] sm:px-[72px] lg:px-[84px] xl:px-[108px]">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
           {/* Left: Title, Subtitle and Steps */}
           <div>
@@ -106,8 +129,8 @@ const HowItWorks = () => {
           </div>
 
           {/* iPhone Simulator */}
-          <div className="flex items-center justify-center lg:justify-end">
-            <div className="w-full max-w-[280px]">
+          <div className="w-full lg:w-auto flex items-center justify-center lg:justify-end order-2">
+            <div className="w-full max-w-[360px]">
               <div className="text-center mb-4">
                 <p className="text-sm font-medium text-text/60">
                   Prueba cómo funciona Versu
@@ -115,132 +138,193 @@ const HowItWorks = () => {
               </div>
               
               <IPhoneFrame>
-                {/* Status Bar */}
-                <div className="flex items-center justify-between bg-accent px-4 py-2 pt-12">
-                  <div className="flex items-center gap-2">
-                    <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center">
-                      <MessageCircle className="h-4 w-4 text-white" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold text-white">Versu</p>
-                      <p className="text-[10px] text-white/70">En línea</p>
+                <div className="flex flex-col h-full bg-black relative iphone-content">
+                  {/* iOS Status Bar */}
+                  <div className="flex items-center justify-between px-4 pt-2 pb-1 bg-accent text-white font-medium">
+                    <span className="text-[13.75px] ml-2">{formatTime(currentTime)}</span>
+                    <div className="flex items-center gap-1 mr-2">
+                      <Signal className="h-[13.8px] w-[13.8px]" />
+                      <Wifi className="h-[13.8px] w-[13.8px]" />
+                      <Battery className="h-[13.8px] w-[13.8px]" />
                     </div>
                   </div>
-                </div>
 
-                {/* Chat Messages */}
-                <div className="h-80 overflow-y-auto bg-text/5 p-3 space-y-2">
-                  {messages.map((message, index) => (
-                    <div
-                      key={index}
-                      className={`flex ${message.isUser ? "justify-end" : "justify-start"}`}
-                    >
-                      <div
-                        className={`max-w-[80%] rounded-xl px-3 py-2 text-xs ${
-                          message.isUser
-                            ? "bg-accent text-white rounded-tr-sm"
-                            : "bg-background border border-text/20 rounded-tl-sm text-text"
-                        }`}
-                      >
-                        {message.text}
+                  {/* WhatsApp Header */}
+                  <div className="flex items-center justify-between bg-accent px-3 py-2 text-white">
+                    <div className="flex items-center gap-3 flex-1">
+                      <ArrowLeft className="h-5 w-5" />
+                      <div className="h-9 w-9 rounded-full bg-white p-1 relative overflow-hidden">
+                        <img src="/foto_perfil.svg" alt="Versu AI" className="h-full w-full object-cover rounded-full" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-[15px] font-medium">Versu AI</p>
                       </div>
                     </div>
-                  ))}
+                    <div className="flex items-center gap-4">
+                      <Video className="h-6 w-6" />
+                      <Phone className="h-5 w-auto" />
+                    </div>
+                  </div>
 
-                  {/* Form inside chat */}
-                  {chatStep === "form" && (
-                    <div className="mt-3 space-y-2 rounded-xl bg-background border border-text/20 p-2.5">
-                      <div>
-                        <label className="text-[10px] text-text/60 mb-1 block">
-                          Tu WhatsApp
-                        </label>
-                        <div className="flex gap-1">
-                          <select
-                            value={countryCode}
-                            onChange={(e) => setCountryCode(e.target.value)}
-                            className="w-14 h-6 px-1 text-[9px] rounded border border-text/20 bg-background flex-shrink-0 text-text"
-                          >
-                            {countryOptions.map((opt) => (
-                              <option key={opt.code} value={opt.code}>
-                                {opt.country.split(' ')[1]}
-                              </option>
-                            ))}
-                          </select>
-                          <input
-                            placeholder="9 1234 5678"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            className="h-6 text-[10px] flex-1 min-w-0 px-1.5 rounded border border-text/20 bg-background text-text"
-                          />
+                  {/* Chat Messages */}
+                  <div 
+                    className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0 relative"
+                    style={{
+                      backgroundImage: 'url(/fondo_wpp_2.PNG)',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundRepeat: 'no-repeat',
+                    }}
+                  >
+                    {/* Date Bubble */}
+                    <div className="flex justify-center">
+                      <div className="bg-[#353535] text-white/70 px-3 py-1 rounded-lg text-[12px]">
+                        {formatDate(currentTime)}
+                      </div>
+                    </div>
+
+                    {messages.map((message, index) => (
+                      <div
+                        key={index}
+                        className={`flex ${message.isUser ? "justify-end" : "justify-start"} mb-1`}
+                      >
+                        <div
+                          className={`max-w-[80%] rounded-lg px-2 py-1.5 text-[15px] ${
+                            message.isUser
+                              ? "bg-[#B0A9E8] text-[#1F2C33] message-bubble-user rounded-br-sm"
+                              : "bg-[#353535] text-white message-bubble-other rounded-bl-sm"
+                          }`}
+                          style={{
+                            boxShadow: message.isUser 
+                              ? '0 1px 2px rgba(0,0,0,0.1)' 
+                              : '0 1px 2px rgba(0,0,0,0.2)'
+                          }}
+                        >
+                          <div className="pr-1 pb-0.5">
+                            {message.text}
+                          </div>
+                          <div className={`flex items-center justify-end gap-1 mt-0.5 ${message.isUser ? 'text-[#1F2C33]/70' : 'text-white/70'}`}>
+                            <span className="text-[10px]">{formatTime(message.timestamp)}</span>
+                            {message.isUser && (
+                              <img 
+                                src="/double_tick.svg" 
+                                alt="read" 
+                                className="h-[18px] w-auto ml-0.5"
+                                style={{ 
+                                  filter: 'brightness(0) saturate(100%)',
+                                  opacity: 0.5
+                                }}
+                              />
+                            )}
+                          </div>
                         </div>
                       </div>
-                      <div>
-                        <label className="text-[10px] text-text/60 mb-1 block">
-                          URL de tu tienda
-                        </label>
-                        <input
-                          placeholder="URL de tu tienda"
-                          value={storeUrl}
-                          onChange={(e) => setStoreUrl(e.target.value)}
-                          className="h-6 text-[10px] w-full px-1.5 rounded border border-text/20 bg-background text-text"
-                        />
+                    ))}
+
+                    {/* Form inside chat */}
+                    {chatStep === "form" && (
+                      <div className="mt-3 space-y-2 rounded-xl bg-[#353535] border border-text/20 p-2.5">
+                        <div>
+                          <label className="text-[12.5px] text-white/70 mb-1 block">
+                            Tu WhatsApp
+                          </label>
+                          <div className="flex gap-1">
+                            <select
+                              value={countryCode}
+                              onChange={(e) => setCountryCode(e.target.value)}
+                              className="w-14 h-6 px-1 text-[11.25px] rounded border border-white/20 bg-[#353535] flex-shrink-0 text-white"
+                            >
+                              {countryOptions.map((opt) => (
+                                <option key={opt.code} value={opt.code}>
+                                  {opt.country.split(' ')[1]}
+                                </option>
+                              ))}
+                            </select>
+                            <input
+                              placeholder="9 1234 5678"
+                              value={phone}
+                              onChange={(e) => setPhone(e.target.value)}
+                              className="h-6 text-[12.5px] flex-1 min-w-0 px-1.5 rounded border border-white/20 bg-[#353535] text-white placeholder:text-white/50"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <label className="text-[12.5px] text-white/70 mb-1 block">
+                            URL de tu tienda
+                          </label>
+                          <input
+                            placeholder="URL de tu tienda"
+                            value={storeUrl}
+                            onChange={(e) => setStoreUrl(e.target.value)}
+                            className="h-6 text-[12.5px] w-full px-1.5 rounded border border-white/20 bg-[#353535] text-white placeholder:text-white/50"
+                          />
+                        </div>
+                        <button
+                          className="w-full h-6 text-[12.5px] rounded bg-accent text-white hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed"
+                          onClick={handleSubmitForm}
+                          disabled={!phone.trim() || !storeUrl.trim()}
+                        >
+                          Continuar
+                        </button>
                       </div>
-                      <button
-                        className="w-full h-6 text-[10px] rounded bg-accent text-white hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed"
-                        onClick={handleSubmitForm}
-                        disabled={!phone.trim() || !storeUrl.trim()}
-                      >
-                        Continuar
-                      </button>
+                    )}
+
+                    {/* WhatsApp button */}
+                    {chatStep === "done" && (
+                      <div className="mt-3">
+                        <button
+                          className="glow-btn-whatsapp w-full h-9 gap-2 rounded-full border border-[#1DAB61] bg-transparent text-white inline-flex items-center justify-center text-[15px] transition-all"
+                          onClick={openWhatsApp}
+                        >
+                          <MessageCircle className="h-4 w-4" />
+                          <span>Abrir WhatsApp</span>
+                          <ArrowRight className="h-3 w-3" />
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* WhatsApp Input Bar */}
+                  {chatStep === "chat" && (
+                    <div className="bg-[#353535] px-2 py-2 pb-8 flex-shrink-0">
+                      <div className="flex items-center gap-2">
+                        <button className="h-8 w-8 flex items-center justify-center text-white/70 flex-shrink-0">
+                          <Plus className="h-5 w-5" />
+                        </button>
+                        <input
+                          placeholder="Escribe aquí..."
+                          value={inputValue}
+                          onChange={(e) => setInputValue(e.target.value)}
+                          onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+                          className="h-9 flex-1 text-[15px] px-3 rounded-full bg-white text-[#1F2C33] placeholder:text-gray-400 placeholder:italic max-w-[calc(100%-120px)]"
+                        />
+                        <div className="flex items-center gap-0 flex-shrink-0">
+                          <button className="h-8 w-8 flex items-center justify-center text-white/70">
+                            <Camera className="h-5 w-5" />
+                          </button>
+                          <button className="h-8 w-8 flex items-center justify-center text-white/70">
+                            <Mic className="h-5 w-5" />
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   )}
 
-                  {/* WhatsApp button */}
-                  {chatStep === "done" && (
-                    <div className="mt-3">
-                      <button
-                        className="glow-btn-whatsapp w-full h-9 gap-2 rounded-full border border-[#1DAB61] bg-transparent text-white inline-flex items-center justify-center text-xs transition-all"
-                        onClick={openWhatsApp}
-                      >
-                        <MessageCircle className="h-4 w-4" />
-                        <span>Abrir WhatsApp</span>
-                        <ArrowRight className="h-3 w-3" />
-                      </button>
+                  {chatStep !== "chat" && (
+                    <div className="bg-[#353535] px-2 py-2 pb-8 flex-shrink-0">
+                      <div className="h-9 flex items-center justify-center">
+                        <p className="text-[12.5px] text-white/60">
+                          {chatStep === "form" ? "Completa el formulario arriba" : "¡Listo para probar!"}
+                        </p>
+                      </div>
                     </div>
                   )}
+
+                  {/* Home indicator bar */}
+                  <div className="absolute bottom-0 left-0 right-0 flex justify-center pb-2">
+                    <div className="h-1 w-32 rounded-full bg-white/30"></div>
+                  </div>
                 </div>
-
-                {/* Input Area */}
-                {chatStep === "chat" && (
-                  <div className="border-t border-text/20 bg-background p-2 pb-8">
-                    <div className="flex items-center gap-2">
-                      <input
-                        placeholder="Escribe un mensaje..."
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-                        className="h-8 flex-1 text-xs px-2 rounded border border-text/20 bg-background text-text"
-                      />
-                      <button
-                        className="h-8 w-8 rounded inline-flex items-center justify-center bg-accent text-white hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed"
-                        onClick={handleSendMessage}
-                        disabled={!inputValue.trim()}
-                      >
-                        <Send className="h-3 w-3" />
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {chatStep !== "chat" && (
-                  <div className="border-t border-text/20 bg-background p-2 pb-8">
-                    <div className="h-8 flex items-center justify-center">
-                      <p className="text-[10px] text-text/60">
-                        {chatStep === "form" ? "Completa el formulario arriba" : "¡Listo para probar!"}
-                      </p>
-                    </div>
-                  </div>
-                )}
               </IPhoneFrame>
             </div>
           </div>
