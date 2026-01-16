@@ -6,7 +6,7 @@ const partnersLogos = [
   { name: "Amplifica", logo: "/logos/partners/amplifica 2.svg" },
   { name: "Blue Express", logo: "/logos/partners/blue express.svg" },
   { name: "BSale", logo: "/logos/partners/bsale.svg" },
-  { name: "Clickex", logo: "/logos/partners/clickex.svg", smaller: true },
+  { name: "Clickex", logo: "/logos/partners/clickex.svg", smallest: true },
   { name: "Despachalo", logo: "/logos/partners/despachalo.svg" },
   { name: "Enviame", logo: "/logos/partners/enviame.svg" },
   { name: "Falabella", logo: "/logos/partners/falabella.svg" },
@@ -26,7 +26,7 @@ const partnersLogos = [
   { name: "VTEX", logo: "/logos/partners/vtex.svg" },
   { name: "Vtiger", logo: "/logos/partners/vtiger.svg" },
   { name: "WhatsApp", logo: "/logos/partners/whatsapp.svg" },
-  { name: "WooCommerce", logo: "/logos/partners/woocommerce final.svg" },
+  { name: "WooCommerce", logo: "/logos/partners/woocomerce final.svg" },
 ];
 
 // Países disponibles
@@ -69,6 +69,7 @@ const CountryCarousel = () => {
 
 const IntegrationsCarousel = () => {
   const [activeIndex, setActiveIndex] = useState(null);
+  const marqueeRef = useRef(null);
 
   const handleClick = (index) => {
     setActiveIndex(index);
@@ -77,10 +78,119 @@ const IntegrationsCarousel = () => {
     }, 2000);
   };
 
+  const handleMarqueeHover = (element) => {
+    if (!element) return;
+    
+    try {
+      // Obtener duración actual basada en el tamaño de pantalla
+      const isMobile = window.innerWidth < 640;
+      const isTablet = window.innerWidth >= 640 && window.innerWidth < 1024;
+      const normalDuration = isMobile ? 25 : isTablet ? 35 : 45;
+      const slowDuration = normalDuration * 2;
+      
+      // Obtener el transform actual del elemento
+      const computedStyle = window.getComputedStyle(element);
+      const matrix = computedStyle.transform;
+      
+      if (matrix && matrix !== 'none') {
+        const matrixValues = matrix.match(/matrix.*\((.+)\)/);
+        if (matrixValues) {
+          const values = matrixValues[1].split(', ');
+          const translateX = parseFloat(values[4]);
+          
+          // El marquee se mueve de 0 a -50% (la mitad del ancho total)
+          // scrollWidth incluye ambas copias, así que una copia = scrollWidth / 2
+          const singleCopyWidth = element.scrollWidth / 2;
+          const currentProgress = Math.abs(translateX) / singleCopyWidth;
+          let progress = currentProgress % 1;
+          
+          // Si translateX es 0 o muy cercano a 0, progress debería ser 0
+          if (Math.abs(translateX) < 1) {
+            progress = 0;
+          }
+          
+          const newDelay = -(progress * slowDuration);
+          
+          element.style.animation = 'none';
+          // Forzar reflow
+          element.offsetHeight;
+          element.style.animation = `marquee ${slowDuration}s linear infinite`;
+          element.style.animationDelay = `${newDelay}s`;
+        }
+      } else {
+        // Si no hay transform, usar la API de animaciones
+        const animation = element.getAnimations?.()[0];
+        if (animation) {
+          const currentTime = animation.currentTime || 0;
+          const progress = (currentTime % normalDuration) / normalDuration;
+          const newDelay = -(progress * slowDuration);
+          
+          element.style.animation = 'none';
+          element.offsetHeight; // Reflow
+          element.style.animation = `marquee ${slowDuration}s linear infinite`;
+          element.style.animationDelay = `${newDelay}s`;
+        }
+      }
+    } catch (e) {
+      console.error('Error en handleMarqueeHover:', e);
+    }
+  };
+
+  const handleMarqueeLeave = (element) => {
+    if (!element) return;
+    
+    try {
+      const isMobile = window.innerWidth < 640;
+      const isTablet = window.innerWidth >= 640 && window.innerWidth < 1024;
+      const normalDuration = isMobile ? 25 : isTablet ? 35 : 45;
+      
+      // Obtener el transform actual para mantener la posición
+      const computedStyle = window.getComputedStyle(element);
+      const matrix = computedStyle.transform;
+      
+      if (matrix && matrix !== 'none') {
+        const matrixValues = matrix.match(/matrix.*\((.+)\)/);
+        if (matrixValues) {
+          const values = matrixValues[1].split(', ');
+          const translateX = parseFloat(values[4]);
+          
+          const singleCopyWidth = element.scrollWidth / 2;
+          const currentProgress = Math.abs(translateX) / singleCopyWidth;
+          let progress = currentProgress % 1;
+          
+          // Si translateX es 0 o muy cercano a 0, progress debería ser 0
+          if (Math.abs(translateX) < 1) {
+            progress = 0;
+          }
+          
+          const newDelay = -(progress * normalDuration);
+          
+          element.style.animation = 'none';
+          element.offsetHeight; // Reflow
+          element.style.animation = `marquee ${normalDuration}s linear infinite`;
+          element.style.animationDelay = `${newDelay}s`;
+        }
+      } else {
+        element.style.animation = `marquee ${normalDuration}s linear infinite`;
+        element.style.animationDelay = '0s';
+      }
+    } catch (e) {
+      const isMobile = window.innerWidth < 640;
+      const isTablet = window.innerWidth >= 640 && window.innerWidth < 1024;
+      const normalDuration = isMobile ? 25 : isTablet ? 35 : 45;
+      element.style.animation = `marquee ${normalDuration}s linear infinite`;
+      element.style.animationDelay = '0s';
+    }
+  };
+
   return (
-    <div className="relative overflow-hidden">
+    <div 
+      className="relative overflow-hidden group"
+      onMouseEnter={() => handleMarqueeHover(marqueeRef.current)}
+      onMouseLeave={() => handleMarqueeLeave(marqueeRef.current)}
+    >
       {/* Marquee infinito para todas las pantallas */}
-      <div className="flex w-max animate-marquee-partners items-center">
+      <div ref={marqueeRef} className="flex w-max animate-marquee-partners items-center">
         {[...partnersLogos, ...partnersLogos].map((partner, index) => (
           <div
             key={index}
@@ -93,7 +203,9 @@ const IntegrationsCarousel = () => {
               src={partner.logo} 
               alt={partner.name}
               className={`w-auto object-contain transition-all duration-300 ${
-                partner.smaller 
+                partner.smallest 
+                  ? 'h-5 sm:h-6 lg:h-7' 
+                  : partner.smaller 
                   ? 'h-6 sm:h-7 lg:h-9' 
                   : 'h-8 sm:h-10 lg:h-12'
               } ${
@@ -239,7 +351,7 @@ const Hero = ({ onDemoClick }) => {
           <div className="max-w-xl xl:max-w-2xl">
             {/* Badge de "Única IA..." - alineado con Convierte */}
             {/* <span className="inline-flex items-center rounded-full px-3 py-1.5 text-[10px] sm:text-[12px] lg:text-[16px] font-detail italic text-text/80 backdrop-blur-sm">
-              Única IA especializada para e-commerce en LatAm
+              Única IA especializada para e-commerce en Latam
             </span> */}
 
             <h1 className="mt-0 text-balance text-[30px] sm:text-[35px] lg:text-[40px] tracking-tight text-text font-semibold">

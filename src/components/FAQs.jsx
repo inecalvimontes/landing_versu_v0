@@ -54,7 +54,7 @@ const FAQs = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-start">
             {/* Left: Title, subtitle and image - sticky on desktop */}
             <div className="lg:sticky lg:top-24">
-              <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text mb-6 font-subtitle lg:whitespace-nowrap">
+              <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text mb-1 font-subtitle lg:whitespace-nowrap">
                 Preguntas frecuentes (FAQ)
               </h2>
               <p className="text-base lg:text-lg text-text/70 font-text lg:whitespace-nowrap">

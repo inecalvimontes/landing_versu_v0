@@ -39,8 +39,8 @@ const Testimonials = () => {
           <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text font-subtitle">
             Lo que dicen nuestros clientes
           </h2>
-          <p className="mt-4 text-base sm:text-lg lg:text-xl text-text/70 font-text">
-            Tiendas en LatAm que ya transformaron su atención con Versu.
+          <p className="mt-1 text-base sm:text-lg lg:text-xl text-text/70 font-text">
+            Tiendas en Latam que ya transformaron su atención con Versu.
           </p>
         </div>
 

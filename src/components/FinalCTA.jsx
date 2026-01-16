@@ -15,7 +15,7 @@ const FinalCTA = ({ onDemoClick }) => {
         <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text font-subtitle">
           ¿Listo para transformar tu atención al cliente?
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg lg:text-xl text-text/80 font-text">
+        <p className="mx-auto mt-1 max-w-2xl text-base sm:text-lg lg:text-xl text-text/80 font-text">
           Agenda una demo personalizada y descubre cómo Versu puede ayudar a tu
           tienda.
         </p>

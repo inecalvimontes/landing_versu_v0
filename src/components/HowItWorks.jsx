@@ -104,7 +104,7 @@ const HowItWorks = () => {
               <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text font-subtitle">
                 Cómo funciona
               </h2>
-              <p className="mt-4 text-base sm:text-lg lg:text-xl text-text/70 font-text">
+              <p className="mt-1 text-base sm:text-lg lg:text-xl text-text/70 font-text">
                 Tres pasos. Sin equipo técnico para partir.
               </p>
             </div>
