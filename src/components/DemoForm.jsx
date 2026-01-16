@@ -235,7 +235,7 @@ const DemoForm = () => {
               {/* Left content - hidden on mobile */}
               <div className="hidden lg:block p-10 bg-gradient-to-br from-background to-background">
                 <div>
-                  <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] text-text mb-4 font-subtitle">
+                  <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] text-text mb-1 font-subtitle">
                     Solicita tu demo
                   </h2>
                   <p className="text-text/70 mb-8 leading-relaxed">
