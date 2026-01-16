@@ -31,16 +31,16 @@ const sourceOptions = [
 ];
 
 const features = [
-  { icon: Clock, label: "Proceso breve (2 pasos)" },
+  { icon: Clock, label: "Configuración en 2 minutos" },
   { icon: Shield, label: "Sin spam" },
   { icon: MessageCircle, label: "Respuesta rápida" },
-  { icon: Target, label: "Enfocado en e-commerce" },
+  { icon: Target, label: "Expertos en Ecommerce" },
 ];
 
 const demoPoints = [
-  "Cómo responde el agente con catálogo y políticas reales.",
-  "Cuándo deriva a humano y cómo queda el contexto.",
-  "Métricas operativas: volumen, resolución y tiempos.",
+  "Tu negocio atendido por nuestra IA en vivo.",
+  "Tú tienes el control: define cuándo y cómo la IA deriva a tus agentes humanos.",
+  "Dashboard de impacto: Proyección de ahorro en costos y aumento de ROI.",
 ];
 
 const DemoForm = () => {
@@ -228,18 +228,17 @@ const DemoForm = () => {
 
   return (
     <section id="demo-form" className="py-6 lg:py-12 xl:py-16 bg-background">
-      <div className="container mx-auto px-6 sm:px-10 lg:px-12 xl:px-16">
-        <div className="max-w-6xl xl:max-w-7xl mx-auto">
+      <div className="mx-auto max-w-7xl px-[42px] sm:px-[72px] lg:px-[84px] xl:px-[108px]">
           <div className="bg-background rounded-2xl lg:rounded-3xl border border-text/20 shadow-xl overflow-hidden">
-            <div className="grid lg:grid-cols-2">
+            <div className="grid lg:grid-cols-2 lg:items-stretch">
               {/* Left content - hidden on mobile */}
-              <div className="hidden lg:block p-10 bg-gradient-to-br from-background to-background">
-                <div>
+              <div className="hidden lg:block p-10 bg-gradient-to-br from-background to-background lg:flex lg:flex-col">
+                <div className="lg:flex lg:flex-col lg:flex-grow lg:justify-between">
                   <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] text-text mb-1 font-subtitle">
-                    Solicita tu demo
+                    Agenda tu demo
                   </h2>
                   <p className="text-text/70 mb-8 leading-relaxed">
-                    Cuéntanos sobre tu tienda y un contacto. Al finalizar podrás ver la mejor opción para continuar.
+                    Mira cómo Versu escala tus ventas en piloto automático.
                   </p>
 
                   {/* Feature chips */}
@@ -258,7 +257,7 @@ const DemoForm = () => {
                   {/* Demo points */}
                   <div className="bg-background rounded-xl border border-text/20 p-5 mb-6">
                     <h3 className="font-semibold text-text mb-4">
-                      Qué verás en la demo
+                      Simulación real
                     </h3>
                     <ul className="space-y-3">
                       {demoPoints.map((point, index) => (
@@ -272,8 +271,12 @@ const DemoForm = () => {
                     </ul>
                   </div>
 
-                  <p className="text-xs text-text/60">
+                  {/* Comentado: texto original */}
+                  {/* <p className="text-xs text-text/60">
                     Al enviar, aceptas que te contactemos para coordinar la demo.
+                  </p> */}
+                  <p className="text-xs text-text/60">
+                    Tus datos están seguros. Al continuar, aceptas nuestra política de privacidad.
                   </p>
 
                   {/* Botón Atrás - solo visible cuando se muestra el calendario */}
@@ -291,18 +294,18 @@ const DemoForm = () => {
               </div>
 
               {/* Right form */}
-              <div className="p-5 lg:p-10 bg-background">
+              <div className="p-5 lg:p-10 bg-background lg:flex lg:flex-col lg:justify-between">
                 {/* Mobile header */}
                 <div className="lg:hidden mb-5">
                   <h2 className="text-xl font-bold text-text mb-1">
-                    Solicita tu demo
+                    Mira cómo Versu escala tus ventas en piloto automático.
                   </h2>
                   <p className="text-sm text-text/70">
-                    Cuéntanos sobre tu tienda y te contactamos.
+                    Obtén una demo personalizada de tu tienda.
                   </p>
                 </div>
                 {!isSubmitted ? (
-                  <div>
+                  <div className="lg:flex lg:flex-col lg:flex-grow lg:justify-between">
                     {/* Stepper header */}
                     <div className="mb-6">
                       <div className="flex items-center justify-between mb-3">
@@ -345,9 +348,9 @@ const DemoForm = () => {
                       </button>
                     </div>
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit} className="lg:flex lg:flex-col lg:flex-grow lg:justify-between">
                       {step === 1 ? (
-                        <div className="space-y-4">
+                        <div className="space-y-4 lg:flex lg:flex-col lg:justify-between">
                           <div>
                             <label className="text-sm font-medium text-text mb-2 block">
                               Nombre
@@ -398,7 +401,7 @@ const DemoForm = () => {
 
                           <div>
                             <label className="text-sm font-medium text-text mb-2 block">
-                              ¿Dónde nos conociste?
+                              ¿Cómo supiste de Versu?
                             </label>
                             <select
                               value={formData.source}
@@ -435,7 +438,7 @@ const DemoForm = () => {
                             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                           </button>
 
-                          <p className="text-xs text-center text-text/60">
+                          <p className="text-xs text-center text-text/60 lg:mt-auto">
                             Tiempo estimado: 1 minuto.
                           </p>
                         </div>
@@ -537,13 +540,13 @@ const DemoForm = () => {
                               disabled={!isStep2Valid}
                               className="glow-btn group h-11 flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-accent bg-transparent px-6 text-sm font-medium text-white hover:bg-accent transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                              <span>Continuar</span>
+                              <span>Agendar mi demo</span>
                               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                             </button>
                           </div>
 
                           <p className="text-xs text-center text-text/60">
-                            No compartimos tu información. Sin spam.
+                            Tus datos están seguros. Al continuar, aceptas nuestra política de privacidad.
                           </p>
                         </div>
                       )}
@@ -570,9 +573,6 @@ const DemoForm = () => {
 
             {/* WhatsApp alternative */}
             <div className="p-6 text-center">
-              <p className="text-text/70 mb-4">
-                ¿Prefieres escribir ahora?
-              </p>
               <button
                 onClick={handleWhatsApp}
                 className="glow-btn-whatsapp inline-flex items-center justify-center rounded-full border border-[#1DAB61] bg-transparent px-4 py-2 text-sm font-medium text-white hover:text-white transition-all"
@@ -580,9 +580,11 @@ const DemoForm = () => {
                 <MessageCircle className="w-4 h-4 mr-2" />
                 <span>WhatsApp</span>
               </button>
+              <p className="text-text/70 mt-2">
+                ¿Sigues con dudas? Escríbenos
+              </p>
             </div>
           </div>
-        </div>
       </div>
 
       <ModalWhatsApp
