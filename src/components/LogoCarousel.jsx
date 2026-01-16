@@ -1,37 +1,55 @@
+import { useState } from 'react';
+
 // Array de logos de clientes
 const clientLogos = [
-  { name: "Ansaldo", logo: "/logos/clientes/ansaldo.svg" },
-  { name: "Aqua Force", logo: "/logos/clientes/aqua force.svg" },
-  { name: "Bestmart", logo: "/logos/clientes/bestmart.svg" },
-  { name: "Build a Bear", logo: "/logos/clientes/build a bear.svg" },
-  { name: "Bullpadel", logo: "/logos/clientes/bullpadel.svg" },
-  { name: "Family Shop", logo: "/logos/clientes/family shop.svg" },
-  { name: "Mr Click", logo: "/logos/clientes/mr click.svg" },
-  { name: "Saintmalé", logo: "/logos/clientes/saintmalé.svg" },
-  { name: "Sioux", logo: "/logos/clientes/sioux.svg" },
-  { name: "Ultimate Fitness", logo: "/logos/clientes/ultimate fitness.svg" },
+  { name: "Ansaldo", logo: "/logos/clientes/ansaldo.png" },
+  { name: "Bekoko", logo: "/logos/clientes/bekoko.png" },
+  { name: "Bestmart", logo: "/logos/clientes/bestmart.png" },
+  { name: "Build a Bear", logo: "/logos/clientes/buildabear.png" },
+  { name: "Family Shop", logo: "/logos/clientes/family shop.png" },
+  { name: "Pao Pink", logo: "/logos/clientes/pao pink.png" },
+  { name: "Prosa", logo: "/logos/clientes/prosa.png" },
+  { name: "Saint Malé", logo: "/logos/clientes/saint male.png" },
+  { name: "Serjaff", logo: "/logos/clientes/serjaff.png" },
+  { name: "Sioux", logo: "/logos/clientes/sioux.png" },
+  { name: "Zenlab", logo: "/logos/clientes/zenlab.png" },
 ];
 
 const LogoCarousel = () => {
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const handleClick = (index) => {
+    setActiveIndex(index);
+    setTimeout(() => {
+      setActiveIndex(null);
+    }, 2000);
+  };
   return (
     <section className="bg-background py-6 md:py-8 lg:py-10">
-      <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-12 xl:px-16">
-        <p className="mb-8 text-center text-sm font-medium text-text/60">
+      <div className="mb-8 px-6 sm:px-10 lg:px-12 xl:px-16">
+        <p className="text-center text-sm font-medium text-text/60">
           +100 marcas confían en Versu
         </p>
+      </div>
+      <div>
 
-        {/* Mobile: horizontal scroll */}
-        <div className="overflow-x-auto scrollbar-hide lg:hidden px-4 sm:px-6">
-          <div className="flex gap-4 pb-2">
-            {clientLogos.map((client, index) => (
+        {/* Mobile: infinite marquee */}
+        <div className="relative overflow-hidden lg:hidden">
+          <div className="flex w-max animate-marquee-mobile">
+            {[...clientLogos, ...clientLogos].map((client, index) => (
               <div
-                key={index}
-                className="flex-shrink-0 flex items-center justify-center h-16 px-3"
+                key={`mobile-${index}`}
+                onClick={() => handleClick(index)}
+                className={`flex-shrink-0 w-48 h-48 sm:w-56 sm:h-56 transition-all duration-300 group cursor-pointer ${
+                  activeIndex === index ? 'grayscale-0' : 'grayscale'
+                }`}
               >
                 <img 
                   src={client.logo} 
                   alt={client.name}
-                  className="h-12 w-auto max-w-[140px] object-contain opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all"
+                  className={`w-full h-full object-cover transition-opacity pointer-events-none ${
+                    activeIndex === index ? 'opacity-100' : 'opacity-70'
+                  }`}
                 />
               </div>
             ))}
@@ -41,16 +59,21 @@ const LogoCarousel = () => {
         {/* Desktop: infinite marquee */}
         <div className="relative hidden overflow-hidden lg:block">
           {/* Marquee track */}
-          <div className="flex animate-marquee">
-            {[...clientLogos, ...clientLogos, ...clientLogos].map((client, index) => (
+          <div className="flex w-max animate-marquee">
+            {[...clientLogos, ...clientLogos].map((client, index) => (
               <div
-                key={index}
-                className="mx-4 flex-shrink-0 flex items-center justify-center h-20 px-4"
+                key={`desktop-${index}`}
+                onClick={() => handleClick(index)}
+                className={`flex-shrink-0 w-64 h-64 xl:w-72 xl:h-72 transition-all duration-300 group cursor-pointer ${
+                  activeIndex === index ? 'grayscale-0' : 'grayscale hover:grayscale-0'
+                }`}
               >
                 <img 
                   src={client.logo} 
                   alt={client.name}
-                  className="h-16 w-auto max-w-[160px] object-contain opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all"
+                  className={`w-full h-full object-cover transition-opacity ${
+                    activeIndex === index ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'
+                  }`}
                 />
               </div>
             ))}
