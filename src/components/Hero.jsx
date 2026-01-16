@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Check, ArrowRight, Play, X } from "lucide-react";
 
-// Partners integrations - TODOS los logos locales de la carpeta partners
+// Partners integrations - 24 logos de la carpeta partners
 const partnersLogos = [
-  { name: "Amplifica", logo: "/logos/partners/amplifica.svg" },
-  { name: "Blue Express", logo: "/logos/partners/blue express 2.svg" },
+  { name: "Amplifica", logo: "/logos/partners/amplifica 2.svg" },
+  { name: "Blue Express", logo: "/logos/partners/blue express.svg" },
   { name: "BSale", logo: "/logos/partners/bsale.svg" },
-  { name: "Clickex", logo: "/logos/partners/clickex.svg" },
+  { name: "Clickex", logo: "/logos/partners/clickex.svg", smaller: true },
   { name: "Despachalo", logo: "/logos/partners/despachalo.svg" },
   { name: "Enviame", logo: "/logos/partners/enviame.svg" },
   { name: "Falabella", logo: "/logos/partners/falabella.svg" },
@@ -16,14 +16,14 @@ const partnersLogos = [
   { name: "JumpSeller", logo: "/logos/partners/jumpseller.svg" },
   { name: "Magento", logo: "/logos/partners/magento.svg" },
   { name: "Mercado Libre", logo: "/logos/partners/mercado libre.svg" },
-  { name: "Meta Tech Provider", logo: "/logos/partners/meta tech provider.svg" },
+  { name: "Meta", logo: "/logos/partners/meta logo.svg" },
   { name: "PrestaShop", logo: "/logos/partners/prestashop.svg" },
   { name: "Recibelo", logo: "/logos/partners/recibelo.svg" },
   { name: "SavvyCal", logo: "/logos/partners/savvycal.svg" },
   { name: "Shipit", logo: "/logos/partners/shipit.svg" },
   { name: "Shopify", logo: "/logos/partners/shopify 2.svg" },
-  { name: "Starken", logo: "/logos/partners/starken.svg" },
-  { name: "VTEX", logo: "/logos/partners/vtex logo.svg" },
+  { name: "Starken", logo: "/logos/partners/starken.svg", smaller: true },
+  { name: "VTEX", logo: "/logos/partners/vtex.svg" },
   { name: "Vtiger", logo: "/logos/partners/vtiger.svg" },
   { name: "WhatsApp", logo: "/logos/partners/whatsapp.svg" },
   { name: "WooCommerce", logo: "/logos/partners/woocommerce final.svg" },
@@ -68,43 +68,42 @@ const CountryCarousel = () => {
 };
 
 const IntegrationsCarousel = () => {
-  return (
-    <div>
-      {/* Mobile: horizontal scroll */}
-      <div className="overflow-x-auto scrollbar-hide lg:hidden px-4 sm:px-6">
-        <div className="flex gap-4 pb-2">
-          {partnersLogos.map((partner, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0 flex items-center justify-center h-16 px-3"
-            >
-              <img 
-                src={partner.logo} 
-                alt={partner.name}
-                className="h-12 w-auto max-w-[140px] object-contain opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all"
-              />
-            </div>
-          ))}
-        </div>
-      </div>
+  const [activeIndex, setActiveIndex] = useState(null);
 
-      {/* Desktop: infinite marquee - se extiende a todo el ancho con márgenes */}
-      <div className="relative hidden overflow-hidden lg:block">
-        {/* Marquee track - duplicamos el array para hacer el loop infinito */}
-        <div className="flex animate-marquee">
-          {[...partnersLogos, ...partnersLogos, ...partnersLogos].map((partner, index) => (
-            <div
-              key={index}
-              className="mx-4 flex-shrink-0 flex items-center justify-center h-20 px-4"
-            >
-              <img 
-                src={partner.logo} 
-                alt={partner.name}
-                className="h-16 w-auto max-w-[160px] object-contain opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all"
-              />
-            </div>
-          ))}
-        </div>
+  const handleClick = (index) => {
+    setActiveIndex(index);
+    setTimeout(() => {
+      setActiveIndex(null);
+    }, 2000);
+  };
+
+  return (
+    <div className="relative overflow-hidden">
+      {/* Marquee infinito para todas las pantallas */}
+      <div className="flex w-max animate-marquee-partners items-center">
+        {[...partnersLogos, ...partnersLogos].map((partner, index) => (
+          <div
+            key={index}
+            onClick={() => handleClick(index)}
+            className={`mx-2.5 sm:mx-4 lg:mx-5 flex-shrink-0 flex items-center justify-center h-8 sm:h-10 lg:h-12 cursor-pointer group transition-all duration-300 ${
+              activeIndex === index ? 'grayscale-0' : 'grayscale hover:grayscale-0'
+            }`}
+          >
+            <img 
+              src={partner.logo} 
+              alt={partner.name}
+              className={`w-auto object-contain transition-all duration-300 ${
+                partner.smaller 
+                  ? 'h-6 sm:h-7 lg:h-9' 
+                  : 'h-8 sm:h-10 lg:h-12'
+              } ${
+                activeIndex === index 
+                  ? 'opacity-100' 
+                  : 'opacity-50 group-hover:opacity-100'
+              }`}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -320,11 +319,11 @@ const Hero = ({ onDemoClick }) => {
             <p className="mb-3 text-xs text-text/60">Integramos con:</p>
           </div>
         </div>
-        
-        {/* E-commerce integrations carousel - se extiende a todo el ancho */}
-        <div className="mt-8 lg:mt-12">
-          <IntegrationsCarousel />
-        </div>
+      </div>
+      
+      {/* E-commerce integrations carousel - se extiende a todo el ancho sin márgenes */}
+      <div className="relative z-20 mt-8 lg:mt-12">
+        <IntegrationsCarousel />
       </div>
 
       {/* Modal de video en pantalla completa o flotante */}
