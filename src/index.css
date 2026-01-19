@@ -422,15 +422,15 @@
   }
 }
 
-/* LogoCarousel: 11 logos * ~2.5s por logo = 27.5s total */
+/* LogoCarousel: 11 logos * ~3.3s por logo = 39.6s total (velocidad reducida 30% total) */
 .animate-marquee {
-  animation: marquee 30s linear infinite;
+  animation: marquee 39.6s linear infinite;
   will-change: transform;
 }
 
-/* LogoCarousel mobile: 11 logos * ~2s por logo = 22s total */
+/* LogoCarousel mobile: 11 logos * ~2.64s por logo = 29.04s total (velocidad reducida 30% total) */
 .animate-marquee-mobile {
-  animation: marquee 22s linear infinite;
+  animation: marquee 29.04s linear infinite;
   will-change: transform;
 }
 
