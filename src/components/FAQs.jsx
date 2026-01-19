@@ -46,7 +46,7 @@ const FAQs = () => {
 
   return (
     <section className="bg-background py-8 md:py-12 lg:py-16 xl:py-20">
-      <div className="mx-auto max-w-7xl px-[42px] sm:px-[72px] lg:px-[84px] xl:px-[108px]">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-start">
             {/* Left: Title and subtitle - fixed in initial position */}
             <div className="flex flex-col lg:sticky lg:top-24 lg:pt-32 self-start">

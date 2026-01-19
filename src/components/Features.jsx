@@ -1,7 +1,7 @@
 function Features() {
   return (
     <section className="py-6 bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="lg:text-center">
           <h2 className="text-base text-accent font-semibold tracking-wide uppercase">Features</h2>
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-text sm:text-4xl">

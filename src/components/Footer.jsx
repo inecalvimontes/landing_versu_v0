@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="bg-background text-white">
       {/* Main footer content */}
-      <div className="mx-auto max-w-7xl px-[42px] sm:px-[72px] lg:px-[84px] xl:px-[108px] py-3 lg:py-4 xl:py-5">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-3 lg:py-4 xl:py-5">
         <div className="grid gap-6 md:gap-2 md:grid-cols-3 md:items-center">
           {/* Partners */}
           <div className="text-center md:text-left">
@@ -60,7 +60,7 @@ const Footer = () => {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-[42px] sm:px-[72px] lg:px-[84px] xl:px-[108px] py-2">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-2">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
             <div className="flex items-center gap-3">
               <img 

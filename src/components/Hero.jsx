@@ -354,7 +354,7 @@ const Hero = ({ onDemoClick }) => {
       {/* Overlay oscuro para legibilidad */}
       <div className="absolute inset-0 bg-background/80 z-10"></div>
       
-      <div className="relative z-20 mx-auto max-w-7xl px-6 sm:px-10 lg:px-12 xl:px-16">
+      <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
 
         <div>
           {/* Left: Content */}
