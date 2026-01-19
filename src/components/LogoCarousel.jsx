@@ -123,17 +123,22 @@ const LogoCarousel = () => {
   return (
     <section className="bg-background py-6 md:py-8 lg:py-10">
       <div className="mb-8 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-        <p className="text-center text-sm font-medium text-text/60">
-          +100 marcas confían en Versu
-        </p>
+        <div className="text-center">
+          <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text font-subtitle">
+            +100 marcas
+          </h2>
+          <p className="mt-1 text-base sm:text-lg lg:text-xl text-text/70 font-text">
+            en todo Latam confían en Versu
+          </p>
+        </div>
       </div>
       <div>
 
         {/* Mobile: infinite marquee */}
         <div 
           className="relative overflow-hidden lg:hidden group"
-          onMouseEnter={() => handleMarqueeHover(mobileMarqueeRef.current, 22, 44)}
-          onMouseLeave={() => handleMarqueeLeave(mobileMarqueeRef.current, 22)}
+          onMouseEnter={() => handleMarqueeHover(mobileMarqueeRef.current, 29.04, 58.08)}
+          onMouseLeave={() => handleMarqueeLeave(mobileMarqueeRef.current, 29.04)}
         >
           <div ref={mobileMarqueeRef} className="flex w-max animate-marquee-mobile">
             {[...clientLogos, ...clientLogos].map((client, index) => (
@@ -157,8 +162,8 @@ const LogoCarousel = () => {
         {/* Desktop: infinite marquee */}
         <div 
           className="relative hidden overflow-hidden lg:block group"
-          onMouseEnter={() => handleMarqueeHover(desktopMarqueeRef.current, 30, 60)}
-          onMouseLeave={() => handleMarqueeLeave(desktopMarqueeRef.current, 30)}
+          onMouseEnter={() => handleMarqueeHover(desktopMarqueeRef.current, 39.6, 79.2)}
+          onMouseLeave={() => handleMarqueeLeave(desktopMarqueeRef.current, 39.6)}
         >
           {/* Marquee track */}
           <div ref={desktopMarqueeRef} className="flex w-max animate-marquee">
