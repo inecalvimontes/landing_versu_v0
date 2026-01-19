@@ -41,7 +41,7 @@ const Header = ({ onDemoClick }) => {
         willChange: 'background-color, backdrop-filter', // Optimizar transición
       }}
     >
-      <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-12 xl:px-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="flex h-16 lg:h-20 items-center justify-between">
           {/* Logo */}
           <a href="/" className="flex items-center">

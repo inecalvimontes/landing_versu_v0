@@ -11,7 +11,7 @@ const FinalCTA = ({ onDemoClick }) => {
 
   return (
     <section className="bg-background py-8 md:py-12 lg:py-16 xl:py-20">
-      <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-12 xl:px-16 text-center">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 text-center">
         <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text font-subtitle">
           ¿Listo para transformar tu atención al cliente?
         </h2>

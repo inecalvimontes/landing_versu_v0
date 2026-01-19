@@ -228,7 +228,7 @@ const DemoForm = () => {
 
   return (
     <section id="demo-form" className="py-6 lg:py-12 xl:py-16 bg-background">
-      <div className="mx-auto max-w-7xl px-[42px] sm:px-[72px] lg:px-[84px] xl:px-[108px]">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
           <div className="bg-background rounded-2xl lg:rounded-3xl border border-text/20 shadow-xl overflow-hidden">
             <div className="grid lg:grid-cols-2 lg:items-stretch">
               {/* Left content - hidden on mobile */}

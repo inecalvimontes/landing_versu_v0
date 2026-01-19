@@ -122,7 +122,7 @@ const LogoCarousel = () => {
 
   return (
     <section className="bg-background py-6 md:py-8 lg:py-10">
-      <div className="mb-8 px-6 sm:px-10 lg:px-12 xl:px-16">
+      <div className="mb-8 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <p className="text-center text-sm font-medium text-text/60">
           +100 marcas confían en Versu
         </p>
