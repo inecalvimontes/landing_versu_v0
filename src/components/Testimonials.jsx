@@ -88,9 +88,15 @@ const TestimonialCard = ({ testimonial }) => {
   const isLongText = testimonial.content.length > 300;
 
   return (
-    <div className={`relative flex flex-col rounded-2xl border border-text/20 bg-background p-6 shadow-sm w-[calc(100vw-4.5rem)] sm:w-[calc(50vw-5rem)] md:w-[calc(33.333vw-5rem)] lg:w-[380px] flex-shrink-0 snap-start transition-all duration-300 ${
-      isExpanded ? 'h-auto' : 'h-[340px]'
-    }`}>
+    <div 
+      className={`relative flex flex-col rounded-2xl border border-text/20 bg-background p-6 shadow-sm w-[calc(100vw-4.5rem)] sm:w-[calc(50vw-5rem)] md:w-[calc(33.333vw-5rem)] lg:w-[380px] flex-shrink-0 snap-start snap-always transition-all duration-300 ${
+        isExpanded ? 'h-auto' : 'h-[340px]'
+      }`}
+      style={{
+        scrollSnapAlign: 'start',
+        scrollSnapStop: 'always',
+      }}
+    >
       {/* Header: Foto y nombre */}
       <div className="flex items-center gap-8 mb-4">
         {/* Foto con círculo superpuesto - izquierda */}
@@ -177,10 +183,24 @@ const Testimonials = () => {
     checkScrollButtons();
     const container = scrollContainerRef.current;
     if (container) {
-      container.addEventListener('scroll', checkScrollButtons);
+      // Reducir sensibilidad en dispositivos táctiles con throttle
+      let scrollTimeout;
+      const handleScroll = () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          checkScrollButtons();
+        }, 50); // Reducir frecuencia de actualización
+      };
+      
+      container.addEventListener('scroll', handleScroll, { passive: true });
       window.addEventListener('resize', checkScrollButtons);
+      
+      // Reducir momentum scrolling en iOS
+      container.style.overscrollBehavior = 'contain';
+      
       return () => {
-        container.removeEventListener('scroll', checkScrollButtons);
+        clearTimeout(scrollTimeout);
+        container.removeEventListener('scroll', handleScroll);
         window.removeEventListener('resize', checkScrollButtons);
       };
     }
@@ -230,7 +250,36 @@ const Testimonials = () => {
           <div 
             ref={scrollContainerRef}
             className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4 snap-x snap-mandatory"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            style={{ 
+              scrollbarWidth: 'none', 
+              msOverflowStyle: 'none',
+              touchAction: 'pan-x',
+              WebkitOverflowScrolling: 'touch',
+              scrollSnapType: 'x mandatory',
+              scrollSnapStop: 'always',
+              overscrollBehaviorX: 'contain',
+              scrollPadding: '0 1rem', // Aumentar el área de snap para reducir sensibilidad
+            }}
+            onTouchStart={(e) => {
+              // Reducir sensibilidad: requerir más movimiento antes de activar scroll
+              const touch = e.touches[0];
+              e.currentTarget.dataset.touchStartX = touch.clientX;
+              e.currentTarget.dataset.touchStartY = touch.clientY;
+            }}
+            onTouchMove={(e) => {
+              // Solo permitir scroll si el movimiento horizontal es significativo y mayor que el vertical
+              const touch = e.touches[0];
+              const startX = parseFloat(e.currentTarget.dataset.touchStartX || '0');
+              const startY = parseFloat(e.currentTarget.dataset.touchStartY || '0');
+              const deltaX = Math.abs(touch.clientX - startX);
+              const deltaY = Math.abs(touch.clientY - startY);
+              
+              // Requerir al menos 15px de movimiento horizontal y que sea mayor que el vertical
+              // Esto reduce la sensibilidad accidental
+              if (deltaX < 15 || deltaY > deltaX) {
+                e.preventDefault();
+              }
+            }}
           >
             {testimonials.map((testimonial, index) => (
               <TestimonialCard key={index} testimonial={testimonial} />
