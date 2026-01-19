@@ -43,6 +43,91 @@ const demoPoints = [
   "Dashboard de impacto: Proyección de ahorro en costos y aumento de ROI.",
 ];
 
+// Helper functions for SavvyCal metadata
+function getCookie(name) {
+  const m = document.cookie.match(new RegExp("(^|; )" + name + "=([^;]*)"));
+  return m ? decodeURIComponent(m[2]) : undefined;
+}
+
+function qp(key) {
+  try {
+    return new URL(window.location.href).searchParams.get(key);
+  } catch {
+    return null;
+  }
+}
+
+function readFbp() {
+  return getCookie("_fbp");
+}
+
+function readOrBuildFbc() {
+  const cookie = getCookie("_fbc");
+  if (cookie) return cookie;
+  const fbclid = qp("fbclid");
+  if (!fbclid) return undefined;
+  const ts = Math.floor(Date.now() / 1000);
+  return `fb.1.${ts}.${fbclid}`;
+}
+
+function genEventId() {
+  return `SCHEDULE::${Date.now()}::${Math.floor(Math.random() * 1e6)}`;
+}
+
+function readAdParams() {
+  const KEYS = ["ad_id", "adset_id", "campaign_id"];
+  const out = {};
+  let url = null;
+  try {
+    url = new URL(window.location.href);
+  } catch {
+    // Ignore
+  }
+
+  KEYS.forEach((k) => {
+    const v =
+      (url ? url.searchParams.get(k) : null) ||
+      sessionStorage.getItem(`meta_${k}`) ||
+      undefined;
+    if (v) {
+      out[k] = v;
+      sessionStorage.setItem(`meta_${k}`, v);
+    }
+  });
+  return out;
+}
+
+function buildMetadata() {
+  // Contexto para Meta CAPI
+  const fbp = readFbp();
+  const fbc = readOrBuildFbc();
+  const eid = sessionStorage.getItem("schedule_event_id") || genEventId();
+  sessionStorage.setItem("schedule_event_id", eid);
+
+  const adp = readAdParams();
+
+  let ref_url = "";
+  try {
+    const u = new URL(window.location.href);
+    ref_url = `${u.origin}${u.pathname}`;
+  } catch {
+    ref_url = window.location.href;
+  }
+
+  const metadata = {
+    eid,
+    source: "web_landing",
+    ref_url,
+    ...(fbp ? { fbp } : {}),
+    ...(fbc ? { fbc } : {}),
+    ...(adp.ad_id ? { ad_id: adp.ad_id } : {}),
+    ...(adp.adset_id ? { adset_id: adp.adset_id } : {}),
+    ...(adp.campaign_id ? { campaign_id: adp.campaign_id } : {}),
+  };
+
+  return metadata;
+}
+
 const DemoForm = () => {
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -211,11 +296,21 @@ const DemoForm = () => {
           container.innerHTML = '';
         }
         
+        // Determinar qué URL de SavvyCal usar según el rango de órdenes
+        const isHighVolume = formData.ordersRange === '1000-3000' || formData.ordersRange === '3000+';
+        const savvyCalLink = isHighVolume 
+          ? 'macarena/reunion-con-versu-ai' 
+          : 'versu/demo';
+        
+        // Construir metadata para Meta CAPI y tracking
+        const metadata = buildMetadata();
+        
         window.SavvyCal('inline', { 
-          link: 'versu/demo', 
+          link: savvyCalLink, 
           selector: '#savvycal-booking',
           email: formData.email,
           displayName: formData.name,
+          metadata, // Metadata para tracking de Meta y analytics
           // Campos personalizados usando índices según el orden en SavvyCal
           questions: {
             0: formData.storeUrl,           // Website (primera pregunta)
@@ -224,7 +319,7 @@ const DemoForm = () => {
         });
       }, 100);
     }
-  }, [isSubmitted]);
+  }, [isSubmitted, formData.ordersRange, formData.email, formData.name, formData.storeUrl]);
 
   return (
     <section id="demo-form" className="py-6 lg:py-12 xl:py-16 bg-background">
