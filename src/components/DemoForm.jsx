@@ -43,6 +43,36 @@ const demoPoints = [
   "Dashboard de impacto: Proyección de ahorro en costos y aumento de ROI.",
 ];
 
+// Función helper para enviar webhooks a n8n
+async function sendWebhookToN8N(eventType, data) {
+  const webhookUrl = 'https://n8n.srv1268009.hstgr.cloud/webhook-test/266f3179-2029-40e2-b9c6-3d3e6efafb1e';
+  
+  try {
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        eventType,
+        timestamp: new Date().toISOString(),
+        data,
+        metadata: {
+          url: window.location.href,
+          referrer: document.referrer,
+          userAgent: navigator.userAgent,
+        }
+      })
+    });
+    
+    return response.ok;
+  } catch (error) {
+    console.error('Error sending webhook:', error);
+    // No bloquear el flujo si falla el webhook
+    return false;
+  }
+}
+
 // Helper functions for SavvyCal metadata
 function getCookie(name) {
   const m = document.cookie.match(new RegExp("(^|; )" + name + "=([^;]*)"));
@@ -228,6 +258,13 @@ const DemoForm = () => {
     setTouched((prev) => ({ ...prev, name: true, email: true, source: true }));
     
     if (nameValid && emailValid && sourceValid) {
+      // Enviar webhook al avanzar del paso 1
+      sendWebhookToN8N('demo_form_step_1_completed', {
+        name: formData.name,
+        email: formData.email,
+        source: formData.source,
+        step: 1
+      });
       setStep(2);
     }
   };
@@ -248,6 +285,16 @@ const DemoForm = () => {
     setTouched((prev) => ({ ...prev, storeUrl: true, ordersRange: true, platform: true }));
     
     if (urlValid && ordersValid && platformValid) {
+      // Enviar webhook al completar el paso 2 (agendar reunión)
+      sendWebhookToN8N('demo_form_step_2_completed', {
+        name: formData.name,
+        email: formData.email,
+        source: formData.source,
+        storeUrl: formData.storeUrl,
+        ordersRange: formData.ordersRange,
+        platform: formData.platform,
+        step: 2
+      });
       setIsSubmitted(true);
       // Aquí puedes agregar la lógica para enviar el formulario
       console.log("Form data:", formData);
