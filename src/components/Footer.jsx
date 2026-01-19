@@ -5,13 +5,13 @@ const Footer = () => {
     <footer className="bg-background text-white">
       {/* Main footer content */}
       <div className="mx-auto max-w-7xl px-[42px] sm:px-[72px] lg:px-[84px] xl:px-[108px] py-3 lg:py-4 xl:py-5">
-        <div className="grid gap-2 md:grid-cols-3 md:items-center">
+        <div className="grid gap-6 md:gap-2 md:grid-cols-3 md:items-center">
           {/* Partners */}
-          <div>
+          <div className="text-center md:text-left">
             <p className="text-xs font-medium uppercase tracking-widest text-white/60 mb-2">
               Partners
             </p>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center md:justify-start gap-3 flex-wrap">
               <img 
                 src="/logos/footer/meta tech blanco.svg" 
                 alt="Meta Tech Provider"
@@ -26,18 +26,18 @@ const Footer = () => {
           </div>
 
           {/* Made with love */}
-          <div className="text-center">
+          <div className="text-center order-first md:order-none">
             <p className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-widest">
-              Hecho con <Heart className="h-4 w-4 fill-white/80 text-white/80" /> en LATAM
+              Hecho en LATAM con <Heart className="h-4 w-4 fill-white/80 text-white/80" />
             </p>
           </div>
 
           {/* Backed by */}
-          <div className="md:text-right">
+          <div className="text-center md:text-right">
             <p className="text-xs font-medium uppercase tracking-widest text-white/60 mb-2">
               Backed by
             </p>
-            <div className="flex items-center gap-[18px] md:justify-end">
+            <div className="flex items-center justify-center md:justify-end gap-[18px] flex-wrap">
               <img 
                 src="/logos/footer/fen ventures blanco.svg" 
                 alt="Fen Ventures"

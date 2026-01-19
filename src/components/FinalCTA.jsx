@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import ModalWhatsApp from "./ModalWhatsApp";
 
 const FinalCTA = ({ onDemoClick }) => {
@@ -31,7 +31,7 @@ const FinalCTA = ({ onDemoClick }) => {
             onClick={openWhatsApp}
             className="glow-btn-whatsapp inline-flex items-center gap-2 rounded-full border border-[#1DAB61] bg-transparent px-6 py-3 text-base font-medium text-white hover:text-white transition-all"
           >
-            <MessageCircle className="h-4 w-4" />
+            <img src="/whatsapp.png" alt="WhatsApp" className="h-4 w-4 object-contain" />
             <span>WhatsApp</span>
           </button>
         </div>

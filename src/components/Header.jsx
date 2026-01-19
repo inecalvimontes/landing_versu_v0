@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MessageCircle, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "../lib/utils";
 import ModalWhatsApp from "./ModalWhatsApp";
 
@@ -9,10 +9,14 @@ const Header = ({ onDemoClick }) => {
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
 
   useEffect(() => {
+    // Establecer el estado inicial inmediatamente
+    setIsScrolled(window.scrollY > 10);
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener("scroll", handleScroll);
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -24,11 +28,18 @@ const Header = ({ onDemoClick }) => {
   return (
     <header
       className={cn(
-        "fixed left-0 right-0 top-0 z-50 w-full transition-all duration-300",
+        "fixed left-0 right-0 top-0 z-50 w-full transition-all duration-200 ease-out",
         isScrolled || isMobileMenuOpen
           ? "border-b border-text/20 bg-background/95 backdrop-blur-lg"
-          : "bg-transparent"
+          : "bg-background/0 backdrop-blur-none"
       )}
+      style={{
+        backgroundColor: isScrolled || isMobileMenuOpen 
+          ? undefined 
+          : 'rgba(32, 32, 32, 0)', // background color transparente explícito
+        transform: 'translateZ(0)', // Forzar aceleración por hardware
+        willChange: 'background-color, backdrop-filter', // Optimizar transición
+      }}
     >
       <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-12 xl:px-16">
         <div className="flex h-16 lg:h-20 items-center justify-between">
@@ -56,7 +67,7 @@ const Header = ({ onDemoClick }) => {
               onClick={openWhatsApp} 
               className="glow-btn-whatsapp inline-flex items-center gap-2 rounded-full border border-[#1DAB61] bg-transparent px-4 py-2 lg:px-6 lg:py-3 text-sm lg:text-base font-medium text-white hover:text-white transition-all"
             >
-              <MessageCircle className="h-4 w-4 lg:h-5 lg:w-5" />
+              <img src="/whatsapp.png" alt="WhatsApp" className="h-4 w-4 lg:h-5 lg:w-5 object-contain" />
               <span>WhatsApp</span>
             </button>
             <button 
@@ -92,7 +103,7 @@ const Header = ({ onDemoClick }) => {
                 }}
                 className="glow-btn-whatsapp inline-flex items-center justify-start gap-2 rounded-full border border-[#1DAB61] bg-transparent px-4 py-2 text-sm font-medium text-white hover:text-white transition-all"
               >
-                <MessageCircle className="h-4 w-4" />
+                <img src="/whatsapp.png" alt="WhatsApp" className="h-4 w-4 object-contain" />
                 <span>Hablar por WhatsApp</span>
               </button>
               <button 
