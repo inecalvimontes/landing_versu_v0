@@ -48,7 +48,7 @@ const Header = ({ onDemoClick }) => {
             <img 
               src="/logos/versu-logo.svg" 
               alt="Versu" 
-              className="h-[60px] sm:h-[72px] lg:h-[144px] w-auto"
+              className="h-[120px] sm:h-[96px] md:h-[108px] lg:h-[144px] w-auto"
               onError={(e) => {
                 // Fallback a texto si no existe el logo
                 const fallback = e.target.nextElementSibling;
