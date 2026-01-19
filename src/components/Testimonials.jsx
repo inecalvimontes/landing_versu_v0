@@ -4,86 +4,79 @@ import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 const testimonials = [
   {
     name: "Prosa",
-    photo: "/placeholder.jpg",
+    photo: "/logos/testimonials/prosa (color).svg",
     content:
       "Para nosotros Versu ha sido una apoyo clave en la estrategia en nuestro ecommerce y RR.SS, nos ayuda a ordena los mensajes y responde de una manera muy cercana. También nos ayudó a optimizar nuestro tiempo de manera mas eficiente. Y lo mejor es poder tener un apoyo extra en ventas, 24 horas al dia los 7 dias de la.semana, de manera muy simple, es realmente útil. La página es muy amigable y su equipo genial. 1000% recomendado.",
     rating: 5,
   },
   {
     name: "Bestmart",
-    photo: "/placeholder.jpg",
+    photo: "/logos/testimonials/bestmart (color).svg",
     content:
       "Operar al volumen de Bestmart te obliga a tener tecnología que no falle. En estos 7 meses, Versu pasó de ser una herramienta a un aliado clave: hoy automatizamos gran parte del soporte y recuperamos más de $20 millones en ventas con un ROAS de 656. Ha sido fundamental para seguir escalando con orden, la operación no solo es más liviana, sino que cada conversación con el cliente se vuelve rentable.",
     rating: 5,
   },
   {
     name: "Zenlab",
-    photo: "/placeholder.jpg",
+    photo: "/logos/testimonials/zenlab (color).svg",
     content:
       "En ZenLab trabajamos con suplementos funcionales, y algo que aprendimos rápido es que no basta con crear buenos productos: hay que saber explicarlos. Cada cliente llega con dudas reales, quiere entender qué está consumiendo, cómo le puede ayudar y cómo usarlo bien. Responder todo eso, en WhatsApp e Instagram, es muy demandante. Gracias a Versu, logramos automatizar la comunicación sin perder el trato humano. Hoy nuestros clientes reciben información clara, precisa y alineada con nuestros productos, mientras nosotros ganamos tiempo para enfocarnos en lo que más nos importa: mejorar nuestros procesos y seguir cuidando el servicio al cliente, que es el corazón de ZenLab.",
     rating: 5,
   },
   {
     name: "Bekoko",
-    photo: "/placeholder.jpg",
+    photo: "/logos/testimonials/bokoko (color).svg", // Nota: el archivo dice "bokoko" pero debería ser "bekoko"
     content:
       "En Bekoko implementamos el agente de IA nuestra web y la experiencia ha sido muy positiva. Nos permite responder consultas de forma rápida y mejorar la atención al cliente y su experiencia de compra. Destacamos especialmente la relación comercial y el soporte diario: cercano, ágil y siempre disponible. Un partner tecnológico en el que confiamos.",
     rating: 5,
   },
   {
     name: "Paopink",
-    photo: "/placeholder.jpg",
+    photo: "/logos/testimonials/pao pink.svg",
     content:
       "Gracias a Versu, nuestra tienda de fajas PaoPink atiende de forma rápida e inmediata el gran volumen diario de conversaciones en WhatsApp y redes sociales, ofreciendo soporte técnico, informativo y transaccional que nos genera nuevas ventas, así permitiendo que el equipo humano se enfoque en clientes que requieren atención prioritaria.",
     rating: 5,
   },
   {
     name: "Serjaf",
-    photo: "/placeholder.jpg",
+    photo: "/logos/testimonials/serjaf (color).svg",
     content:
       "Versu ha permitido que SERJAF Cycling & Sports atienda a sus clientes de forma inmediata y en cualquier momento, brindando información técnica precisa, asesoría en la elección de productos y generando ventas reales, mientras el equipo se enfoca en tareas estratégicas para el crecimiento del negocio.",
     rating: 5,
   },
   {
     name: "Saintmalé",
-    photo: "/placeholder.jpg",
+    photo: "/logos/testimonials/saint male (color).svg",
     content:
       "Implementar Versu en Saintmalé nos permitió ordenar la casa: hoy automatizamos nuestro soporte y postventa y, de paso, recuperamos carritos con una conversión real de hasta un 29%. La herramienta realmente captura al cliente cuando está por irse, con respuestas rápidas y sugerencias de prendas y tallas precisas. Se ha vuelto un pilar para operar tranquilos y seguir vendiendo.",
     rating: 5,
   },
   {
-    name: "Brenda Mendez",
-    photo: "/placeholder.jpg",
+    name: "Brenda Méndez",
+    photo: "/logos/testimonials/brenda mendez (color).png",
     content:
       "La verdad es que me sorprendieron mucho los resultados. Jamás pensé que un agente de IA pudiera atender con este nivel de precisión y, más encima, vender. En solo 3 meses Versu ya nos ha generado más de $4 millones en ventas recuperando carritos, con ROAS sobre 70%. Hoy es parte real de nuestro equipo, no un bot más.",
     rating: 5,
   },
   {
-    name: "Macai",
-    photo: "/placeholder.jpg",
+    name: "Maçaix",
+    photo: "/logos/testimonials/macaix (color).svg",
     content:
       "Como CEO de Maçaix, implementar Versu fue una decisión estratégica. Automatizamos Instagram y WhatsApp con respuestas rápidas, coherentes y humanas, y logramos recuperar carritos abandonados de forma consistente. Versu no solo mejora el soporte, si no también crea carritos, impulsa conversiones y genera ventas, por lo que la plataforma prácticamente se autofinancia. Es fácil de gestionar, muy eficiente y con un equipo ágil y comprometido. Una solución clave para escalar ecommerce y otras verticales de negocio",
     rating: 5,
   },
   {
-    name: "Bikini Misfit",
-    photo: "/placeholder.jpg",
+    name: "Bikini Missfit",
+    photo: "/logos/testimonials/missfit (color).svg",
     content:
       "Una respuesta entregada en el momento preciso nos ha ayudado a subir las ventas en un 30%",
     rating: 5,
   },
   {
-    name: "MI placard",
-    photo: "/placeholder.jpg",
+    name: "MI Placard",
+    photo: "/logos/testimonials/mi placard (color).svg",
     content:
       "Como CEO de Mi Placard, nuestra experiencia con Versu ha sido excelente. En solo un día lograron integrar la IA con nuestro Shopify, algo que no habíamos conseguido con otras soluciones. La plataforma es muy fácil de autogestionar, lo que nos permite adaptarla rápido a cambios de horarios, promociones o información clave. Destaco especialmente su sistema de tickets, que clasifica y prioriza los casos que la IA no puede resolver, y la integración de carrito abandonado por WhatsApp, que nos ha ayudado a recuperar ventas. El equipo es cercano, rápido y muy comprometido. Lo recomiendo totalmente.",
-    rating: 5,
-  },
-  {
-    name: "Spot essence",
-    photo: "/placeholder.jpg",
-    content:
-      "Ha sido una plataforma cómoda y fácil de usar. Facilita el trabajo del servicio al cliente, respondiendo automáticamente preguntas de forma clara y precisa en segundos, además de que guía a los clientes a realizar la compra cuando lo necesitan. Ha sido un alivio poder ahorrar tiempo especialmente en periodos de campaña.",
     rating: 5,
   },
 ];
@@ -102,15 +95,15 @@ const TestimonialCard = ({ testimonial }) => {
       <div className="flex items-center gap-8 mb-4">
         {/* Foto con círculo superpuesto - izquierda */}
         <div className="flex-shrink-0 relative">
-          <div className="w-16 h-16 rounded-full overflow-hidden bg-accent/20 flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full overflow-hidden bg-white flex items-center justify-center p-2">
             <img
               src={testimonial.photo}
               alt={testimonial.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
           </div>
-          {/* Logo de Shopify superpuesto en la parte inferior derecha (60% superpuesto sobre el círculo grande) */}
-          <div className="absolute bottom-0 -right-3.5 w-9 h-9 rounded-full bg-white flex items-center justify-center p-1.5">
+          {/* Logo de Shopify superpuesto en la parte inferior derecha - 50% dentro del círculo grande, 50% fuera */}
+          <div className="absolute bottom-0 -right-4 w-8 h-8 rounded-full bg-white flex items-center justify-center p-1.5">
             <img
               src="/logos/partners/shopify 2.svg"
               alt="Shopify"
@@ -119,8 +112,8 @@ const TestimonialCard = ({ testimonial }) => {
           </div>
         </div>
         
-        {/* Nombre centrado verticalmente con el círculo */}
-        <div className="flex-1">
+        {/* Nombre centrado verticalmente con el círculo - movido la misma cantidad que el círculo pequeño */}
+        <div className="flex-1" style={{ marginLeft: '10px' }}>
           <h3 className="text-xl font-bold text-text">
             {testimonial.name}
           </h3>
@@ -212,7 +205,7 @@ const Testimonials = () => {
 
   return (
     <section className="bg-background py-8 md:py-12 lg:py-16 xl:py-20">
-      <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-12 xl:px-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="text-center">
           <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text font-subtitle">
             Lo que dicen nuestros clientes

@@ -96,7 +96,7 @@ const HowItWorks = () => {
 
   return (
     <section className="bg-background py-8 md:py-12 lg:py-16 xl:py-20">
-      <div className="mx-auto max-w-7xl px-[42px] sm:px-[72px] lg:px-[84px] xl:px-[108px]">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="grid gap-6 lg:grid-cols-[3fr_2fr] lg:gap-8 items-center">
           {/* Left: Title, Subtitle and Steps */}
           <div>

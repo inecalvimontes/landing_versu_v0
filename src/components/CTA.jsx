@@ -1,7 +1,7 @@
 function CTA() {
   return (
     <section className="bg-accent">
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
             Ready to get started?
