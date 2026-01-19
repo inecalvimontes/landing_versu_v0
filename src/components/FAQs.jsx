@@ -1,47 +1,43 @@
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Users, Bot, Star, Clock, ShieldAlert, FileText } from "lucide-react";
 import { cn } from "../lib/utils";
 
 const faqs = [
   {
     question: "¿Versu reemplaza a mi equipo?",
     answer:
-      "No. Versu automatiza consultas frecuentes y deriva casos complejos a tu equipo humano con todo el contexto de la conversación.",
+      "No. Versu reduce en promedio hasta un 65% la carga operativa del equipo humano. Tu equipo se enfoca en casos críticos o excepciones, y Versu deriva las conversaciones a cada integrante cuando se requiere intervención humana, manteniendo todo el contexto.",
+    icon: Users,
   },
   {
-    question: "¿Cuánto se demora en quedar funcionando?",
+    question: "¿Los clientes notan que es IA?",
     answer:
-      "El promedio es de 7 días hábiles, dependiendo de la complejidad de tu catálogo y políticas. Algunos clientes han logrado implementar en 3 días.",
+      "Versu responde con el tono de tu marca y mantiene contexto conversacional. La mayoría de clientes no lo nota, pero si preguntan, el agente se identifica como asistente virtual.",
+    icon: Bot,
   },
   {
-    question: "¿Qué canales soporta?",
+    question: "¿Qué hace diferente a Versu?",
     answer:
-      "WhatsApp Business API e Instagram DMs. Próximamente estaremos agregando Facebook Messenger y chat web.",
+      "Versu está diseñado específicamente para e-commerce. Se conecta a tu catálogo y a tus políticas (envíos, cambios, pagos) para responder con contexto real, mantener consistencia y escalar sin perder control operativo. Por eso nos enfocamos en retail/e-commerce y no en industrias fuera de ese scope.",
+    icon: Star,
   },
   {
-    question: "¿Cómo se entrena el agente?",
+    question: "¿Tiene costo de implementación? ¿Cuanto tiempo toma?",
     answer:
-      "Conectamos tu tienda (Shopify, WooCommerce, VTEX, etc.) y extraemos automáticamente tu catálogo. Además, configuramos tus políticas de envío, devoluciones y preguntas frecuentes.",
+      "No. Versu no tiene costos de implementación. La integración técnica toma alrededor de 3 minutos y el tiempo para dejar los agentes públicos depende del negocio. En promedio, quedan operativos en una semana, considerando ajustes según tu operación.",
+    icon: Clock,
   },
   {
-    question: "¿Puedo personalizar las respuestas?",
+    question: "¿Qué pasa si la IA se equivoca?",
     answer:
-      "Sí, puedes ajustar el tono, agregar respuestas específicas y definir cuándo debe derivar a un humano. Todo desde nuestro panel sin necesidad de código.",
+      "Tu equipo supervisa en tiempo real y puede intervenir con un solo click. Cada error se corrige sin costo y sirve como hito para una mejora continua del agente.",
+    icon: ShieldAlert,
   },
   {
-    question: "¿Qué pasa si el agente no sabe responder?",
+    question: "¿Hay cláusula de permanencia?",
     answer:
-      "El agente está configurado para reconocer sus límites. Cuando no tiene certeza, deriva la conversación a tu equipo con un resumen del contexto.",
-  },
-  {
-    question: "¿Hay un período de prueba?",
-    answer:
-      "Ofrecemos una demo personalizada donde puedes ver el agente funcionando con tu catálogo real antes de tomar una decisión.",
-  },
-  {
-    question: "¿Cuánto cuesta?",
-    answer:
-      "Tenemos planes desde $99 USD/mes. El precio final depende del volumen de conversaciones y las integraciones requeridas. Agenda una demo para recibir una cotización personalizada.",
+      "No es obligatorio amarrarse por largos períodos. Trabajamos con suscripción y puedes cancelar en cualquier momento.",
+    icon: FileText,
   },
 ];
 
@@ -52,8 +48,8 @@ const FAQs = () => {
     <section className="bg-background py-8 md:py-12 lg:py-16 xl:py-20">
       <div className="mx-auto max-w-7xl px-[42px] sm:px-[72px] lg:px-[84px] xl:px-[108px]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-start">
-            {/* Left: Title, subtitle and image - sticky on desktop */}
-            <div className="lg:sticky lg:top-24">
+            {/* Left: Title and subtitle - fixed in initial position */}
+            <div className="flex flex-col lg:sticky lg:top-24 lg:pt-32 self-start">
               <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text mb-1 font-subtitle lg:whitespace-nowrap">
                 Preguntas frecuentes (FAQ)
               </h2>
@@ -61,15 +57,6 @@ const FAQs = () => {
                 ¿No encuentras lo que buscas? Contacta a nuestro{" "}
                 <span className="font-semibold text-text">equipo de soporte</span>.
               </p>
-              <div className="mt-8 flex justify-center">
-                <div className="rounded-2xl overflow-hidden max-w-[280px] lg:max-w-[320px]">
-                <img 
-                  src="/placeholder.jpg" 
-                  alt="FAQ illustration" 
-                  className="w-full h-auto object-cover rounded-2xl"
-                />
-                </div>
-              </div>
             </div>
 
             {/* Right: FAQ accordion */}
@@ -80,9 +67,12 @@ const FAQs = () => {
                     onClick={() => setOpenIndex(openIndex === index ? null : index)}
                     className="flex w-full items-center justify-between gap-4 px-6 py-4 text-left transition-colors hover:bg-text/10"
                   >
-                    <span className="font-medium text-text">
-                      {faq.question}
-                    </span>
+                    <div className="flex items-center gap-3 flex-1">
+                      <faq.icon className="w-3.5 h-3.5 text-accent flex-shrink-0" />
+                      <span className="font-medium text-text">
+                        {faq.question}
+                      </span>
+                    </div>
                     <ChevronDown
                       className={cn(
                         "h-5 w-5 flex-shrink-0 text-text/60 transition-transform duration-200",
