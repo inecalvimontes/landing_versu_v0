@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
-import { X, MessageCircle } from "lucide-react";
+import { X } from "lucide-react";
 
 const ordersOptions = [
   { value: "0-200", label: "0 - 200" },
@@ -230,7 +230,7 @@ const ModalWhatsApp = ({ isOpen, onClose }) => {
               disabled={!isFormValid}
               className="glow-btn-whatsapp w-full h-11 mt-6 inline-flex items-center justify-center gap-2 rounded-full border border-[#1DAB61] bg-transparent px-6 text-sm font-medium text-white hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <MessageCircle className="w-4 h-4" />
+              <img src="/whatsapp.png" alt="WhatsApp" className="w-4 h-4 object-contain" />
               <span>Abrir WhatsApp</span>
             </button>
           </div>

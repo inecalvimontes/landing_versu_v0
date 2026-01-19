@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Check, ArrowRight, Play, X } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
+// import { Play, X } from "lucide-react"; // Comentado - no se usa el modal de video
 
 // Partners integrations - 24 logos de la carpeta partners
 const partnersLogos = [
@@ -222,11 +223,11 @@ const IntegrationsCarousel = () => {
 };
 
 const Hero = ({ onDemoClick }) => {
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
-  const [isHeroVisible, setIsHeroVisible] = useState(true);
+  // const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  // const [isHeroVisible, setIsHeroVisible] = useState(true);
   const [typewriterText, setTypewriterText] = useState("");
-  const videoRef = useRef(null);
-  const heroSectionRef = useRef(null);
+  // const videoRef = useRef(null);
+  // const heroSectionRef = useRef(null);
 
   const words = ["resuelve.", "atiende.", "vende.", "responde."];
 
@@ -237,55 +238,55 @@ const Hero = ({ onDemoClick }) => {
   ];
 
   // Detectar cuando el hero sale del viewport
-  useEffect(() => {
-    if (!heroSectionRef.current || !isVideoModalOpen) return;
+  // useEffect(() => {
+  //   if (!heroSectionRef.current || !isVideoModalOpen) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsHeroVisible(entry.isIntersecting);
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '-50px 0px 0px 0px'
-      }
-    );
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       setIsHeroVisible(entry.isIntersecting);
+  //     },
+  //     {
+  //       threshold: 0.1,
+  //       rootMargin: '-50px 0px 0px 0px'
+  //     }
+  //   );
 
-    observer.observe(heroSectionRef.current);
+  //   observer.observe(heroSectionRef.current);
 
-    return () => {
-      observer.disconnect();
-    };
-  }, [isVideoModalOpen]);
+  //   return () => {
+  //     observer.disconnect();
+  //   };
+  // }, [isVideoModalOpen]);
 
   // Reproducir video cuando se abre el modal
-  useEffect(() => {
-    if (isVideoModalOpen && videoRef.current) {
-      videoRef.current.play().catch(console.error);
-    } else if (!isVideoModalOpen && videoRef.current) {
-      // Pausar video cuando se cierra el modal
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-  }, [isVideoModalOpen]);
+  // useEffect(() => {
+  //   if (isVideoModalOpen && videoRef.current) {
+  //     videoRef.current.play().catch(console.error);
+  //   } else if (!isVideoModalOpen && videoRef.current) {
+  //     // Pausar video cuando se cierra el modal
+  //     videoRef.current.pause();
+  //     videoRef.current.currentTime = 0;
+  //   }
+  // }, [isVideoModalOpen]);
 
-  const handleOpenVideo = () => {
-    setIsVideoModalOpen(true);
-  };
+  // const handleOpenVideo = () => {
+  //   setIsVideoModalOpen(true);
+  // };
 
-  const handleCloseVideo = () => {
-    setIsVideoModalOpen(false);
-  };
+  // const handleCloseVideo = () => {
+  //   setIsVideoModalOpen(false);
+  // };
 
   // Cerrar modal con tecla Escape
-  useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === 'Escape' && isVideoModalOpen) {
-        setIsVideoModalOpen(false);
-      }
-    };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [isVideoModalOpen]);
+  // useEffect(() => {
+  //   const handleEscape = (e) => {
+  //     if (e.key === 'Escape' && isVideoModalOpen) {
+  //       setIsVideoModalOpen(false);
+  //     }
+  //   };
+  //   window.addEventListener('keydown', handleEscape);
+  //   return () => window.removeEventListener('keydown', handleEscape);
+  // }, [isVideoModalOpen]);
 
   // Efecto de máquina de escribir que cicla entre palabras
   useEffect(() => {
@@ -329,7 +330,7 @@ const Hero = ({ onDemoClick }) => {
   }, []);
 
   return (
-    <section ref={heroSectionRef} className="relative w-full overflow-hidden pt-[86px] pb-8 md:pt-[115px] md:pb-12 lg:pt-[144px] lg:pb-16 xl:pt-[173px] xl:pb-20">
+    <section className="relative w-full overflow-hidden pt-[86px] pb-8 md:pt-[115px] md:pb-12 lg:pt-[144px] lg:pb-16 xl:pt-[173px] xl:pb-20">
       {/* Video de fondo */}
       <video
         autoPlay
@@ -337,10 +338,19 @@ const Hero = ({ onDemoClick }) => {
         loop
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-0"
+        style={{
+          transform: 'scaleX(-1)',
+        }}
       >
-        <source src="/video hero.MOV" type="video/quicktime" />
-        <source src="/video hero.MOV" type="video/mp4" />
+        <source src="/video_1.mp4" type="video/mp4" />
       </video>
+      {/* Imagen de fondo */}
+      {/* <div 
+        className="absolute inset-0 w-full h-full bg-cover bg-center z-0"
+        style={{
+          backgroundImage: 'url(/fondo_2.png)',
+        }}
+      /> */}
       {/* Overlay oscuro para legibilidad */}
       <div className="absolute inset-0 bg-background/80 z-10"></div>
       
@@ -382,7 +392,7 @@ const Hero = ({ onDemoClick }) => {
                   <span>Solicitar demo</span>
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </button>
-                <button
+                {/* <button
                   onClick={handleOpenVideo}
                   className="glow-btn-white group inline-flex items-center justify-center gap-3 rounded-full border border-[#f2f2f2]/80 bg-transparent px-6 py-3 text-base font-medium text-[#f2f2f2] transition-all h-12 box-border"
                 >
@@ -390,7 +400,7 @@ const Hero = ({ onDemoClick }) => {
                     <Play className="h-3 w-3 fill-[#202020] ml-0.5" />
                   </div>
                   <span>Video completo</span>
-                </button>
+                </button> */}
               </div>
               <p className="text-sm text-text/60">
                 Toma 2 minutos. Sin spam.
@@ -439,18 +449,18 @@ const Hero = ({ onDemoClick }) => {
       </div>
 
       {/* Modal de video en pantalla completa o flotante */}
-      {isVideoModalOpen && (
+      {/* {isVideoModalOpen && (
         <>
           {/* Fondo semi-transparente solo cuando el hero es visible */}
-          {isHeroVisible && (
+          {/* {isHeroVisible && (
             <div 
               className="fixed inset-0 z-[9998] bg-black/50 transition-opacity duration-300"
               onClick={handleCloseVideo}
             />
-          )}
+          )} */}
           
           {/* Contenedor del video */}
-          <div 
+          {/* <div 
             className={`fixed z-[9999] transition-all duration-[1500ms] ease-in-out ${
               isHeroVisible
                 ? 'inset-0 flex items-center justify-center p-4 opacity-100'
@@ -466,7 +476,7 @@ const Hero = ({ onDemoClick }) => {
             }}
           >
             {/* Botón cerrar */}
-            <button
+            {/* <button
               onClick={handleCloseVideo}
               className={`absolute z-50 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-[1500ms] ease-in-out backdrop-blur-sm ${
                 isHeroVisible
@@ -476,10 +486,10 @@ const Hero = ({ onDemoClick }) => {
               aria-label="Cerrar video"
             >
               <X className={`transition-all duration-[1500ms] ease-in-out ${isHeroVisible ? 'h-6 w-6' : 'h-4 w-4'}`} />
-            </button>
+            </button> */}
 
             {/* Reproductor de video */}
-            <video
+            {/* <video
               ref={videoRef}
               controls
               autoPlay
@@ -498,7 +508,7 @@ const Hero = ({ onDemoClick }) => {
             </video>
           </div>
         </>
-      )}
+      )} */}
     </section>
   );
 };

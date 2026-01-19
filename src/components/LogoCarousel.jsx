@@ -140,16 +140,14 @@ const LogoCarousel = () => {
               <div
                 key={`mobile-${index}`}
                 onClick={() => handleClick(index)}
-                className={`flex-shrink-0 w-48 h-48 sm:w-56 sm:h-56 transition-all duration-300 group cursor-pointer ${
-                  activeIndex === index ? 'grayscale-0' : 'grayscale'
-                }`}
+                className="flex-shrink-0 w-48 h-48 sm:w-56 sm:h-56 transition-all duration-300 group cursor-pointer"
               >
+                {/* Código comentado - efecto blanco y negro: activeIndex === index ? 'grayscale-0' : 'grayscale' */}
+                {/* Código comentado - efecto de opacidad con click: activeIndex === index ? 'opacity-100' : 'opacity-70' */}
                 <img 
                   src={client.logo} 
                   alt={client.name}
-                  className={`w-full h-full object-cover transition-opacity pointer-events-none ${
-                    activeIndex === index ? 'opacity-100' : 'opacity-70'
-                  }`}
+                  className="w-full h-full object-cover transition-opacity pointer-events-none opacity-100"
                 />
               </div>
             ))}
@@ -168,16 +166,14 @@ const LogoCarousel = () => {
               <div
                 key={`desktop-${index}`}
                 onClick={() => handleClick(index)}
-                className={`flex-shrink-0 w-64 h-64 xl:w-72 xl:h-72 transition-all duration-300 group cursor-pointer ${
-                  activeIndex === index ? 'grayscale-0' : 'grayscale hover:grayscale-0'
-                }`}
+                className="flex-shrink-0 w-64 h-64 xl:w-72 xl:h-72 transition-all duration-300 group cursor-pointer"
               >
+                {/* Código comentado - efecto blanco y negro con hover: activeIndex === index ? 'grayscale-0' : 'grayscale hover:grayscale-0' */}
+                {/* Código comentado - efecto de opacidad con click y hover: activeIndex === index ? 'opacity-100' : 'opacity-70 group-hover:opacity-100' */}
                 <img 
                   src={client.logo} 
                   alt={client.name}
-                  className={`w-full h-full object-cover transition-opacity ${
-                    activeIndex === index ? 'opacity-100' : 'opacity-70 group-hover:opacity-100'
-                  }`}
+                  className="w-full h-full object-cover transition-opacity opacity-100"
                 />
               </div>
             ))}

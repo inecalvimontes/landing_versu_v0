@@ -97,7 +97,7 @@ const HowItWorks = () => {
   return (
     <section className="bg-background py-8 md:py-12 lg:py-16 xl:py-20">
       <div className="mx-auto max-w-7xl px-[42px] sm:px-[72px] lg:px-[84px] xl:px-[108px]">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+        <div className="grid gap-6 lg:grid-cols-[3fr_2fr] lg:gap-8 items-center">
           {/* Left: Title, Subtitle and Steps */}
           <div>
             <div className="mb-8 lg:mb-10">
@@ -121,7 +121,7 @@ const HowItWorks = () => {
                     PASO {index + 1}
                   </p>
                   <h3 className="text-[20px] sm:text-[24px] font-subtitle text-text">{step.title}</h3>
-                  <p className="mt-1 text-base text-text/70 font-text lg:whitespace-nowrap">{step.description}</p>
+                  <p className="mt-1 text-base text-text/70 font-text xl:whitespace-nowrap">{step.description}</p>
                 </div>
               </div>
             ))}
@@ -276,7 +276,7 @@ const HowItWorks = () => {
                           className="glow-btn-whatsapp w-full h-9 gap-2 rounded-full border border-[#1DAB61] bg-transparent text-white inline-flex items-center justify-center text-[15px] transition-all"
                           onClick={openWhatsApp}
                         >
-                          <MessageCircle className="h-4 w-4" />
+                          <img src="/whatsapp.png" alt="WhatsApp" className="h-4 w-4 object-contain" />
                           <span>Abrir WhatsApp</span>
                           <ArrowRight className="h-3 w-3" />
                         </button>
