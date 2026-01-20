@@ -4,7 +4,7 @@ import IPhoneFrame from "./ui/IPhoneFrame";
 
 // Función helper para enviar webhooks a n8n
 async function sendWebhookToN8N(eventType, data) {
-  const webhookUrl = 'https://n8n.srv1268009.hstgr.cloud/webhook-test/266f3179-2029-40e2-b9c6-3d3e6efafb1e';
+  const webhookUrl = import.meta.env.VITE_WEBHOOK_URL || 'https://witty-laurene-anacrustically.ngrok-free.dev/landing/webhook/';
   
   try {
     const payload = {
@@ -24,7 +24,6 @@ async function sendWebhookToN8N(eventType, data) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-forward-secret': import.meta.env.WEBHOOK_SECRET || '',
       },
       body: payloadString
     });
@@ -66,6 +65,8 @@ const HowItWorks = () => {
   const [inputValue, setInputValue] = useState("");
   const [email, setEmail] = useState("");
   const [storeUrl, setStoreUrl] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [urlError, setUrlError] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -74,6 +75,14 @@ const HowItWorks = () => {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Resetear errores cuando se muestra el formulario
+  useEffect(() => {
+    if (chatStep === "form") {
+      setEmailError("");
+      setUrlError("");
+    }
+  }, [chatStep]);
 
   const formatTime = (date) => {
     return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: false });
@@ -86,6 +95,86 @@ const HowItWorks = () => {
     const day = date.getDate();
     const month = months[date.getMonth()];
     return `${dayName} ${day}. ${month}`;
+  };
+
+  // Función para validar email
+  const validateEmail = (email) => {
+    if (!email.trim()) {
+      return "";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return "Formato de email inválido";
+    }
+    return "";
+  };
+
+  // Función para validar URL
+  const validateUrl = (url) => {
+    if (!url.trim()) {
+      return "";
+    }
+    
+    const trimmedUrl = url.trim();
+    
+    // Verificar que no tenga espacios
+    if (trimmedUrl.includes(' ')) {
+      return "URL inválida";
+    }
+    
+    try {
+      let urlToValidate = trimmedUrl;
+      
+      // Si no tiene protocolo, agregar https://
+      if (!trimmedUrl.match(/^https?:\/\//i)) {
+        urlToValidate = `https://${trimmedUrl}`;
+      }
+      
+      // Intentar crear un objeto URL
+      const urlObj = new URL(urlToValidate);
+      
+      // Verificar que tenga hostname válido
+      if (!urlObj.hostname || urlObj.hostname.length < 3) {
+        return "URL inválida";
+      }
+      
+      // Verificar que el hostname tenga al menos un punto (dominio válido)
+      // Ejemplos válidos: ejemplo.com, www.ejemplo.com, subdominio.ejemplo.com
+      // Ejemplos inválidos: localhost, 123, ejemplo
+      if (!urlObj.hostname.includes('.')) {
+        return "URL inválida";
+      }
+      
+      // Verificar que las partes del dominio no estén vacías
+      const hostnameParts = urlObj.hostname.split('.');
+      if (hostnameParts.some(part => part.length === 0)) {
+        return "URL inválida";
+      }
+      
+      // Verificar que el TLD (última parte) tenga al menos 2 caracteres
+      const tld = hostnameParts[hostnameParts.length - 1];
+      if (tld.length < 2) {
+        return "URL inválida";
+      }
+      
+      return "";
+    } catch (error) {
+      return "URL inválida";
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    setEmailError(validateEmail(value));
+  };
+
+  const handleUrlChange = (e) => {
+    const value = e.target.value;
+    setStoreUrl(value);
+    // Validar inmediatamente cuando el usuario escribe
+    const error = validateUrl(value);
+    setUrlError(error);
   };
 
   const handleSendMessage = () => {
@@ -115,9 +204,16 @@ const HowItWorks = () => {
   };
 
   const handleSubmitForm = () => {
-    // Validar email
-    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    if (!emailValid || !storeUrl.trim()) return;
+    // Validar ambos campos antes de continuar
+    const emailErr = validateEmail(email);
+    const urlErr = validateUrl(storeUrl);
+    
+    setEmailError(emailErr);
+    setUrlError(urlErr);
+    
+    if (emailErr || urlErr || !email.trim() || !storeUrl.trim()) {
+      return;
+    }
     
     // Enviar webhook al continuar después de rellenar el formulario
     sendWebhookToN8N('howitworks_form_continued', {
@@ -295,25 +391,36 @@ const HowItWorks = () => {
                             type="email"
                             placeholder="tu@empresa.com"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="h-6 text-[12.5px] w-full px-1.5 rounded border border-white/20 bg-[#353535] text-white placeholder:text-white/50"
+                            onChange={handleEmailChange}
+                            className={`h-6 text-[12.5px] w-full px-1.5 rounded border ${
+                              emailError ? 'border-red-500' : 'border-white/20'
+                            } bg-[#353535] text-white placeholder:text-white/50`}
                           />
+                          {emailError && (
+                            <p className="text-[10px] text-red-400 mt-0.5">{emailError}</p>
+                          )}
                         </div>
                         <div>
                           <label className="text-[12.5px] text-white/70 mb-1 block">
                             URL de tu tienda
                           </label>
                           <input
-                            placeholder="URL de tu tienda"
+                            type="url"
+                            placeholder="https://tu-tienda.com"
                             value={storeUrl}
-                            onChange={(e) => setStoreUrl(e.target.value)}
-                            className="h-6 text-[12.5px] w-full px-1.5 rounded border border-white/20 bg-[#353535] text-white placeholder:text-white/50"
+                            onChange={handleUrlChange}
+                            className={`h-6 text-[12.5px] w-full px-1.5 rounded border ${
+                              urlError ? 'border-red-500' : 'border-white/20'
+                            } bg-[#353535] text-white placeholder:text-white/50`}
                           />
+                          {urlError && (
+                            <p className="text-[10px] text-red-400 mt-0.5">{urlError}</p>
+                          )}
                         </div>
                         <button
                           className="w-full h-6 text-[12.5px] rounded bg-accent text-white hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed"
                           onClick={handleSubmitForm}
-                          disabled={!email.trim() || !storeUrl.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)}
+                          disabled={!email.trim() || !storeUrl.trim() || emailError || urlError}
                         >
                           Continuar
                         </button>
