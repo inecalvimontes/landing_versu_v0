@@ -12,8 +12,5 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       open: true
     },
-    define: {
-      'import.meta.env.WEBHOOK_SECRET': JSON.stringify(env.WEBHOOK_SECRET || '')
-    }
   }
 })

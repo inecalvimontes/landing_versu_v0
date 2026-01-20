@@ -45,7 +45,7 @@ const demoPoints = [
 
 // Función helper para enviar webhooks a n8n
 async function sendWebhookToN8N(eventType, data) {
-  const webhookUrl = 'https://n8n.srv1268009.hstgr.cloud/webhook-test/266f3179-2029-40e2-b9c6-3d3e6efafb1e';
+  const webhookUrl = import.meta.env.VITE_WEBHOOK_URL || 'https://witty-laurene-anacrustically.ngrok-free.dev/landing/webhook/';
   
   try {
     const payload = {
@@ -65,7 +65,6 @@ async function sendWebhookToN8N(eventType, data) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-forward-secret': import.meta.env.WEBHOOK_SECRET || '',
       },
       body: payloadString
     });
@@ -348,11 +347,21 @@ const DemoForm = () => {
           container.innerHTML = '';
         }
         
-        // Determinar qué URL de SavvyCal usar según el rango de órdenes
-        const isHighVolume = formData.ordersRange === '1000-3000' || formData.ordersRange === '3000+';
-        const savvyCalLink = isHighVolume 
-          ? 'macarena/reunion-con-versu-ai' 
-          : 'versu/demo';
+        // Determinar qué URL de SavvyCal usar
+        // Primero verificar si la URL contiene /mx para usar el calendario de México
+        const isMexicoUrl = window.location.pathname.includes('/mx');
+        let savvyCalLink;
+        
+        if (isMexicoUrl) {
+          // Calendario de México
+          savvyCalLink = 'versumexico/demo-versu-max';
+        } else {
+          // Lógica original: según el rango de órdenes
+          const isHighVolume = formData.ordersRange === '1000-3000' || formData.ordersRange === '3000+';
+          savvyCalLink = isHighVolume 
+            ? 'macarena/reunion-con-versu-ai' 
+            : 'versu/demo';
+        }
         
         // Construir metadata para Meta CAPI y tracking
         const metadata = buildMetadata();

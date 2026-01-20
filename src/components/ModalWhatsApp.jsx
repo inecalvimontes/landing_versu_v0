@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 
 // Función helper para enviar webhooks a n8n
 async function sendWebhookToN8N(eventType, data) {
-  const webhookUrl = 'https://n8n.srv1268009.hstgr.cloud/webhook-test/266f3179-2029-40e2-b9c6-3d3e6efafb1e';
+  const webhookUrl = import.meta.env.VITE_WEBHOOK_URL || 'https://witty-laurene-anacrustically.ngrok-free.dev/landing/webhook/';
   
   try {
     const payload = {
@@ -24,7 +24,6 @@ async function sendWebhookToN8N(eventType, data) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-forward-secret': import.meta.env.WEBHOOK_SECRET || '',
       },
       body: payloadString
     });
