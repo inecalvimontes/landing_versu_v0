@@ -2,6 +2,41 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
+// Función helper para enviar webhooks a n8n
+async function sendWebhookToN8N(eventType, data) {
+  const webhookUrl = 'https://n8n.srv1268009.hstgr.cloud/webhook-test/266f3179-2029-40e2-b9c6-3d3e6efafb1e';
+  
+  try {
+    const payload = {
+      eventType,
+      timestamp: new Date().toISOString(),
+      data,
+      metadata: {
+        url: window.location.href,
+        referrer: document.referrer,
+        userAgent: navigator.userAgent,
+      }
+    };
+    
+    const payloadString = JSON.stringify(payload);
+    
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-forward-secret': import.meta.env.WEBHOOK_SECRET || '',
+      },
+      body: payloadString
+    });
+    
+    return response.ok;
+  } catch (error) {
+    console.error('Error sending webhook:', error);
+    // No bloquear el flujo si falla el webhook
+    return false;
+  }
+}
+
 const ordersOptions = [
   { value: "0-200", label: "0 - 200" },
   { value: "200-500", label: "200 - 500" },
@@ -103,6 +138,13 @@ const ModalWhatsApp = ({ isOpen, onClose }) => {
     setTouched({ email: true, storeUrl: true, ordersRange: true });
     
     if (!emailValid || !urlValid || !ordersValid) return;
+
+    // Enviar webhook al abrir WhatsApp
+    sendWebhookToN8N('whatsapp_form_opened', {
+      email: formData.email,
+      storeUrl: formData.storeUrl,
+      ordersRange: formData.ordersRange,
+    });
 
     const message = encodeURIComponent(
       `Hola, quiero saber más sobre Versu.\n\nEmail: ${formData.email}\nWebsite: ${formData.storeUrl}\nÓrdenes mensuales: ${formData.ordersRange}`

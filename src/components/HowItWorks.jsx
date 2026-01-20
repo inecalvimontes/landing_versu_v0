@@ -3,6 +3,41 @@ import { Link2, Brain, Rocket, Send, MessageCircle, ArrowRight, ArrowLeft, Video
 import IPhoneFrame from "./ui/IPhoneFrame";
 import ModalWhatsApp from "./ModalWhatsApp";
 
+// Función helper para enviar webhooks a n8n
+async function sendWebhookToN8N(eventType, data) {
+  const webhookUrl = 'https://n8n.srv1268009.hstgr.cloud/webhook-test/266f3179-2029-40e2-b9c6-3d3e6efafb1e';
+  
+  try {
+    const payload = {
+      eventType,
+      timestamp: new Date().toISOString(),
+      data,
+      metadata: {
+        url: window.location.href,
+        referrer: document.referrer,
+        userAgent: navigator.userAgent,
+      }
+    };
+    
+    const payloadString = JSON.stringify(payload);
+    
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-forward-secret': import.meta.env.WEBHOOK_SECRET || '',
+      },
+      body: payloadString
+    });
+    
+    return response.ok;
+  } catch (error) {
+    console.error('Error sending webhook:', error);
+    // No bloquear el flujo si falla el webhook
+    return false;
+  }
+}
+
 const steps = [
   {
     icon: Link2,
@@ -24,21 +59,13 @@ const steps = [
   },
 ];
 
-const countryOptions = [
-  { code: "+52", country: "🇲🇽 MX" },
-  { code: "+57", country: "🇨🇴 CO" },
-  { code: "+56", country: "🇨🇱 CL" },
-  { code: "+51", country: "🇵🇪 PE" },
-];
-
 const HowItWorks = () => {
   const [chatStep, setChatStep] = useState("chat");
   const [messages, setMessages] = useState([
     { text: "¡Hola! Soy Versu 👋 ¿Tienes alguna pregunta sobre nuestros productos?", isUser: false, timestamp: new Date() },
   ]);
   const [inputValue, setInputValue] = useState("");
-  const [countryCode, setCountryCode] = useState("+56");
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [storeUrl, setStoreUrl] = useState("");
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -72,7 +99,7 @@ const HowItWorks = () => {
     
     setTimeout(() => {
       setMessages(prev => [...prev, { 
-        text: "¡Gracias por tu mensaje! Para darte una respuesta personalizada, ¿podrías compartirme tu número de WhatsApp y la URL de tu tienda?", 
+        text: "¡Gracias por tu mensaje! Para darte una respuesta personalizada, ¿podrías compartirme tu correo electrónico y la URL de tu tienda?", 
         isUser: false,
         timestamp: new Date()
       }]);
@@ -81,7 +108,16 @@ const HowItWorks = () => {
   };
 
   const handleSubmitForm = () => {
-    if (!phone.trim() || !storeUrl.trim()) return;
+    // Validar email
+    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!emailValid || !storeUrl.trim()) return;
+    
+    // Enviar webhook al continuar después de rellenar el formulario
+    sendWebhookToN8N('howitworks_form_continued', {
+      email: email,
+      storeUrl: storeUrl,
+    });
+    
     setChatStep("done");
     setMessages(prev => [...prev, { 
       text: "¡Perfecto! Ahora puedes probar Versu directamente en WhatsApp con tu catálogo.", 
@@ -226,27 +262,15 @@ const HowItWorks = () => {
                       <div className="mt-3 space-y-2 rounded-xl bg-[#353535] border border-text/20 p-2.5">
                         <div>
                           <label className="text-[12.5px] text-white/70 mb-1 block">
-                            Tu WhatsApp
+                            Tu correo electrónico
                           </label>
-                          <div className="flex gap-1">
-                            <select
-                              value={countryCode}
-                              onChange={(e) => setCountryCode(e.target.value)}
-                              className="w-14 h-6 px-1 text-[11.25px] rounded border border-white/20 bg-[#353535] flex-shrink-0 text-white"
-                            >
-                              {countryOptions.map((opt) => (
-                                <option key={opt.code} value={opt.code}>
-                                  {opt.country.split(' ')[1]}
-                                </option>
-                              ))}
-                            </select>
-                            <input
-                              placeholder="9 1234 5678"
-                              value={phone}
-                              onChange={(e) => setPhone(e.target.value)}
-                              className="h-6 text-[12.5px] flex-1 min-w-0 px-1.5 rounded border border-white/20 bg-[#353535] text-white placeholder:text-white/50"
-                            />
-                          </div>
+                          <input
+                            type="email"
+                            placeholder="tu@empresa.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="h-6 text-[12.5px] w-full px-1.5 rounded border border-white/20 bg-[#353535] text-white placeholder:text-white/50"
+                          />
                         </div>
                         <div>
                           <label className="text-[12.5px] text-white/70 mb-1 block">
@@ -262,7 +286,7 @@ const HowItWorks = () => {
                         <button
                           className="w-full h-6 text-[12.5px] rounded bg-accent text-white hover:bg-accent/90 disabled:opacity-50 disabled:cursor-not-allowed"
                           onClick={handleSubmitForm}
-                          disabled={!phone.trim() || !storeUrl.trim()}
+                          disabled={!email.trim() || !storeUrl.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)}
                         >
                           Continuar
                         </button>
