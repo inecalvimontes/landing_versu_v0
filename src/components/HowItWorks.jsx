@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link2, Brain, Rocket, Send, MessageCircle, ArrowRight, ArrowLeft, Video, Phone, Plus, Camera, Mic, Signal, Wifi, Battery } from "lucide-react";
 import IPhoneFrame from "./ui/IPhoneFrame";
-import ModalWhatsApp from "./ModalWhatsApp";
 
 // Función helper para enviar webhooks a n8n
 async function sendWebhookToN8N(eventType, data) {
@@ -41,33 +40,32 @@ async function sendWebhookToN8N(eventType, data) {
 const steps = [
   {
     icon: Link2,
-    title: "Conectamos tu canal y tu tienda",
+    title: "Integra Versu con tu ecommerce",
     description:
-      "Integración directa con WhatsApp Business, Instagram y tu plataforma de e-commerce.",
+      "Versu se conecta en pocos minutos a tu tienda para sincronizar tu catálogo y responder con información real de tu negocio.",
   },
   {
     icon: Brain,
-    title: "Entrenamos el agente con tu operación",
+    title: "Entrena el agente con tu operación y contexto ecommerce",
     description:
-      "Configuramos el agente con tu catálogo, políticas y tono de marca.",
+      "Ajusta tu información y tono de atención; Versu aplica conocimiento agregado de patrones ecommerce para responder con mayor precisión.",
   },
   {
     icon: Rocket,
-    title: "Publicas y controlas desde la plataforma",
+    title: "Actívalo en tus canales y escala tu operación",
     description:
-      "Monitorea conversaciones, métricas y ajusta el comportamiento en tiempo real.",
+      "Publica Versu en WhatsApp, Instagram y tu sitio web, y controla métricas, conversaciones y resultados desde una sola plataforma.",
   },
 ];
 
 const HowItWorks = () => {
   const [chatStep, setChatStep] = useState("chat");
   const [messages, setMessages] = useState([
-    { text: "¡Hola! Soy Versu 👋 ¿Tienes alguna pregunta sobre nuestros productos?", isUser: false, timestamp: new Date() },
+    { text: "Hola 👋 Soy Versu.\n¿Quieres ver cómo funciona nuestra IA para ecommerce?", isUser: false, timestamp: new Date() },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [email, setEmail] = useState("");
   const [storeUrl, setStoreUrl] = useState("");
-  const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -99,12 +97,21 @@ const HowItWorks = () => {
     
     setTimeout(() => {
       setMessages(prev => [...prev, { 
-        text: "¡Gracias por tu mensaje! Para darte una respuesta personalizada, ¿podrías compartirme tu correo electrónico y la URL de tu tienda?", 
+        text: "¡Genial!\nPara que puedas probar Versu en una demo real por WhatsApp, necesitamos algunos datos antes de continuar.", 
         isUser: false,
         timestamp: new Date()
       }]);
-      setChatStep("form");
-    }, 1000);
+      
+      // Después de 1.5 segundos, enviar el chat 3 automáticamente
+      setTimeout(() => {
+        setMessages(prev => [...prev, { 
+          text: "👉 La demo es sobre una tienda de ejemplo", 
+          isUser: false,
+          timestamp: new Date()
+        }]);
+        setChatStep("form");
+      }, 1500);
+    }, 1500);
   };
 
   const handleSubmitForm = () => {
@@ -118,16 +125,32 @@ const HowItWorks = () => {
       storeUrl: storeUrl,
     });
     
-    setChatStep("done");
-    setMessages(prev => [...prev, { 
-      text: "¡Perfecto! Ahora puedes probar Versu directamente en WhatsApp con tu catálogo.", 
-      isUser: false,
-      timestamp: new Date()
-    }]);
+    // Después de 1.5 segundos, cambiar el estado y enviar el chat 4
+    setTimeout(() => {
+      setChatStep("done");
+      
+      // Después de otros 1.5 segundos, enviar el chat 4
+      setTimeout(() => {
+        setMessages(prev => [...prev, { 
+          text: "¡Listo!\nAhora puedes ver cómo responde un agente real en una tienda demo.", 
+          isUser: false,
+          timestamp: new Date()
+        }]);
+      }, 1500);
+    }, 1500);
   };
 
   const openWhatsApp = () => {
-    setIsWhatsAppModalOpen(true);
+    // Enviar webhook al abrir WhatsApp
+    sendWebhookToN8N('whatsapp_opened_from_howitworks', {
+      email: email,
+      storeUrl: storeUrl,
+    });
+
+    const message = encodeURIComponent(
+      `Hola, quiero probar Versu.\n\nEmail: ${email}\nWebsite: ${storeUrl}`
+    );
+    window.open(`https://wa.me/56932592085?text=${message}`, "_blank");
   };
 
   return (
@@ -138,11 +161,8 @@ const HowItWorks = () => {
           <div>
             <div className="mb-8 lg:mb-10">
               <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text font-subtitle">
-                Cómo funciona
+                Pasos
               </h2>
-              <p className="mt-1 text-base sm:text-lg lg:text-xl text-text/70 font-text">
-                Tres pasos. Sin equipo técnico para partir.
-              </p>
             </div>
             <div className="space-y-8 lg:space-y-10">
             {steps.map((step, index) => (
@@ -157,10 +177,17 @@ const HowItWorks = () => {
                     PASO {index + 1}
                   </p>
                   <h3 className="text-[20px] sm:text-[24px] font-subtitle text-text">{step.title}</h3>
-                  <p className="mt-1 text-base text-text/70 font-text xl:whitespace-nowrap">{step.description}</p>
+                  <p className="mt-1 text-base text-text/70 font-text">{step.description}</p>
                 </div>
               </div>
             ))}
+            </div>
+            
+            {/* Cierre */}
+            <div className="mt-8 lg:mt-10">
+              <p className="text-base sm:text-lg lg:text-xl text-text font-text">
+                <span className="font-semibold">¡Listo!</span> Tu ecommerce queda <span className="font-bold" style={{fontWeight: 'bold', background: 'linear-gradient(to right, #a5c9ff, #c8a8f0, #ffb3d9)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text'}}>automatizado</span> para operar a gran escala.
+              </p>
             </div>
           </div>
 
@@ -169,12 +196,12 @@ const HowItWorks = () => {
             <div className="w-full max-w-[360px]">
               <div className="text-center mb-4">
                 <p className="text-sm font-medium text-text/60">
-                  Prueba cómo funciona Versu
+                  Prueba el agente en WhatsApp
                 </p>
               </div>
               
               <IPhoneFrame>
-                <div className="flex flex-col h-full bg-black relative iphone-content">
+                <div className="flex flex-col h-full bg-black relative iphone-content group/whatsapp">
                   {/* iOS Status Bar */}
                   <div className="flex items-center justify-between px-4 pt-2 pb-1 bg-accent text-white font-medium">
                     <span className="text-[13.75px] ml-2">{formatTime(currentTime)}</span>
@@ -293,15 +320,15 @@ const HowItWorks = () => {
                       </div>
                     )}
 
-                    {/* WhatsApp button */}
+                    {/* WhatsApp button - Fixed at bottom */}
                     {chatStep === "done" && (
-                      <div className="mt-3">
+                      <div className="sticky bottom-0 mt-3 pt-3 pb-1 -mx-3 px-3 z-10">
                         <button
-                          className="glow-btn-whatsapp w-full h-9 gap-2 rounded-full border border-[#1DAB61] bg-transparent text-white inline-flex items-center justify-center text-[15px] transition-all"
+                          className="w-full h-9 gap-2 rounded-full border border-[#1DAB61] bg-[#1DAB61] text-white inline-flex items-center justify-center text-[15px] transition-all hover:brightness-110 group-hover/whatsapp:brightness-110"
                           onClick={openWhatsApp}
                         >
                           <img src="/whatsapp.png" alt="WhatsApp" className="h-4 w-4 object-contain" />
-                          <span>Abrir WhatsApp</span>
+                          <span>Probar Versu</span>
                           <ArrowRight className="h-3 w-3" />
                         </button>
                       </div>
@@ -337,8 +364,8 @@ const HowItWorks = () => {
                   {chatStep !== "chat" && (
                     <div className="bg-[#353535] px-2 py-2 pb-8 flex-shrink-0">
                       <div className="h-9 flex items-center justify-center">
-                        <p className="text-[12.5px] text-white/60">
-                          {chatStep === "form" ? "Completa el formulario arriba" : "¡Listo para probar!"}
+                        <p className="text-[12.5px] text-white/60 text-center transition-all group-hover/whatsapp:text-white/80 whitespace-pre-line">
+                          {chatStep === "form" ? "Completa el formulario arriba" : "Estás a punto de interactuar con un\nagente real de Versu."}
                         </p>
                       </div>
                     </div>
@@ -355,10 +382,6 @@ const HowItWorks = () => {
         </div>
       </div>
 
-      <ModalWhatsApp
-        isOpen={isWhatsAppModalOpen}
-        onClose={() => setIsWhatsAppModalOpen(false)}
-      />
     </section>
   );
 };
