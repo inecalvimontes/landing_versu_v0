@@ -48,21 +48,26 @@ async function sendWebhookToN8N(eventType, data) {
   const webhookUrl = 'https://n8n.srv1268009.hstgr.cloud/webhook-test/266f3179-2029-40e2-b9c6-3d3e6efafb1e';
   
   try {
+    const payload = {
+      eventType,
+      timestamp: new Date().toISOString(),
+      data,
+      metadata: {
+        url: window.location.href,
+        referrer: document.referrer,
+        userAgent: navigator.userAgent,
+      }
+    };
+    
+    const payloadString = JSON.stringify(payload);
+    
     const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-forward-secret': import.meta.env.WEBHOOK_SECRET || '',
       },
-      body: JSON.stringify({
-        eventType,
-        timestamp: new Date().toISOString(),
-        data,
-        metadata: {
-          url: window.location.href,
-          referrer: document.referrer,
-          userAgent: navigator.userAgent,
-        }
-      })
+      body: payloadString
     });
     
     return response.ok;
