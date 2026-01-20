@@ -12,10 +12,23 @@ import StickyCTA from './components/StickyCTA'
 
 function App() {
   const handleDemoClick = () => {
-    // Scroll suave al formulario de demo
+    // Scroll suave al formulario de demo con offset para el header
     const demoForm = document.getElementById('demo-form')
     if (demoForm) {
-      demoForm.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      // Obtener la altura del header (64px mobile, 80px desktop/lg)
+      const headerHeight = window.innerWidth >= 1024 ? 80 : 64
+      
+      // Obtener la posición del elemento desde la parte superior de la página
+      const elementPosition = demoForm.getBoundingClientRect().top + window.pageYOffset
+      
+      // Calcular la posición final restando la altura del header
+      const offsetPosition = elementPosition - headerHeight
+      
+      // Hacer scroll suave a la posición calculada
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
     }
   }
 

@@ -4,30 +4,30 @@ import { Check, ArrowRight } from "lucide-react";
 
 // Partners integrations - 24 logos de la carpeta partners
 const partnersLogos = [
-  { name: "Amplifica", logo: "/logos/partners/amplifica 2.svg" },
+  { name: "Starken", logo: "/logos/partners/starken.svg", smaller: true },
+  { name: "Mercado Libre", logo: "/logos/partners/mercado libre.svg" },
+  { name: "Shopify", logo: "/logos/partners/shopify 2.svg" },
+  { name: "WhatsApp", logo: "/logos/partners/whatsapp.svg" },
+  { name: "Instagram", logo: "/logos/partners/instagram.svg" },
+  { name: "WooCommerce", logo: "/logos/partners/woocomerce final.svg" },
+  { name: "VTEX", logo: "/logos/partners/vtex.svg" },
+  { name: "Magento", logo: "/logos/partners/magento.svg" },
+  { name: "JumpSeller", logo: "/logos/partners/jumpseller.svg" },
   { name: "Blue Express", logo: "/logos/partners/blue express.svg" },
-  { name: "BSale", logo: "/logos/partners/bsale.svg" },
   { name: "Clickex", logo: "/logos/partners/clickex.svg", smallest: true },
+  { name: "Amplifica", logo: "/logos/partners/amplifica 2.svg" },
+  { name: "BSale", logo: "/logos/partners/bsale.svg" },
   { name: "Despachalo", logo: "/logos/partners/despachalo.svg" },
   { name: "Enviame", logo: "/logos/partners/enviame.svg" },
   { name: "Falabella", logo: "/logos/partners/falabella.svg" },
   { name: "Fazt", logo: "/logos/partners/fazt.svg" },
   { name: "Flapp", logo: "/logos/partners/flapp.svg" },
-  { name: "Instagram", logo: "/logos/partners/instagram.svg" },
-  { name: "JumpSeller", logo: "/logos/partners/jumpseller.svg" },
-  { name: "Magento", logo: "/logos/partners/magento.svg" },
-  { name: "Mercado Libre", logo: "/logos/partners/mercado libre.svg" },
   { name: "Meta", logo: "/logos/partners/meta logo.svg" },
   { name: "PrestaShop", logo: "/logos/partners/prestashop.svg" },
   { name: "Recibelo", logo: "/logos/partners/recibelo.svg" },
   { name: "SavvyCal", logo: "/logos/partners/savvycal.svg" },
   { name: "Shipit", logo: "/logos/partners/shipit.svg" },
-  { name: "Shopify", logo: "/logos/partners/shopify 2.svg" },
-  { name: "Starken", logo: "/logos/partners/starken.svg", smaller: true },
-  { name: "VTEX", logo: "/logos/partners/vtex.svg" },
   { name: "Vtiger", logo: "/logos/partners/vtiger.svg" },
-  { name: "WhatsApp", logo: "/logos/partners/whatsapp.svg" },
-  { name: "WooCommerce", logo: "/logos/partners/woocomerce final.svg" },
 ];
 
 // Países disponibles
@@ -196,23 +196,17 @@ const IntegrationsCarousel = () => {
           <div
             key={index}
             onClick={() => handleClick(index)}
-            className={`mx-2.5 sm:mx-4 lg:mx-5 flex-shrink-0 flex items-center justify-center h-8 sm:h-10 lg:h-12 cursor-pointer group transition-all duration-300 ${
-              activeIndex === index ? 'grayscale-0' : 'grayscale hover:grayscale-0'
-            }`}
+            className="mx-2.5 sm:mx-4 lg:mx-5 flex-shrink-0 flex items-center justify-center h-8 sm:h-10 lg:h-12 cursor-pointer group transition-all duration-300"
           >
             <img 
               src={partner.logo} 
               alt={partner.name}
-              className={`w-auto object-contain transition-all duration-300 ${
+              className={`w-auto object-contain transition-all duration-300 opacity-60 hover:opacity-100 ${
                 partner.smallest 
                   ? 'h-5 sm:h-6 lg:h-7' 
                   : partner.smaller 
                   ? 'h-6 sm:h-7 lg:h-9' 
                   : 'h-8 sm:h-10 lg:h-12'
-              } ${
-                activeIndex === index 
-                  ? 'opacity-100' 
-                  : 'opacity-50 group-hover:opacity-100'
               }`}
             />
           </div>
@@ -438,13 +432,13 @@ const Hero = ({ onDemoClick }) => {
         <div className="max-w-xl xl:max-w-2xl">
           {/* Integramos con: */}
           <div className="mt-10">
-            <p className="mb-3 text-xs text-text/60">Integramos con:</p>
+            <p className="mb-2 text-base sm:text-lg lg:text-xl text-text/60 font-text">Integramos con:</p>
           </div>
         </div>
       </div>
       
       {/* E-commerce integrations carousel - se extiende a todo el ancho sin márgenes */}
-      <div className="relative z-20 mt-8 lg:mt-12">
+      <div className="relative z-20 mt-4 lg:mt-6">
         <IntegrationsCarousel />
       </div>
 

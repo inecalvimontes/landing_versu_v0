@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, Users, Bot, Star, Clock, ShieldAlert, FileText } from "lucide-react";
+import { ChevronDown, Users, Star, Clock, FileText } from "lucide-react";
 import { cn } from "../lib/utils";
 
 const faqs = [
@@ -9,12 +9,12 @@ const faqs = [
       "No. Versu reduce en promedio hasta un 65% la carga operativa del equipo humano. Tu equipo se enfoca en casos críticos o excepciones, y Versu deriva las conversaciones a cada integrante cuando se requiere intervención humana, manteniendo todo el contexto.",
     icon: Users,
   },
-  {
-    question: "¿Los clientes notan que es IA?",
-    answer:
-      "Versu responde con el tono de tu marca y mantiene contexto conversacional. La mayoría de clientes no lo nota, pero si preguntan, el agente se identifica como asistente virtual.",
-    icon: Bot,
-  },
+  // {
+  //   question: "¿Los clientes notan que es IA?",
+  //   answer:
+  //     "Versu responde con el tono de tu marca y mantiene contexto conversacional. La mayoría de clientes no lo nota, pero si preguntan, el agente se identifica como asistente virtual.",
+  //   icon: Bot,
+  // },
   {
     question: "¿Qué hace diferente a Versu?",
     answer:
@@ -27,12 +27,12 @@ const faqs = [
       "No. Versu no tiene costos de implementación. La integración técnica toma alrededor de 3 minutos y el tiempo para dejar los agentes públicos depende del negocio. En promedio, quedan operativos en una semana, considerando ajustes según tu operación.",
     icon: Clock,
   },
-  {
-    question: "¿Qué pasa si la IA se equivoca?",
-    answer:
-      "Tu equipo supervisa en tiempo real y puede intervenir con un solo click. Cada error se corrige sin costo y sirve como hito para una mejora continua del agente.",
-    icon: ShieldAlert,
-  },
+  // {
+  //   question: "¿Qué pasa si la IA se equivoca?",
+  //   answer:
+  //     "Tu equipo supervisa en tiempo real y puede intervenir con un solo click. Cada error se corrige sin costo y sirve como hito para una mejora continua del agente.",
+  //   icon: ShieldAlert,
+  // },
   {
     question: "¿Hay cláusula de permanencia?",
     answer:
@@ -49,7 +49,7 @@ const FAQs = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 xl:gap-24 items-start">
             {/* Left: Title and subtitle - fixed in initial position */}
-            <div className="flex flex-col lg:sticky lg:top-24 lg:pt-32 self-start">
+            <div className="flex flex-col lg:sticky lg:top-24 lg:pt-16 self-start">
               <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text mb-1 font-subtitle lg:whitespace-nowrap">
                 Preguntas frecuentes (FAQ)
               </h2>

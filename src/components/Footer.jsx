@@ -15,12 +15,12 @@ const Footer = () => {
               <img 
                 src="/logos/footer/meta tech blanco.svg" 
                 alt="Meta Tech Provider"
-                className="h-[45px] w-auto"
+                className="h-[56.25px] w-auto"
               />
               <img 
                 src="/logos/footer/shopify partners blanco.svg" 
                 alt="Shopify Partner"
-                className="h-[45px] w-auto"
+                className="h-[56.25px] w-auto"
               />
             </div>
           </div>

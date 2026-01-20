@@ -228,7 +228,7 @@ const Testimonials = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="text-center">
           <h2 className="text-[20px] sm:text-[24px] md:text-[32px] lg:text-[40px] tracking-tight text-text font-subtitle">
-            Lo que dicen nuestros clientes
+            Ecommerce que ya operan con Versu
           </h2>
           <p className="mt-1 text-base sm:text-lg lg:text-xl text-text/70 font-text">
             Tiendas en Latam que ya transformaron su atención con Versu.
