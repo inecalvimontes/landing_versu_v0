@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import LogoCarousel from './components/LogoCarousel'
@@ -9,8 +9,13 @@ import DemoForm from './components/DemoForm'
 import FinalCTA from './components/FinalCTA'
 import Footer from './components/Footer'
 import StickyCTA from './components/StickyCTA'
+import { initSavvyCalTracking } from './lib/metaPixel'
 
 function App() {
+  // Inicializar tracking de SavvyCal al montar la app
+  useEffect(() => {
+    initSavvyCalTracking();
+  }, []);
   const handleDemoClick = () => {
     // Scroll suave al formulario de demo con offset para el header
     const demoForm = document.getElementById('demo-form')

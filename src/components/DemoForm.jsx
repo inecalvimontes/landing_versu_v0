@@ -77,90 +77,8 @@ async function sendWebhookToN8N(eventType, data) {
   }
 }
 
-// Helper functions for SavvyCal metadata
-function getCookie(name) {
-  const m = document.cookie.match(new RegExp("(^|; )" + name + "=([^;]*)"));
-  return m ? decodeURIComponent(m[2]) : undefined;
-}
-
-function qp(key) {
-  try {
-    return new URL(window.location.href).searchParams.get(key);
-  } catch {
-    return null;
-  }
-}
-
-function readFbp() {
-  return getCookie("_fbp");
-}
-
-function readOrBuildFbc() {
-  const cookie = getCookie("_fbc");
-  if (cookie) return cookie;
-  const fbclid = qp("fbclid");
-  if (!fbclid) return undefined;
-  const ts = Math.floor(Date.now() / 1000);
-  return `fb.1.${ts}.${fbclid}`;
-}
-
-function genEventId() {
-  return `SCHEDULE::${Date.now()}::${Math.floor(Math.random() * 1e6)}`;
-}
-
-function readAdParams() {
-  const KEYS = ["ad_id", "adset_id", "campaign_id"];
-  const out = {};
-  let url = null;
-  try {
-    url = new URL(window.location.href);
-  } catch {
-    // Ignore
-  }
-
-  KEYS.forEach((k) => {
-    const v =
-      (url ? url.searchParams.get(k) : null) ||
-      sessionStorage.getItem(`meta_${k}`) ||
-      undefined;
-    if (v) {
-      out[k] = v;
-      sessionStorage.setItem(`meta_${k}`, v);
-    }
-  });
-  return out;
-}
-
-function buildMetadata() {
-  // Contexto para Meta CAPI
-  const fbp = readFbp();
-  const fbc = readOrBuildFbc();
-  const eid = sessionStorage.getItem("schedule_event_id") || genEventId();
-  sessionStorage.setItem("schedule_event_id", eid);
-
-  const adp = readAdParams();
-
-  let ref_url = "";
-  try {
-    const u = new URL(window.location.href);
-    ref_url = `${u.origin}${u.pathname}`;
-  } catch {
-    ref_url = window.location.href;
-  }
-
-  const metadata = {
-    eid,
-    source: "web_landing",
-    ref_url,
-    ...(fbp ? { fbp } : {}),
-    ...(fbc ? { fbc } : {}),
-    ...(adp.ad_id ? { ad_id: adp.ad_id } : {}),
-    ...(adp.adset_id ? { adset_id: adp.adset_id } : {}),
-    ...(adp.campaign_id ? { campaign_id: adp.campaign_id } : {}),
-  };
-
-  return metadata;
-}
+// Importar funciones de tracking con persistencia
+import { buildMetadata } from '../lib/tracking';
 
 const DemoForm = () => {
   const [step, setStep] = useState(1);
@@ -364,6 +282,7 @@ const DemoForm = () => {
         }
         
         // Construir metadata para Meta CAPI y tracking
+        // buildMetadata() ahora usa funciones persistentes (readFbpPersisted, readOrBuildFbcPersisted)
         const metadata = buildMetadata();
         
         window.SavvyCal('inline', { 
@@ -509,7 +428,7 @@ const DemoForm = () => {
                         <div className="space-y-4 lg:flex lg:flex-col lg:justify-between">
                           <div>
                             <label className="text-sm font-medium text-text mb-2 block">
-                              Nombre
+                              Nombre y apellido
                             </label>
                             <input
                               type="text"
