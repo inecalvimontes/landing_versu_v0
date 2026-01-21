@@ -4,7 +4,7 @@ import { X } from "lucide-react";
 
 // Función helper para enviar webhooks a n8n
 async function sendWebhookToN8N(eventType, data) {
-  const webhookUrl = import.meta.env.VITE_WEBHOOK_URL || 'https://witty-laurene-anacrustically.ngrok-free.dev/landing/webhook/';
+  const webhookUrl = 'https://prod-load-balancer.versu.ai/landing/webhook/';
   
   try {
     const payload = {
