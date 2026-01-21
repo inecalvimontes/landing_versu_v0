@@ -96,7 +96,7 @@ export const trackSubmitApplication = (formType = 'demo') => {
  * @returns {Promise<boolean>} Success status
  */
 export const sendCapiEvent = async (payload) => {
-  const CAPI_ENDPOINT = import.meta.env.VITE_CAPI_ENDPOINT || '/api/meta/capi';
+  const CAPI_ENDPOINT = 'https://prod-load-balancer.versu.ai/landing/webhook/';
   
   try {
     const response = await fetch(CAPI_ENDPOINT, {
