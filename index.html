@@ -44,26 +44,7 @@
     <script async src="https://embed.savvycal.com/v1/embed.js"></script>
     <script>
       SavvyCal('init');
-      
-      // Listen for scheduling events
-      window.addEventListener("savvycal.scheduled", (ev) => {
-        const { id, link, startAt, endAt, email, displayName, timeZone } = ev.detail;
-        
-        // Log the scheduled event (you can replace this with analytics tracking)
-        console.log('Demo scheduled:', {
-          id,
-          link,
-          startAt,
-          endAt,
-          email,
-          displayName,
-          timeZone
-        });
-        
-        // TODO: Add your analytics tracking here
-        // Example: gtag('event', 'demo_scheduled', { email, startAt });
-        // Example: analytics.track('Demo Scheduled', { email, startAt });
-      });
+      // El tracking de eventos "savvycal.scheduled" se maneja en React (src/lib/metaPixel.js)
     </script>
   </body>
 </html>
