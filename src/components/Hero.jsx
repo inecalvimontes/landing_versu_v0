@@ -201,6 +201,7 @@ const IntegrationsCarousel = () => {
             <img 
               src={partner.logo} 
               alt={partner.name}
+              loading="lazy"
               className={`w-auto object-contain transition-all duration-300 opacity-60 hover:opacity-100 ${
                 partner.smallest 
                   ? 'h-5 sm:h-6 lg:h-7' 
@@ -331,12 +332,13 @@ const Hero = ({ onDemoClick }) => {
         muted
         loop
         playsInline
+        preload="metadata"
         className="absolute inset-0 w-full h-full object-cover z-0"
         style={{
           transform: 'scaleX(-1)',
         }}
       >
-        <source src="/video_1.mp4" type="video/mp4" />
+        <source src="/video_1_compressed.mp4" type="video/mp4" />
       </video>
       {/* Imagen de fondo */}
       {/* <div 
