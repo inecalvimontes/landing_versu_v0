@@ -105,6 +105,7 @@ const TestimonialCard = ({ testimonial }) => {
             <img
               src={testimonial.photo}
               alt={testimonial.name}
+              loading="lazy"
               className="w-full h-full object-contain"
             />
           </div>
