@@ -2,17 +2,17 @@ import { useState, useRef, useEffect } from 'react';
 
 // Array de logos de clientes
 const clientLogos = [
-  { name: "Ansaldo", logo: "/logos/clientes/ansaldo.png" },
-  { name: "Bekoko", logo: "/logos/clientes/bekoko.png" },
-  { name: "Bestmart", logo: "/logos/clientes/bestmart.png" },
-  { name: "Build a Bear", logo: "/logos/clientes/buildabear-2.png" },
-  { name: "Family Shop", logo: "/logos/clientes/family shop.png" },
-  { name: "Pao Pink", logo: "/logos/clientes/pao pink.png" },
-  { name: "Prosa", logo: "/logos/clientes/prosa.png" },
-  { name: "Saint Malé", logo: "/logos/clientes/saint male.png" },
-  { name: "Serjaff", logo: "/logos/clientes/serjaff.png" },
-  { name: "Sioux", logo: "/logos/clientes/sioux.png" },
-  { name: "Zenlab", logo: "/logos/clientes/zenlab.png" },
+  { name: "Ansaldo", logo: "/logos/clientes/ansaldo.webp" },
+  { name: "Bekoko", logo: "/logos/clientes/bekoko.webp" },
+  { name: "Bestmart", logo: "/logos/clientes/bestmart.webp" },
+  { name: "Build a Bear", logo: "/logos/clientes/buildabear-2.webp" },
+  { name: "Family Shop", logo: "/logos/clientes/family shop.webp" },
+  { name: "Pao Pink", logo: "/logos/clientes/pao pink.webp" },
+  { name: "Prosa", logo: "/logos/clientes/prosa.webp" },
+  { name: "Saint Malé", logo: "/logos/clientes/saint male.webp" },
+  { name: "Serjaff", logo: "/logos/clientes/serjaff.webp" },
+  { name: "Sioux", logo: "/logos/clientes/sioux.webp" },
+  { name: "Zenlab", logo: "/logos/clientes/zenlab.webp" },
 ];
 
 const LogoCarousel = () => {
@@ -152,6 +152,7 @@ const LogoCarousel = () => {
                 <img 
                   src={client.logo} 
                   alt={client.name}
+                  loading="lazy"
                   className="w-full h-full object-cover transition-opacity pointer-events-none opacity-100"
                 />
               </div>
@@ -178,6 +179,7 @@ const LogoCarousel = () => {
                 <img 
                   src={client.logo} 
                   alt={client.name}
+                  loading="lazy"
                   className="w-full h-full object-cover transition-opacity opacity-100"
                 />
               </div>

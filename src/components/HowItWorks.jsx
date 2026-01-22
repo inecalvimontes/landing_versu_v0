@@ -329,7 +329,7 @@ const HowItWorks = () => {
                   <div 
                     className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0 relative"
                     style={{
-                      backgroundImage: 'url(/fondo_wpp_2.PNG)',
+                      backgroundImage: 'url(/fondo_wpp_2.webp)',
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                       backgroundRepeat: 'no-repeat',
